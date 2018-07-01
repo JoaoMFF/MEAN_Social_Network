@@ -1,15 +1,6 @@
-# Steps to run the project
+# MEAN STACK - SOCIAL NETWORK
 
-## General steps
+## General install instructions
 
--   Instal node (recommended version)
-
-## Run Web App
-
--   Open terminal instance and navigate to Project_directory/web-app
--   Run “ng serve”
-
-## Run API
-
--   Open terminal instance and navigate to Project_directory/api
--   Run “node server
+-   Install node (recommended version)
+-   Open a terminal, navigate to the repository folder and run `npm install` and then `npm start`

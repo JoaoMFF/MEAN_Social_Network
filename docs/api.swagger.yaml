@@ -1,0 +1,114 @@
+swagger: '2.0'
+info:
+  title: MEAN Social Network
+  version: '1.0'
+  contact:
+    email: joao_mff@hotmail.com
+host: localhost
+basePath: /api
+tags:
+  - name: auth
+    description: Authentication endpoints
+schemes:
+  - http
+paths:
+  /auth:
+    post:
+      tags:
+        - auth
+      summary: Login endpoint
+      description: ''
+      operationId: Login
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User login credentials
+          required: true
+          schema:
+            $ref: '#/definitions/UserLogin'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/AuthResult'
+        '400':
+          description: bad request, for example wrong credentials
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+        '500':
+          description: internal server error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: Endpoint to create new users
+      description: ''
+      operationId: AuthRegister
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Credentials and name
+          required: true
+          schema:
+            $ref: '#/definitions/UserRegister'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/AuthResult'
+        '400':
+          description: bad request, for example wrong credentials
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+        '500':
+          description: internal server error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+definitions:
+  UserLogin:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - email
+      - password
+  AuthResult:
+    type: object
+    properties:
+      token:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+  ErrorMessage:
+    type: object
+    properties:
+      message:
+        type: string
+  UserRegister:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      name:
+        type: string
+    required: 
+      - email
+      - password
+      - name
