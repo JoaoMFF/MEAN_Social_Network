@@ -9,6 +9,8 @@ basePath: /api
 tags:
   - name: auth
     description: Authentication endpoints
+  - name: user
+    description: User related endpoints
 schemes:
   - http
 paths:
@@ -74,6 +76,28 @@ paths:
           description: internal server error
           schema:
             $ref: '#/definitions/ErrorMessage'
+  /user/logs:
+    get:
+      tags:
+        - user
+      summary: Endpoint to fetch all the user logs
+      description: ''
+      operationId: UserLogs
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/LogsResult'
+        '400':
+          description: bad request, for example wrong credentials
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+        '500':
+          description: internal server error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
 definitions:
   UserLogin:
     type: object
@@ -112,3 +136,26 @@ definitions:
       - email
       - password
       - name
+  LogsResult:
+    type: array
+    items:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        entityId:
+          type: number
+        entityType:
+          type: string
+          enum:
+            - ACCOUNT
+            - POST
+            - COMMENT
+        action:
+          type: string
+          enum:
+            - CREATE
+            - READ
+            - UPDATE
+            - DELETE

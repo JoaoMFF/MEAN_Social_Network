@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user.model");
+const LogService = require("./log.service");
 
 exports.getUsersByEmailAndPassword = async function(email, password) {
     try {
@@ -28,18 +29,16 @@ exports.getUserById = async function(userId) {
 };
 
 exports.createUser = async function(user) {
-    // Creating a new Mongoose Object by using the new keyword
     const newUser = new User({
         email: user.email,
         password: user.password,
         name: user.name
     });
     try {
-        // Saving the Todo
         const savedUser = await newUser.save();
+        LogService.accountCreate(savedUser._id);
         return savedUser;
     } catch (e) {
-        // return a Error message describing the reason
         throw Error("Error while Creating User");
     }
 };
