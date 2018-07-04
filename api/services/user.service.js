@@ -36,7 +36,7 @@ exports.createUser = async function(user) {
     });
     try {
         const savedUser = await newUser.save();
-        LogService.accountCreate(savedUser._id);
+        LogService.createUser(savedUser._id);
         return savedUser;
     } catch (e) {
         throw Error("Error while Creating User");

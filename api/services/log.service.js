@@ -9,8 +9,7 @@ exports.getLogsForUser = async function(userId) {
                 _id: 0,
                 userId: 0
             }
-        );
-        console.log(logs);
+        ).populate("entity");
         return logs;
     } catch (error) {
         console.log(error);
@@ -18,12 +17,28 @@ exports.getLogsForUser = async function(userId) {
     }
 };
 
-exports.accountCreate = async function(userId) {
+exports.createPost = async function(post) {
+    const newLog = new Log({
+        userId: post.user,
+        date: post.dateCreated,
+        entity: post._id,
+        entityType: constants.POST,
+        action: constants.CREATE
+    });
+    try {
+        await newLog.save();
+    } catch (e) {
+        // If logging fails we don't want to prevent the user from existing
+        console.log("Error while logging: ", e);
+    }
+};
+
+exports.createUser = async function(userId) {
     const newLog = new Log({
         userId: userId,
         date: Date.now(),
-        entityId: userId,
-        entityType: constants.ACCOUNT,
+        entity: userId,
+        entityType: constants.USER,
         action: constants.CREATE
     });
     try {

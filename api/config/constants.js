@@ -1,9 +1,10 @@
 module.exports = {
-    ACCOUNT: "ACCOUNT",
     COMMENT: "COMMENT",
     CREATE: "CREATE",
     DELETE: "DELETE",
+    LOG: "LOG",
     POST: "POST",
     READ: "READ",
-    UPDATE: "UPDATE"
+    UPDATE: "UPDATE",
+    USER: "USER"
 };

@@ -11,6 +11,8 @@ tags:
     description: Authentication endpoints
   - name: user
     description: User related endpoints
+  - name: post
+    description: Endpoints related to posts
 schemes:
   - http
 paths:
@@ -98,6 +100,43 @@ paths:
           description: internal server error
           schema:
             $ref: '#/definitions/ErrorMessage'
+  /post:
+    get:
+      tags:
+        - post
+      summary: Endpoint to fetch all available posts
+      description: ''
+      operationId: GetPosts
+      parameters:
+        - in: path
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The page of posts to fetch
+        - in: path
+          name: limit
+          required: false
+          schema:
+            type: integer
+            default: 15
+          description: The number of results to fetch per page
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PostsResult'
+        '400':
+          description: bad request, for example wrong credentials
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+        '500':
+          description: internal server error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
 definitions:
   UserLogin:
     type: object
@@ -149,7 +188,7 @@ definitions:
         entityType:
           type: string
           enum:
-            - ACCOUNT
+            - USER
             - POST
             - COMMENT
         action:
@@ -159,3 +198,35 @@ definitions:
             - READ
             - UPDATE
             - DELETE
+  PostsResult:
+    type: object
+    properties:
+      docs:
+        type: array
+        items:
+          type: object
+          properties:
+            dateCreated:
+              type: string
+              format: date
+            _id:
+              type: number
+            user:
+              type: object
+              properties:
+                email:
+                  type: string
+                name:
+                  type: string
+            title:
+              type: string
+            content:
+              type: string
+      total:
+        type: number
+      limit:
+        type: number
+      page:
+        type: number
+      pages:
+        type: number
