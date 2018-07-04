@@ -3,7 +3,9 @@
 ## General install instructions for development
 
 -   Install node (recommended version)
+-   Install mongoDB
 -   Install concurrently `npm install concurrently -g`
+-   Open a terminal and run mongo by typing `mongod`
 -   Open a terminal, navigate to the repository folder and run `npm install` and then `npm start`
 -   API will be running on `localhost:3000`
 -   WebApp will be running on `localhost:4200`
