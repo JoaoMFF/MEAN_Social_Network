@@ -17,12 +17,12 @@ router.get("/", tokenValidator, async function(req, res) {
 });
 
 // Endpoint to add a new post in name of the user
-router.post("/add", tokenValidator, async function(req, res, next) {
-    const post = {
-        title: req.body.title,
-        content: req.body.content
-    };
+router.post("/", tokenValidator, async function(req, res, next) {
     try {
+        const post = {
+            title: req.body.title,
+            content: req.body.content
+        };
         const createdPost = await PostService.createPost(req.userId, post);
         return res.status(201).json({
             title: createdPost.title,

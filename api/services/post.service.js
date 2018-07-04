@@ -18,12 +18,12 @@ exports.readPosts = async function(page = 1, limit = 15) {
 };
 
 exports.createPost = async function(userId, postData) {
-    const newPost = new Post({
-        user: userId,
-        title: postData.title,
-        content: postData.content
-    });
     try {
+        const newPost = new Post({
+            user: userId,
+            title: postData.title,
+            content: postData.content
+        });
         const savedPost = await newPost.save();
         LogService.createPost(savedPost);
         return savedPost;

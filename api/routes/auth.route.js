@@ -6,17 +6,9 @@ const UserService = require("../services/user.service");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-// TODO: Remove commented code when applied in an actual endpoint
-// Example of validated route
-// var tokenValidator = require("./../config/tokenValidator");
-
-// router.get("/me", tokenValidator, function(req, res, next) {
-//     res.status(200).json({ userId: req.userId });
-// });
-
 // Endpoint to register a user, it creates a new user in database and returns an authentication token
 router.post("/register", async function(req, res, next) {
-    var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+    const hashedPassword = bcrypt.hashSync(req.body.password, 8);
     const user = {
         email: req.body.email,
         password: hashedPassword,
