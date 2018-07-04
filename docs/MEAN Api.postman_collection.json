@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "a9b4f90b-764f-4e2b-a4f4-be914ee13f2c",
+		"name": "MEAN Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"description": null,
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "65cae057-ca69-4b10-ba38-c3d4f95842b3",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"bearer_token\", `Bearer ${data.token}`);",
+									"",
+									"tests[\"Successful auto POST request\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"joaofag@gmail.com\",\n\t\"password\": \"password\",\n\t\"name\": \"Joao Fag\"\n}"
+						},
+						"url": "{{server}}/api/auth/register",
+						"description": "Register endpoint that creates a user and automatically authenticates it."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "69173b36-8da3-4c0e-9686-f522df7d7c37",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"bearer_token\", `Bearer ${data.token}`);",
+									"",
+									"tests[\"Successful auto POST request\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"jordao.f.gustavo@gmail.com\",\n\t\"password\": \"password\"\n}"
+						},
+						"url": "{{server}}/api/auth",
+						"description": "Authentication endpoint to log in a user and return an authentication token"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"description": null,
+			"item": [
+				{
+					"name": "Logs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							}
+						],
+						"body": {},
+						"url": "{{server}}/api/user/logs",
+						"description": "Get the logs for the authenticated user"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"description": null,
+			"item": [
+				{
+					"name": "Add Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"My very third LOGGED post\",\n\t\"content\": \"The content of this post was logged, there is no more privacy\"\n}"
+						},
+						"url": "localhost:3000/api/post",
+						"description": "Create a new post"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "localhost:3000/api/post?page=1&limit=15",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"post"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "15"
+								}
+							]
+						},
+						"description": "Get a list of all available posts using filters"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
