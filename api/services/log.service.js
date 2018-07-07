@@ -9,10 +9,11 @@ exports.getLogsForUser = async function(userId) {
                 _id: 0,
                 userId: 0
             }
-        ).populate("entity");
+        )
+            .populate("entity")
+            .sort({ date: "desc" });
         return logs;
     } catch (error) {
-        console.log(error);
         throw Error("Error retrieving logs");
     }
 };
@@ -39,6 +40,22 @@ exports.createUser = async function(userId) {
         date: Date.now(),
         entity: userId,
         entityType: constants.USER,
+        action: constants.CREATE
+    });
+    try {
+        await newLog.save();
+    } catch (e) {
+        // If logging fails we don't want to prevent the user from existing
+        console.log("Error while logging: ", e);
+    }
+};
+
+exports.createComment = async function(comment) {
+    const newLog = new Log({
+        userId: comment.user,
+        date: comment.dateCreated,
+        entity: comment._id,
+        entityType: constants.COMMENT,
         action: constants.CREATE
     });
     try {

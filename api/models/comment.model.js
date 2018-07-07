@@ -1,19 +1,21 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
 const constants = require("./../config/constants");
 
-const PostSchema = new mongoose.Schema({
+const CommentSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: constants.USER,
         required: true
     },
-    title: { type: String, required: true },
-    content: { type: String, required: true },
+    post: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: constants.POST,
+        required: true
+    },
+    text: { type: String, required: true },
     deleted: { type: Boolean, default: false },
     dateCreated: { type: mongoose.Schema.Types.Date, default: Date.now }
 });
-PostSchema.plugin(mongoosePaginate);
-const Post = mongoose.model(constants.POST, PostSchema);
+const Comment = mongoose.model(constants.COMMENT, CommentSchema);
 
-module.exports = Post;
+module.exports = Comment;
