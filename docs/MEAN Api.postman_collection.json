@@ -123,7 +123,7 @@
 							"mode": "raw",
 							"raw": "{\n\t\"title\": \"My very third LOGGED post\",\n\t\"content\": \"The content of this post was logged, there is no more privacy\"\n}"
 						},
-						"url": "localhost:3000/api/post",
+						"url": "{{server}}/api/post",
 						"description": "Create a new post"
 					},
 					"response": []
@@ -140,11 +140,10 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "localhost:3000/api/post?page=1&limit=15",
+							"raw": "{{server}}/api/post?page=1&limit=15",
 							"host": [
-								"localhost"
+								"{{server}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"post"
@@ -161,6 +160,45 @@
 							]
 						},
 						"description": "Get a list of all available posts using filters"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Comments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							}
+						],
+						"body": {},
+						"url": "{{server}}/api/post/5b3cc924859f400f6ac0534b/comments",
+						"description": "Read all the comments for a given post ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"I commented this post\"\n}"
+						},
+						"url": "{{server}}/api/post/5b3cc924859f400f6ac0534b/comments",
+						"description": "Adds a comment for a given post"
 					},
 					"response": []
 				}

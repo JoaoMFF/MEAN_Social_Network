@@ -6,7 +6,7 @@ exports.readComments = async function(postId) {
         const comments = await Comment.find(
             { deleted: false, post: postId },
             "user text dateCreated"
-        ).populate("user");
+        ).populate("user", { __v: 0, password: 0 });
         return comments;
     } catch (error) {
         throw Error("Error retrieving comments");
