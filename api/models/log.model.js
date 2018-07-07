@@ -9,7 +9,7 @@ const LogSchema = new mongoose.Schema({
     },
     date: {
         type: mongoose.Schema.Types.Date,
-        default: Date.now()
+        default: Date.now
     },
     entity: {
         type: mongoose.Schema.Types.ObjectId,
@@ -33,6 +33,6 @@ const LogSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model(constants.LOG, LogSchema);
+const Log = mongoose.model(constants.LOG, LogSchema);
 
-module.exports = User;
+module.exports = Log;

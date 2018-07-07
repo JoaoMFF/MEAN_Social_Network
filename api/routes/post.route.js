@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const tokenValidator = require("./../config/tokenValidator");
 const PostService = require("./../services/post.service");
+const CommentService = require("./../services/comment.service");
 
 // Enpoint to return the posts for an authenticated user
 router.get("/", tokenValidator, async function(req, res) {
@@ -28,6 +29,34 @@ router.post("/", tokenValidator, async function(req, res, next) {
             title: createdPost.title,
             content: createdPost.content,
             dateCreated: createdPost.dateCreated
+        });
+    } catch (error) {
+        return res.status(400).json({ message: error });
+    }
+});
+
+// Enpoint to return the comments of a post for an authenticated user
+router.get("/:id/comments", tokenValidator, async function(req, res) {
+    try {
+        const comments = await CommentService.readComments(req.params.id);
+        return res.status(200).json(comments);
+    } catch (error) {
+        return res.status(400).json({ message: "Wrong credentials" });
+    }
+});
+
+// Enpoint to create a new comment in a post for an authenticated user
+router.post("/:id/comments", tokenValidator, async function(req, res) {
+    try {
+        const comment = { text: req.body.text };
+        const createdComment = await CommentService.createComment(
+            req.userId,
+            req.params.id,
+            comment
+        );
+        return res.status(201).json({
+            text: createdComment.text,
+            dateCreated: createdComment.dateCreated
         });
     } catch (error) {
         return res.status(400).json({ message: error });

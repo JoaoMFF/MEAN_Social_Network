@@ -13,6 +13,7 @@
 ## General install instructions for production
 
 -   Install node (recommended version)
+-   Install mongoDB
 -   Open a terminal, navigate to the repository folder and run `npm install`
 -   Run `npm run build` and then `npm run serve-api`
 -   The whole app will be running on `localhost:3000`, if you access the base path you will access the web app

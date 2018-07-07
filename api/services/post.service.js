@@ -5,14 +5,14 @@ exports.readPosts = async function(page = 1, limit = 15) {
     try {
         const options = {
             select: "title content user dateCreated",
+            sort: { dateCreated: "desc" },
             populate: { path: "user", select: { _id: 0, password: 0, __v: 0 } },
             page: page,
             limit: limit
         };
-        const posts = await Post.paginate({}, options);
+        const posts = await Post.paginate({ deleted: false }, options);
         return posts;
     } catch (error) {
-        console.log(error);
         throw Error("Error retrieving posts");
     }
 };

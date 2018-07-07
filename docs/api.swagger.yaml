@@ -108,19 +108,17 @@ paths:
       description: ''
       operationId: GetPosts
       parameters:
-        - in: path
-          name: page
+        - name: page
+          in: query
           required: true
-          schema:
-            type: integer
-            minimum: 1
+          type: integer
+          minimum: 1
           description: The page of posts to fetch
-        - in: path
-          name: limit
+        - name: limit
+          in: query
           required: false
-          schema:
-            type: integer
-            default: 15
+          type: integer
+          default: 15
           description: The number of results to fetch per page
       produces:
         - application/json
@@ -167,7 +165,72 @@ paths:
           description: internal server error
           schema:
             $ref: '#/definitions/ErrorMessage'
-      
+  '/post/{id}/comments':
+    get:
+      tags:
+        - post
+      summary: Endpoint to fetch all available comments of a post
+      description: ''
+      operationId: GetCommentForPost
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          description: The page of posts to fetch
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CommentsResult'
+        '400':
+          description: bad request, for example wrong credentials
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+        '500':
+          description: internal server error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+    post:
+      tags:
+        - post
+      summary: Enpoint to add a new post
+      description: ''
+      operationId: AddCommentToPost
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          description: The page of posts to fetch
+        - name: body
+          in: body
+          description: text for the comment
+          required: true
+          schema:
+            $ref: '#/definitions/Comment'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CommentResult'
+        '400':
+          description: bad request, for example wrong credentials
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+        '500':
+          description: internal server error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+    
 definitions:
   UserLogin:
     type: object
@@ -278,3 +341,37 @@ definitions:
       dateCreated:
         type: string
         format: date
+  Comment:
+    type: object
+    properties:
+      text:
+        type: string
+  CommentResult:
+    type: object
+    properties:
+      text:
+        type: string
+      dateCreated:
+        type: string
+        format: date
+  CommentsResult:
+    type: array
+    items:
+      type: object
+      properties:
+        _id:
+          type: string
+        user:
+          type: object
+          properties:
+            _id:
+              type: string
+            email:
+              type: string
+            name:
+              type: string
+        text:
+          type: string
+        dateCreated:
+          type: string
+          format: date
