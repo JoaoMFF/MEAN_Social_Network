@@ -1,3 +1,34 @@
-<p>
-  register-form works!
-</p>
+<form>
+  <h4>Register</h4>
+  <div class="form-group">
+    <label for="emailRegister">Email</label>
+    <input 
+    required 
+    ngModel 
+    name="emailRegister"
+    #emailRegister="ngModel" 
+    (change)="log(emailRegister)" 
+    id="emailRegister"
+    type="text" 
+    class="form-control">
+    <div class="alert alert-danger" *ngIf="emailRegister.touched && !emailRegister.valid">
+      <div *ngIf="emailRegister.errors.required">Email is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="passwordRegister">Password</label>
+    <input
+    required 
+    ngModel 
+    name="passwordRegister"
+    #passwordRegister="ngModel" 
+    (change)="log(passwordRegister)"  
+    id="passwordRegister"
+    type="password" 
+    class="form-control">
+    <div class="alert alert-danger" *ngIf="passwordRegister.touched && !passwordRegister.valid">
+      <div *ngIf="passwordRegister.errors.required">Password is required</div>
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary">Sign Up</button>
+</form>

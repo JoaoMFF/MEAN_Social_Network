@@ -1,40 +1,54 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
-import { RouterModule, Routes } from '@angular/router';
-import { ContactFormComponent } from './contact-form/contact-form.component';
+import { RouterModule } from '@angular/router';
 import { FeedComponent } from './feed/feed.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { LogsComponent } from './logs/logs.component';
-
-const appRoutes: Routes = [
-  {
-    path: 'feed',
-    component: FeedComponent
-  }
-];
+import { RegisterLoginComponent } from './register-login/register-login.component';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContactFormComponent,
     FeedComponent,
     RegisterFormComponent,
     LoginFormComponent,
-    LogsComponent
+    LogsComponent,
+    RegisterLoginComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(
-      appRoutes
-      //,
-      //{ enableTracing: true} // < -- debugging purposes only
-    )
+    RouterModule.forRoot([
+      { 
+        path: '',
+        component: RegisterLoginComponent
+      },
+      { 
+        path: 'feed/:id_post',
+        component: PostComponent 
+      },
+      { 
+        path: 'feed',
+        component: FeedComponent 
+      },
+      { 
+        path: 'logs', 
+        component: LogsComponent 
+      },
+      { 
+        path: '**', 
+        component: RegisterLoginComponent 
+      }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
