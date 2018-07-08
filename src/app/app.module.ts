@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule, Http} from '@angular/http';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 
@@ -25,6 +26,7 @@ import { PostComponent } from './post/post.component';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
@@ -50,7 +52,7 @@ import { PostComponent } from './post/post.component';
       }
     ])
   ],
-  providers: [],
+  providers: [FeedComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

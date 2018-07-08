@@ -19,10 +19,11 @@ async function tokenValidator(req, res, next) {
                 message: "No token provided."
             });
         }
-
+        
         return res.status(500).json({
             message: "Token validation failed."
         });
     }
 }
+
 module.exports = tokenValidator;
