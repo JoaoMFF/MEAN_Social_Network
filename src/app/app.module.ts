@@ -52,7 +52,7 @@ import { PostComponent } from './post/post.component';
       }
     ])
   ],
-  providers: [FeedComponent],
+  providers: [FeedComponent, AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

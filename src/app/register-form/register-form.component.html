@@ -1,34 +1,56 @@
 <form>
   <h4>Register</h4>
+  <div class="form-group" >
+    <label for="nomeRegister">Nome</label>
+    <input  
+    required
+    ngModel 
+    name="nomeRegister"
+    #nomeRegister="ngModel" 
+    id="nomeRegister"
+    type="text" 
+    class="form-control">
+    <div class="alert alert-danger" *ngIf="nomeRegister.touched && !nomeRegister.valid ">
+      <div *ngIf="nomeRegister.errors.required">Name is required</div>
+    </div>
+  </div>
   <div class="form-group">
     <label for="emailRegister">Email</label>
     <input 
-    required 
-    ngModel 
-    name="emailRegister"
-    #emailRegister="ngModel" 
-    (change)="log(emailRegister)" 
-    id="emailRegister"
-    type="text" 
-    class="form-control">
-    <div class="alert alert-danger" *ngIf="emailRegister.touched && !emailRegister.valid">
-      <div *ngIf="emailRegister.errors.required">Email is required</div>
-    </div>
+      required
+      ngModel 
+      name="emailRegister"
+      #emailRegister="ngModel"
+      id="emailRegister"
+      type="email" 
+      class="form-control">
+      <div class="alert alert-danger" *ngIf="emailRegister.touched && !emailRegister.valid ">
+        <div *ngIf="emailRegister.errors.required">Email is required</div>
+      </div>
   </div>
   <div class="form-group">
     <label for="passwordRegister">Password</label>
     <input
-    required 
-    ngModel 
-    name="passwordRegister"
-    #passwordRegister="ngModel" 
-    (change)="log(passwordRegister)"  
-    id="passwordRegister"
-    type="password" 
-    class="form-control">
-    <div class="alert alert-danger" *ngIf="passwordRegister.touched && !passwordRegister.valid">
-      <div *ngIf="passwordRegister.errors.required">Password is required</div>
-    </div>
+      required
+      ngModel 
+      name="passwordRegister"
+      #passwordRegister="ngModel"
+      id="passwordRegister" 
+      type="password" 
+      class="form-control">
+      <div class="alert alert-danger" *ngIf="passwordRegister.touched && !passwordRegister.valid ">
+        <div *ngIf="passwordRegister.errors.required">Password is required</div>
+      </div>
   </div>
-  <button type="button" class="btn btn-primary">Sign Up</button>
+
+  <div class="form-group">
+    <div *ngIf="nomeRegister.invalid || emailRegister.invalid || passwordRegister.invalid ; else button_available">
+      <button disabled class="btn btn-primary">Sign Up</button>
+    </div>
+
+    <ng-template #button_available>
+      <button type="submit" (click)="postRegister();" class="btn btn-primary">Sign Up</button>
+    </ng-template>
+    
+  </div>
 </form>
