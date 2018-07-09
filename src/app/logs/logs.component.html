@@ -1,53 +1,21 @@
+
 <div class="container">
   <div clas="row">
     <div class="col-md-12">
       <h4>Posts</h4>
 
-      <div *ngIf='data.logs.length > 0; else no_posts'>
-        <ng-container *ngFor="let logs of data.logs">
-          <div *ngIf='logs.entityType === "POST"'>
-              <div class="card">
-                <div class="card-body">
-                  <p>Deleted: {{ logs.entity.deleted }}</p>
-                  <p>Title: {{ logs.entity.title }}</p>
-                  <p>Content: {{ logs.entity.content }}</p>
-                  <p>Date: {{ logs.date }}</p> 
-                </div>
-              </div>
-          </div>
-        </ng-container>
-      </div>
-      
-      <ng-template #no_posts>
-        <p>No posts yet</p>
-      </ng-template>
-
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div clas="row">
-    <div class="col-md-12 sections">
-      <h4>Comments</h4>
-
-      <div *ngIf='data.logs.length > 0; else no_comments'>
-        <ng-container *ngFor="let logs of data.logs">
-          <div *ngIf='logs.entityType === "COMMENT"'>
+      <ng-container *ngFor="let logs of data.logs">
+        <div *ngIf='logs.entityType === "POST"'>
             <div class="card">
               <div class="card-body">
                 <p>Id: {{ logs.entity.post }}</p>
-                <p>Text: {{ logs.entity.text }}</p>
-                <p>Date: {{ logs.date }}</p>   
+                <p>Title: {{ logs.entity.tile }}</p>
+                <p>Content: {{ logs.entity.content }}</p>
+                <p>Date: {{ logs.date }}</p> 
               </div>
             </div>
-          </div>
-        </ng-container>
-      </div>
-      
-      <ng-template #no_comments>
-        <p>No comments yet</p>
-      </ng-template>
+        </div>
+      </ng-container>
 
     </div>
   </div>
@@ -55,10 +23,30 @@
 
 <div class="container">
   <div clas="row">
-    <div class="col-md-12 sections">
+    <div class="col-md-12">
+      <h4>Comments</h4>
+
+      <ng-container *ngFor="let logs of data.logs">
+        <div *ngIf='logs.entityType === "COMMENT"'>
+          <div class="card" ng-model="myVar">
+            <div class="card-body">
+              <p>Id: {{ logs.entity.post }}</p>
+              <p>Text: {{ logs.entity.text }}</p>
+              <p>Date: {{ logs.date }}</p>   
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div clas="row">
+    <div class="col-md-12">
       <h4>Account Details</h4>
 
-      <div *ngIf='data.logs.length > 0; else no_account'>
         <ng-container *ngFor="let logs of data.logs">
           <div *ngIf='logs.entityType === "USER"'>
             <div class="card">
@@ -70,11 +58,6 @@
             </div>
           </div>
         </ng-container>
-      </div>
-      
-      <ng-template #no_account>
-        <p>No account details</p>
-      </ng-template>
 
     </div>
   </div>

@@ -194,7 +194,7 @@ module.exports = ".postBody {\r\n    text-align: center;\r\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"card \">\n          <div class=\"card-body postBody\">\n            <h4 class=\"card-title\">{{ post.title }}</h4>\n            <h6 class=\"card-subtitle mb-2 text-muted\">{{ post.dateCreated }}</h6>\n            <p class=\"card-text\">\n                {{ post.content }}\n            </p>\n            <a href=\"#!\" class=\"card-link\">User: {{ post.user.name }}</a>\n            <a href=\"#!\" class=\"card-link\">Email: {{ post.user.email }}</a>\n          </div>\n        </div>\n      </ng-container>\n\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"card \">\n          <div class=\"card-body postBody\">\n            <h4 class=\"card-title\">{{ post.title }}</h4>\n            <h6 class=\"card-subtitle mb-2 text-muted\">{{ post.dateCreated }}</h6>\n            <p class=\"card-text\">{{ post.content }}</p>\n            <a href=\"#!\" class=\"card-link\">User: {{ post.user.name }}</a>\n            <a href=\"#!\" class=\"card-link\">Email: {{ post.user.email }}</a>\n          </div>\n        </div>\n      </ng-container>\n\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -230,7 +230,6 @@ var FeedComponent = /** @class */ (function () {
         this.apiUrl = 'http://localhost:3000/api/post?page=1&limit=15';
         this.data = {};
         this.getPosts();
-        this.getData();
     }
     FeedComponent.prototype.getData = function () {
         return this.http.get(this.apiUrl, {
@@ -240,6 +239,7 @@ var FeedComponent = /** @class */ (function () {
     };
     FeedComponent.prototype.getPosts = function () {
         var _this = this;
+        this.getData();
         this.getData().subscribe(function (data) {
             console.log(data);
             _this.data = data;
@@ -325,7 +325,7 @@ var LoginFormComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".card {\r\n    margin-top: 20px;\r\n}\r\n\r\n.sections {\r\n    margin-top: 40px;\r\n}"
 
 /***/ }),
 
@@ -336,7 +336,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  logs works!\n</p>\n"
+module.exports = "<div class=\"container\">\n  <div clas=\"row\">\n    <div class=\"col-md-12\">\n      <h4>Posts</h4>\n\n      <div *ngIf='data.logs.length > 0; else no_posts'>\n        <ng-container *ngFor=\"let logs of data.logs\">\n          <div *ngIf='logs.entityType === \"POST\"'>\n              <div class=\"card\">\n                <div class=\"card-body\">\n                  <p>Deleted: {{ logs.entity.deleted }}</p>\n                  <p>Title: {{ logs.entity.title }}</p>\n                  <p>Content: {{ logs.entity.content }}</p>\n                  <p>Date: {{ logs.date }}</p> \n                </div>\n              </div>\n          </div>\n        </ng-container>\n      </div>\n      \n      <ng-template #no_posts>\n        <p>No posts yet</p>\n      </ng-template>\n\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div clas=\"row\">\n    <div class=\"col-md-12 sections\">\n      <h4>Comments</h4>\n\n      <div *ngIf='data.logs.length > 0; else no_comments'>\n        <ng-container *ngFor=\"let logs of data.logs\">\n          <div *ngIf='logs.entityType === \"COMMENT\"'>\n            <div class=\"card\">\n              <div class=\"card-body\">\n                <p>Id: {{ logs.entity.post }}</p>\n                <p>Text: {{ logs.entity.text }}</p>\n                <p>Date: {{ logs.date }}</p>   \n              </div>\n            </div>\n          </div>\n        </ng-container>\n      </div>\n      \n      <ng-template #no_comments>\n        <p>No comments yet</p>\n      </ng-template>\n\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div clas=\"row\">\n    <div class=\"col-md-12 sections\">\n      <h4>Account Details</h4>\n\n      <div *ngIf='data.logs.length > 0; else no_account'>\n        <ng-container *ngFor=\"let logs of data.logs\">\n          <div *ngIf='logs.entityType === \"USER\"'>\n            <div class=\"card\">\n              <div class=\"card-body\">\n                <p>Name: {{ logs.entity.name }}</p>\n                <p>Email: {{ logs.entity.email }}</p>\n                <p>Date: {{ logs.date }}</p>\n              </div>\n            </div>\n          </div>\n        </ng-container>\n      </div>\n      \n      <ng-template #no_account>\n        <p>No account details</p>\n      </ng-template>\n\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -351,6 +351,8 @@ module.exports = "<p>\n  logs works!\n</p>\n"
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LogsComponent", function() { return LogsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -361,10 +363,29 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var LogsComponent = /** @class */ (function () {
-    function LogsComponent() {
+    function LogsComponent(http) {
+        this.http = http;
+        this.title = 'logs';
+        this.apiUrl = 'http://localhost:3000/api/user/logs';
+        this.data = {};
+        this.getLogs();
     }
-    LogsComponent.prototype.ngOnInit = function () {
+    LogsComponent.prototype.getData = function () {
+        return this.http.get(this.apiUrl, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]()
+                .append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNDI2ODk1ODBhYjA4MDg3NDMzM2Q2ZiIsImlhdCI6MTUzMTA3ODgyNSwiZXhwIjoxNTMxMTY1MjI1fQ.6EXpqwb9Bc9eb31TkQ6duNDmfIGxtHSfET0syFFaiXY')
+        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) { return data; }));
+    };
+    LogsComponent.prototype.getLogs = function () {
+        var _this = this;
+        this.getData();
+        this.getData().subscribe(function (data) {
+            console.log(data);
+            _this.data = data;
+        });
     };
     LogsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -372,7 +393,7 @@ var LogsComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./logs.component.html */ "./src/app/logs/logs.component.html"),
             styles: [__webpack_require__(/*! ./logs.component.css */ "./src/app/logs/logs.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], LogsComponent);
     return LogsComponent;
 }());
