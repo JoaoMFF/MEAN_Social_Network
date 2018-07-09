@@ -14,7 +14,6 @@ export class FeedComponent {
 
   constructor(private http: HttpClient) {
     this.getPosts();
-    this.getData();
   }
 
   getData() {
@@ -26,11 +25,12 @@ export class FeedComponent {
   }
 
   getPosts() {
+    this.getData();
+
     this.getData().subscribe(data => {
       console.log(data);
       this.data = data;
     })
   }
-
 
 }

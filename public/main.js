@@ -183,7 +183,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".postBody {\r\n    text-align: center;\r\n}"
 
 /***/ }),
 
@@ -194,7 +194,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  feed works!\n</p>\n"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"card \">\n          <div class=\"card-body postBody\">\n            <h4 class=\"card-title\">{{ post.title }}</h4>\n            <h6 class=\"card-subtitle mb-2 text-muted\">{{ post.dateCreated }}</h6>\n            <p class=\"card-text\">\n                {{ post.content }}\n            </p>\n            <a href=\"#!\" class=\"card-link\">User: {{ post.user.name }}</a>\n            <a href=\"#!\" class=\"card-link\">Email: {{ post.user.email }}</a>\n          </div>\n        </div>\n      </ng-container>\n\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -209,8 +209,8 @@ module.exports = "<p>\n  feed works!\n</p>\n"
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FeedComponent", function() { return FeedComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -227,22 +227,16 @@ var FeedComponent = /** @class */ (function () {
     function FeedComponent(http) {
         this.http = http;
         this.title = 'feed';
-        this.apiRoot = "http://localhost:3000/api/post?page=1&limit=15";
+        this.apiUrl = 'http://localhost:3000/api/post?page=1&limit=15';
         this.data = {};
         this.getPosts();
         this.getData();
     }
     FeedComponent.prototype.getData = function () {
-        console.log("GET WITH HEADERS");
-        return this.http.get(this.apiRoot, {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
-                .append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS')
-                .append('Access-Control-Allow-Origin', 'http://localhost:4200')
-                .append('Access-Control-Allow-Headers', "Access-Control-Allow-Headers, Access-Control-Allow-Origin, Access-Control-Request-Method")
-                .append('Authorization', "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViM2NiZDVkM2M1YzY5MGE0MTU1ODc5NiIsImlhdCI6MTUzMDcxMTAzMCwiZXhwIjoxNTMwNzk3NDMwfQ.uNVXvZ9lSSK_Ty3nmaIUPAAFG0pT6sxRGcJHbh5Yhh4"),
-            responseType: 'text'
-        })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) { return data; }));
+        return this.http.get(this.apiUrl, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]()
+                .append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNDI2ODk1ODBhYjA4MDg3NDMzM2Q2ZiIsImlhdCI6MTUzMTA3ODgyNSwiZXhwIjoxNTMxMTY1MjI1fQ.6EXpqwb9Bc9eb31TkQ6duNDmfIGxtHSfET0syFFaiXY')
+        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) { return data; }));
     };
     FeedComponent.prototype.getPosts = function () {
         var _this = this;
@@ -257,7 +251,7 @@ var FeedComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./feed.component.html */ "./src/app/feed/feed.component.html"),
             styles: [__webpack_require__(/*! ./feed.component.css */ "./src/app/feed/feed.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], FeedComponent);
     return FeedComponent;
 }());
