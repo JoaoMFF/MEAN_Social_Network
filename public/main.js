@@ -165,7 +165,7 @@ var AppModule = /** @class */ (function () {
                     }
                 ])
             ],
-            providers: [_feed_feed_component__WEBPACK_IMPORTED_MODULE_7__["FeedComponent"]],
+            providers: [_feed_feed_component__WEBPACK_IMPORTED_MODULE_7__["FeedComponent"], _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
         })
     ], AppModule);
@@ -336,7 +336,7 @@ module.exports = ".card {\r\n    margin-top: 20px;\r\n}\r\n\r\n.sections {\r\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div clas=\"row\">\n    <div class=\"col-md-12\">\n      <h4>Posts</h4>\n\n      <div *ngIf='data.logs.length > 0; else no_posts'>\n        <ng-container *ngFor=\"let logs of data.logs\">\n          <div *ngIf='logs.entityType === \"POST\"'>\n              <div class=\"card\">\n                <div class=\"card-body\">\n                  <p>Deleted: {{ logs.entity.deleted }}</p>\n                  <p>Title: {{ logs.entity.title }}</p>\n                  <p>Content: {{ logs.entity.content }}</p>\n                  <p>Date: {{ logs.date }}</p> \n                </div>\n              </div>\n          </div>\n        </ng-container>\n      </div>\n      \n      <ng-template #no_posts>\n        <p>No posts yet</p>\n      </ng-template>\n\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div clas=\"row\">\n    <div class=\"col-md-12 sections\">\n      <h4>Comments</h4>\n\n      <div *ngIf='data.logs.length > 0; else no_comments'>\n        <ng-container *ngFor=\"let logs of data.logs\">\n          <div *ngIf='logs.entityType === \"COMMENT\"'>\n            <div class=\"card\">\n              <div class=\"card-body\">\n                <p>Id: {{ logs.entity.post }}</p>\n                <p>Text: {{ logs.entity.text }}</p>\n                <p>Date: {{ logs.date }}</p>   \n              </div>\n            </div>\n          </div>\n        </ng-container>\n      </div>\n      \n      <ng-template #no_comments>\n        <p>No comments yet</p>\n      </ng-template>\n\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div clas=\"row\">\n    <div class=\"col-md-12 sections\">\n      <h4>Account Details</h4>\n\n      <div *ngIf='data.logs.length > 0; else no_account'>\n        <ng-container *ngFor=\"let logs of data.logs\">\n          <div *ngIf='logs.entityType === \"USER\"'>\n            <div class=\"card\">\n              <div class=\"card-body\">\n                <p>Name: {{ logs.entity.name }}</p>\n                <p>Email: {{ logs.entity.email }}</p>\n                <p>Date: {{ logs.date }}</p>\n              </div>\n            </div>\n          </div>\n        </ng-container>\n      </div>\n      \n      <ng-template #no_account>\n        <p>No account details</p>\n      </ng-template>\n\n    </div>\n  </div>\n</div>\n"
+module.exports = "\n<div class=\"container\">\n  <div clas=\"row\">\n    <div class=\"col-md-12\">\n      <h4>Posts</h4>\n\n      <ng-container *ngFor=\"let logs of data.logs\">\n        <div *ngIf='logs.entityType === \"POST\"'>\n            <div class=\"card\">\n              <div class=\"card-body\">\n                <p>Id: {{ logs.entity.post }}</p>\n                <p>Title: {{ logs.entity.tile }}</p>\n                <p>Content: {{ logs.entity.content }}</p>\n                <p>Date: {{ logs.date }}</p> \n              </div>\n            </div>\n        </div>\n      </ng-container>\n\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div clas=\"row\">\n    <div class=\"col-md-12\">\n      <h4>Comments</h4>\n\n      <ng-container *ngFor=\"let logs of data.logs\">\n        <div *ngIf='logs.entityType === \"COMMENT\"'>\n          <div class=\"card\" ng-model=\"myVar\">\n            <div class=\"card-body\">\n              <p>Id: {{ logs.entity.post }}</p>\n              <p>Text: {{ logs.entity.text }}</p>\n              <p>Date: {{ logs.date }}</p>   \n            </div>\n          </div>\n        </div>\n      </ng-container>\n\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div clas=\"row\">\n    <div class=\"col-md-12\">\n      <h4>Account Details</h4>\n\n        <ng-container *ngFor=\"let logs of data.logs\">\n          <div *ngIf='logs.entityType === \"USER\"'>\n            <div class=\"card\">\n              <div class=\"card-body\">\n                <p>Name: {{ logs.entity.name }}</p>\n                <p>Email: {{ logs.entity.email }}</p>\n                <p>Date: {{ logs.date }}</p>\n              </div>\n            </div>\n          </div>\n        </ng-container>\n\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -376,7 +376,7 @@ var LogsComponent = /** @class */ (function () {
     LogsComponent.prototype.getData = function () {
         return this.http.get(this.apiUrl, {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]()
-                .append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNDI2ODk1ODBhYjA4MDg3NDMzM2Q2ZiIsImlhdCI6MTUzMTA3ODgyNSwiZXhwIjoxNTMxMTY1MjI1fQ.6EXpqwb9Bc9eb31TkQ6duNDmfIGxtHSfET0syFFaiXY')
+                .append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNDM5NzgwOTk3NTJmMjg0MDY0Mjk2MiIsImlhdCI6MTUzMTE1NjM3NCwiZXhwIjoxNTMxMjQyNzc0fQ.TzEAJggE-7Gjqgi1CrmbdhOVfQwNhLWmiH1Qe7Nu2RU')
         }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) { return data; }));
     };
     LogsComponent.prototype.getLogs = function () {
@@ -483,7 +483,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form>\n  <h4>Register</h4>\n  <div class=\"form-group\">\n    <label for=\"emailRegister\">Email</label>\n    <input \n    required \n    ngModel \n    name=\"emailRegister\"\n    #emailRegister=\"ngModel\" \n    (change)=\"log(emailRegister)\" \n    id=\"emailRegister\"\n    type=\"text\" \n    class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"emailRegister.touched && !emailRegister.valid\">\n      <div *ngIf=\"emailRegister.errors.required\">Email is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordRegister\">Password</label>\n    <input\n    required \n    ngModel \n    name=\"passwordRegister\"\n    #passwordRegister=\"ngModel\" \n    (change)=\"log(passwordRegister)\"  \n    id=\"passwordRegister\"\n    type=\"password\" \n    class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"passwordRegister.touched && !passwordRegister.valid\">\n      <div *ngIf=\"passwordRegister.errors.required\">Password is required</div>\n    </div>\n  </div>\n  <button type=\"button\" class=\"btn btn-primary\">Sign Up</button>\n</form>"
+module.exports = "<form>\n  <h4>Register</h4>\n  <div class=\"form-group\" >\n    <label for=\"nomeRegister\">Nome</label>\n    <input  \n    required\n    ngModel \n    name=\"nomeRegister\"\n    #nomeRegister=\"ngModel\" \n    id=\"nomeRegister\"\n    type=\"text\" \n    class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"nomeRegister.touched && !nomeRegister.valid \">\n      <div *ngIf=\"nomeRegister.errors.required\">Name is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"emailRegister\">Email</label>\n    <input \n      required\n      ngModel \n      name=\"emailRegister\"\n      #emailRegister=\"ngModel\"\n      id=\"emailRegister\"\n      type=\"email\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"emailRegister.touched && !emailRegister.valid \">\n        <div *ngIf=\"emailRegister.errors.required\">Email is required</div>\n      </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordRegister\">Password</label>\n    <input\n      required\n      ngModel \n      name=\"passwordRegister\"\n      #passwordRegister=\"ngModel\"\n      id=\"passwordRegister\" \n      type=\"password\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"passwordRegister.touched && !passwordRegister.valid \">\n        <div *ngIf=\"passwordRegister.errors.required\">Password is required</div>\n      </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"nomeRegister.invalid || emailRegister.invalid || passwordRegister.invalid ; else button_available\">\n      <button disabled class=\"btn btn-primary\">Sign Up</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"postRegister();\" class=\"btn btn-primary\">Sign Up</button>\n    </ng-template>\n    \n  </div>\n</form>"
 
 /***/ }),
 
@@ -498,23 +498,44 @@ module.exports = "<form>\n  <h4>Register</h4>\n  <div class=\"form-group\">\n   
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterFormComponent", function() { return RegisterFormComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 var RegisterFormComponent = /** @class */ (function () {
-    function RegisterFormComponent() {
+    function RegisterFormComponent(http) {
+        this.http = http;
+        this.title = 'register';
     }
-    RegisterFormComponent.prototype.log = function (x) { console.log(x); };
+    RegisterFormComponent.prototype.postRegister = function () {
+        var emailInput = document.getElementById('nomeRegister').value;
+        var nameInput = document.getElementById('emailRegister').value;
+        var passInput = document.getElementById('passwordRegister').value;
+        this.http.post("http://localhost:3000/api/auth/register", {
+            "email": emailInput,
+            "password": passInput,
+            "name": nameInput
+        }).subscribe(function (res) {
+            console.log(res);
+        }, function (err) {
+            console.log(err);
+        });
+    };
     RegisterFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'register-form',
             template: __webpack_require__(/*! ./register-form.component.html */ "./src/app/register-form/register-form.component.html"),
             styles: [__webpack_require__(/*! ./register-form.component.css */ "./src/app/register-form/register-form.component.css")]
-        })
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], RegisterFormComponent);
     return RegisterFormComponent;
 }());

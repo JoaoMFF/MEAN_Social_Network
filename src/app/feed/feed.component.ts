@@ -17,10 +17,11 @@ export class FeedComponent {
   }
 
   getData() {
+    var token = localStorage.getItem('token');
     return this.http.get(this.apiUrl, {
       headers:
         new HttpHeaders()
-          .append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNDI2ODk1ODBhYjA4MDg3NDMzM2Q2ZiIsImlhdCI6MTUzMTA3ODgyNSwiZXhwIjoxNTMxMTY1MjI1fQ.6EXpqwb9Bc9eb31TkQ6duNDmfIGxtHSfET0syFFaiXY')
+          .append('Authorization', 'Bearer ' + token)
     }).pipe(map(data => data))
   }
 
@@ -32,5 +33,7 @@ export class FeedComponent {
       this.data = data;
     })
   }
+
+
 
 }

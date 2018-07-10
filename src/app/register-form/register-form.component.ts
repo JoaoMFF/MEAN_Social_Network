@@ -15,8 +15,8 @@ export class RegisterFormComponent {
 
   postRegister(){
 
-    var emailInput = (<HTMLInputElement>document.getElementById('nomeRegister')).value;
-    var nameInput = (<HTMLInputElement>document.getElementById('emailRegister')).value;
+    var emailInput = (<HTMLInputElement>document.getElementById('emailRegister')).value;
+    var nameInput = (<HTMLInputElement>document.getElementById('nomeRegister')).value;
     var passInput = (<HTMLInputElement>document.getElementById('passwordRegister')).value;
 
     this.http.post("http://localhost:3000/api/auth/register", {

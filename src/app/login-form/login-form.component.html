@@ -1,28 +1,26 @@
 <form class="forms">
   <h4>Login</h4>
   <div class="form-group">
-    <label>Email</label>
+    <label for="emailLogin">Email</label>
     <input 
     required 
     ngModel 
     name="emailLogin"
     #emailLogin="ngModel" 
-    (change)="log(emailLogin)" 
     id="emailLogin" 
-    type="text "
+    type="email"
     class="form-control" >
     <div class="alert alert-danger" *ngIf="emailLogin.touched && !emailLogin.valid">
       <div *ngIf="emailLogin.errors.required">Email is required</div>
     </div>
   </div>
   <div class="form-group">
-    <label>Password</label>
+    <label for="passwordLogin">Password</label>
     <input 
     required 
     ngModel 
     name="passwordLogin"
-    #passwordLogin="ngModel" 
-    (change)="log(passwordLogin)"  
+    #passwordLogin="ngModel"  
     id="passwordLogin"
     type="password"
     class="form-control">
@@ -30,5 +28,14 @@
       <div *ngIf="passwordLogin.errors.required">Password is required</div>
     </div>
   </div>
-  <button type="button" class="btn btn-primary">Sign In</button>
+
+  <div class="form-group">
+    <div *ngIf="emailLogin.invalid || passwordLogin.invalid ; else button_available">
+      <button disabled class="btn btn-primary">Sign In</button>
+    </div>
+
+    <ng-template #button_available>
+      <button type="submit" (click)="saveToken()" class="btn btn-primary">Sign Ip</button>
+    </ng-template>
+  </div>
 </form>

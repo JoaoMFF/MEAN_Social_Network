@@ -17,10 +17,12 @@ export class LogsComponent {
   }
 
   getData() {
+    var token = localStorage.getItem('token');
+
     return this.http.get(this.apiUrl, {
       headers:
         new HttpHeaders()
-          .append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNDM5NzgwOTk3NTJmMjg0MDY0Mjk2MiIsImlhdCI6MTUzMTE1NjM3NCwiZXhwIjoxNTMxMjQyNzc0fQ.TzEAJggE-7Gjqgi1CrmbdhOVfQwNhLWmiH1Qe7Nu2RU')
+          .append('Authorization', 'Bearer ' + token)
     }).pipe(map(data => data))
   }
 
