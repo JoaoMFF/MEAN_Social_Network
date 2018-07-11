@@ -15,7 +15,7 @@ export class LoginFormComponent {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  postRegister(){
+  postLogin(){
 
     var emailInput = (<HTMLInputElement>document.getElementById('emailLogin')).value;
     var passInput = (<HTMLInputElement>document.getElementById('passwordLogin')).value;
@@ -29,13 +29,17 @@ export class LoginFormComponent {
   }
 
   saveToken() {
-    this.postRegister();
+    this.postLogin();
 
-    this.postRegister().subscribe(data => {
+    this.postLogin().subscribe(data => {
       console.log(data);
       this.data = data;
-      localStorage.setItem('token', this.data.token);
-      this.router.navigateByUrl('/feed');
+      
+      if(this.data.token){
+        localStorage.setItem('token', this.data.token);
+        localStorage.setItem('nomeuser', this.data.name);
+        this.router.navigateByUrl('/feed');
+      }
     },
     err => {
       console.log(err)

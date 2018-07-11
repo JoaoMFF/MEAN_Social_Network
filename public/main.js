@@ -232,9 +232,10 @@ var FeedComponent = /** @class */ (function () {
         this.getPosts();
     }
     FeedComponent.prototype.getData = function () {
+        var token = localStorage.getItem('token');
         return this.http.get(this.apiUrl, {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]()
-                .append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNDI2ODk1ODBhYjA4MDg3NDMzM2Q2ZiIsImlhdCI6MTUzMTA3ODgyNSwiZXhwIjoxNTMxMTY1MjI1fQ.6EXpqwb9Bc9eb31TkQ6duNDmfIGxtHSfET0syFFaiXY')
+                .append('Authorization', 'Bearer ' + token)
         }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) { return data; }));
     };
     FeedComponent.prototype.getPosts = function () {
@@ -278,7 +279,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"forms\">\n  <h4>Login</h4>\n  <div class=\"form-group\">\n    <label>Email</label>\n    <input \n    required \n    ngModel \n    name=\"emailLogin\"\n    #emailLogin=\"ngModel\" \n    (change)=\"log(emailLogin)\" \n    id=\"emailLogin\" \n    type=\"text \"\n    class=\"form-control\" >\n    <div class=\"alert alert-danger\" *ngIf=\"emailLogin.touched && !emailLogin.valid\">\n      <div *ngIf=\"emailLogin.errors.required\">Email is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label>Password</label>\n    <input \n    required \n    ngModel \n    name=\"passwordLogin\"\n    #passwordLogin=\"ngModel\" \n    (change)=\"log(passwordLogin)\"  \n    id=\"passwordLogin\"\n    type=\"password\"\n    class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"passwordLogin.touched && !passwordLogin.valid\">\n      <div *ngIf=\"passwordLogin.errors.required\">Password is required</div>\n    </div>\n  </div>\n  <button type=\"button\" class=\"btn btn-primary\">Sign In</button>\n</form>"
+module.exports = "<form class=\"forms\">\n  <h4>Login</h4>\n  <div class=\"form-group\">\n    <label for=\"emailLogin\">Email</label>\n    <input \n    required \n    ngModel \n    name=\"emailLogin\"\n    #emailLogin=\"ngModel\" \n    id=\"emailLogin\" \n    type=\"email\"\n    class=\"form-control\" >\n    <div class=\"alert alert-danger\" *ngIf=\"emailLogin.touched && !emailLogin.valid\">\n      <div *ngIf=\"emailLogin.errors.required\">Email is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordLogin\">Password</label>\n    <input \n    required \n    ngModel \n    name=\"passwordLogin\"\n    #passwordLogin=\"ngModel\"  \n    id=\"passwordLogin\"\n    type=\"password\"\n    class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"passwordLogin.touched && !passwordLogin.valid\">\n      <div *ngIf=\"passwordLogin.errors.required\">Password is required</div>\n    </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"emailLogin.invalid || passwordLogin.invalid ; else button_available\">\n      <button disabled class=\"btn btn-primary\">Sign In</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"saveToken()\" class=\"btn btn-primary\">Sign Ip</button>\n    </ng-template>\n  </div>\n</form>"
 
 /***/ }),
 
@@ -293,23 +294,56 @@ module.exports = "<form class=\"forms\">\n  <h4>Login</h4>\n  <div class=\"form-
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginFormComponent", function() { return LoginFormComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
 
 var LoginFormComponent = /** @class */ (function () {
-    function LoginFormComponent() {
+    function LoginFormComponent(http, router) {
+        this.http = http;
+        this.router = router;
+        this.title = 'login';
+        this.data = {};
     }
-    LoginFormComponent.prototype.log = function (x) { console.log(x); };
+    LoginFormComponent.prototype.postLogin = function () {
+        var emailInput = document.getElementById('emailLogin').value;
+        var passInput = document.getElementById('passwordLogin').value;
+        return this.http.post("http://localhost:3000/api/auth", {
+            "email": emailInput,
+            "password": passInput
+        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) { return data; }));
+    };
+    LoginFormComponent.prototype.saveToken = function () {
+        var _this = this;
+        this.postLogin();
+        this.postLogin().subscribe(function (data) {
+            console.log(data);
+            _this.data = data;
+            localStorage.setItem('token', _this.data.token);
+            _this.router.navigateByUrl('/feed');
+        }, function (err) {
+            console.log(err);
+        });
+    };
     LoginFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'login-form',
             template: __webpack_require__(/*! ./login-form.component.html */ "./src/app/login-form/login-form.component.html"),
             styles: [__webpack_require__(/*! ./login-form.component.css */ "./src/app/login-form/login-form.component.css")]
-        })
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], LoginFormComponent);
     return LoginFormComponent;
 }());
@@ -374,9 +408,10 @@ var LogsComponent = /** @class */ (function () {
         this.getLogs();
     }
     LogsComponent.prototype.getData = function () {
+        var token = localStorage.getItem('token');
         return this.http.get(this.apiUrl, {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]()
-                .append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNDM5NzgwOTk3NTJmMjg0MDY0Mjk2MiIsImlhdCI6MTUzMTE1NjM3NCwiZXhwIjoxNTMxMjQyNzc0fQ.TzEAJggE-7Gjqgi1CrmbdhOVfQwNhLWmiH1Qe7Nu2RU')
+                .append('Authorization', 'Bearer ' + token)
         }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) { return data; }));
     };
     LogsComponent.prototype.getLogs = function () {
@@ -483,7 +518,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form>\n  <h4>Register</h4>\n  <div class=\"form-group\" >\n    <label for=\"nomeRegister\">Nome</label>\n    <input  \n    required\n    ngModel \n    name=\"nomeRegister\"\n    #nomeRegister=\"ngModel\" \n    id=\"nomeRegister\"\n    type=\"text\" \n    class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"nomeRegister.touched && !nomeRegister.valid \">\n      <div *ngIf=\"nomeRegister.errors.required\">Name is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"emailRegister\">Email</label>\n    <input \n      required\n      ngModel \n      name=\"emailRegister\"\n      #emailRegister=\"ngModel\"\n      id=\"emailRegister\"\n      type=\"email\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"emailRegister.touched && !emailRegister.valid \">\n        <div *ngIf=\"emailRegister.errors.required\">Email is required</div>\n      </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordRegister\">Password</label>\n    <input\n      required\n      ngModel \n      name=\"passwordRegister\"\n      #passwordRegister=\"ngModel\"\n      id=\"passwordRegister\" \n      type=\"password\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"passwordRegister.touched && !passwordRegister.valid \">\n        <div *ngIf=\"passwordRegister.errors.required\">Password is required</div>\n      </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"nomeRegister.invalid || emailRegister.invalid || passwordRegister.invalid ; else button_available\">\n      <button disabled class=\"btn btn-primary\">Sign Up</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"postRegister();\" class=\"btn btn-primary\">Sign Up</button>\n    </ng-template>\n    \n  </div>\n</form>"
+module.exports = "<form>\n  <h4>Register</h4>\n  <div class=\"form-group\" >\n    <label for=\"nomeRegister\">Nome</label>\n    <input  \n    required\n    ngModel \n    name=\"nomeRegister\"\n    #nomeRegister=\"ngModel\" \n    id=\"nomeRegister\"\n    type=\"text\" \n    class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"nomeRegister.touched && !nomeRegister.valid \">\n      <div *ngIf=\"nomeRegister.errors.required\">Name is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"emailRegister\">Email</label>\n    <input \n      required\n      ngModel \n      name=\"emailRegister\"\n      #emailRegister=\"ngModel\"\n      id=\"emailRegister\"\n      type=\"email\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"emailRegister.touched && !emailRegister.valid \">\n        <div *ngIf=\"emailRegister.errors.required\">Email is required</div>\n      </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordRegister\">Password</label>\n    <input\n      required\n      ngModel \n      name=\"passwordRegister\"\n      #passwordRegister=\"ngModel\"\n      id=\"passwordRegister\" \n      type=\"password\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"passwordRegister.touched && !passwordRegister.valid \">\n        <div *ngIf=\"passwordRegister.errors.required\">Password is required</div>\n      </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"nomeRegister.invalid || emailRegister.invalid || passwordRegister.invalid ; else button_available\">\n      <button disabled class=\"btn btn-primary\">Sign Up</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"saveToken();\" class=\"btn btn-primary\">Sign Up</button>\n    </ng-template>\n    \n  </div>\n</form>"
 
 /***/ }),
 
@@ -516,8 +551,8 @@ var RegisterFormComponent = /** @class */ (function () {
         this.title = 'register';
     }
     RegisterFormComponent.prototype.postRegister = function () {
-        var emailInput = document.getElementById('nomeRegister').value;
-        var nameInput = document.getElementById('emailRegister').value;
+        var emailInput = document.getElementById('emailRegister').value;
+        var nameInput = document.getElementById('nomeRegister').value;
         var passInput = document.getElementById('passwordRegister').value;
         this.http.post("http://localhost:3000/api/auth/register", {
             "email": emailInput,

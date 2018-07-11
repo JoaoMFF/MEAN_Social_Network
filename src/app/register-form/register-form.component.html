@@ -45,11 +45,11 @@
 
   <div class="form-group">
     <div *ngIf="nomeRegister.invalid || emailRegister.invalid || passwordRegister.invalid ; else button_available">
-      <button disabled class="btn btn-primary">Sign Up</button>
+      <button disabled class="btn btn-outline-primary">Sign Up</button>
     </div>
 
     <ng-template #button_available>
-      <button type="submit" (click)="saveToken();" class="btn btn-primary">Sign Up</button>
+      <button type="submit" (click)="postRegister();" class="btn btn-primary">Sign Up</button>
     </ng-template>
     
   </div>

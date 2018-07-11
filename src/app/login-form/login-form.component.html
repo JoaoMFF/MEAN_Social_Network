@@ -3,13 +3,13 @@
   <div class="form-group">
     <label for="emailLogin">Email</label>
     <input 
-    required 
-    ngModel 
-    name="emailLogin"
-    #emailLogin="ngModel" 
-    id="emailLogin" 
-    type="email"
-    class="form-control" >
+      required 
+      ngModel 
+      name="emailLogin"
+      #emailLogin="ngModel" 
+      id="emailLogin" 
+      type="email"
+      class="form-control">
     <div class="alert alert-danger" *ngIf="emailLogin.touched && !emailLogin.valid">
       <div *ngIf="emailLogin.errors.required">Email is required</div>
     </div>
@@ -17,13 +17,13 @@
   <div class="form-group">
     <label for="passwordLogin">Password</label>
     <input 
-    required 
-    ngModel 
-    name="passwordLogin"
-    #passwordLogin="ngModel"  
-    id="passwordLogin"
-    type="password"
-    class="form-control">
+      required 
+      ngModel 
+      name="passwordLogin"
+      #passwordLogin="ngModel"  
+      id="passwordLogin"
+      type="password"
+      class="form-control">
     <div class="alert alert-danger" *ngIf="passwordLogin.touched && !passwordLogin.valid">
       <div *ngIf="passwordLogin.errors.required">Password is required</div>
     </div>
@@ -31,7 +31,7 @@
 
   <div class="form-group">
     <div *ngIf="emailLogin.invalid || passwordLogin.invalid ; else button_available">
-      <button disabled class="btn btn-primary">Sign In</button>
+      <button disabled class="btn btn-outline-primary">Sign In</button>
     </div>
 
     <ng-template #button_available>

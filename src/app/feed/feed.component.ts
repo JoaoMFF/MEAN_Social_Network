@@ -1,6 +1,8 @@
 import { Component} from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'feed',
@@ -8,24 +10,29 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent {
+  
   title = 'feed';
-  private apiUrl = 'http://localhost:3000/api/post?page=1&limit=15';
+  private apiUrlGET = 'http://localhost:3000/api/post?page=1&limit=15';
+  private apiUrlPOST = 'http://localhost:3000/api/post'
   data: any = {};
+  nameUser = localStorage.getItem('nomeuser');
+  token = localStorage.getItem('token');
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getPosts();
   }
 
   getData() {
-    var token = localStorage.getItem('token');
-    return this.http.get(this.apiUrl, {
+    
+    return this.http.get(this.apiUrlGET, {
       headers:
         new HttpHeaders()
-          .append('Authorization', 'Bearer ' + token)
+          .append('Authorization', 'Bearer ' + this.token)
     }).pipe(map(data => data))
   }
 
   getPosts() {
+    
     this.getData();
 
     this.getData().subscribe(data => {
@@ -34,6 +41,38 @@ export class FeedComponent {
     })
   }
 
+  logout() {
+    localStorage.clear();
+    this.router.navigateByUrl('');
+  }
 
+  logs() {
+    if(this.token){
+      this.router.navigateByUrl('/logs');
+    }
+  }
 
+  publishPost() {
+    var titleInput = (<HTMLInputElement>document.getElementById('commentTitle')).value;
+    var contentInput = (<HTMLInputElement>document.getElementById('commentContent')).value;
+
+    return this.http.post(this.apiUrlPOST, {
+      
+      "title": titleInput,
+      "content": contentInput
+
+    },{
+      headers:
+        new HttpHeaders()
+          .append('Authorization', 'Bearer ' + this.token)
+    }).subscribe(
+      res => { 
+        console.log(res);
+        location.reload();
+      },
+      err => {
+        console.log(err)
+      }
+    );
+  }
 }

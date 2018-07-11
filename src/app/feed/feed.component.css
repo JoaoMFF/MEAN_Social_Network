@@ -1,3 +1,15 @@
+.posts {
+    margin-bottom: 25px;
+}
+
 .postBody {
     text-align: center;
+}
+
+.addPost {
+    margin-bottom: 30px;
+}
+
+.addPost label{
+    margin-top: 15px;
 }

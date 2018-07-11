@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class RegisterFormComponent {
   title = 'register';
+  data: any = {};
 
   constructor(private http: HttpClient) {
   }
@@ -28,6 +29,7 @@ export class RegisterFormComponent {
     }).subscribe(
       res => { 
         console.log(res);
+        this.data = res;
       },
       err => {
         console.log(err)

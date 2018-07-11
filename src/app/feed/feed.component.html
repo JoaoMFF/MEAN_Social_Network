@@ -1,12 +1,65 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
+      <div class="card ">
+        <div class="card-body">
+          <h4>Bem vindo {{ nameUser }}</h4>
+          <form>
+            <div class="form-group">
+              <button type="button"  (click)="logs();" class="btn btn-outline-primary">Logs</button>
+            </div>
+            <div class="form-group">
+              <button type="button" (click)="logout();" class="btn btn-outline-danger">Logout</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
 
+        <div class="card addPost">
+          <div class="card-body">
+            <form>
+              <h5>Add a new post</h5>
+              <div class="form-group">
+                <label for="commentTitle">Title:</label>  
+                <input
+                  required
+                  ngModel
+                  name="commentTitle"
+                  #commentTitle="ngModel"  
+                  type="text" 
+                  class="form-control" 
+                  id="commentTitle">
+                <label for="commentContent">Content:</label>  
+                <textarea 
+                  required
+                  ngModel
+                  name="commentContent"
+                  #commentContent="ngModel" 
+                  class="form-control" 
+                  rows="5" 
+                  id="commentContent"></textarea>
+              </div>
+              <div class="form-group">
+                <div *ngIf="commentTitle.invalid || commentContent.invalid ; else button_available">
+                  <button disabled class="btn btn-outline-primary">Publish</button>
+                </div>
+            
+                <ng-template #button_available>
+                  <button type="button" (click)="publishPost();"class="btn btn-primary">Publish</button>
+                </ng-template>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      <h5>Posts:</h5>
       <ng-container *ngFor="let post of data.docs">
-        <div class="card ">
+        <div class="card posts">
           <div class="card-body postBody">
             <h4 class="card-title">{{ post.title }}</h4>
-            <h6 class="card-subtitle mb-2 text-muted">{{ post.dateCreated }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</h6>
             <p class="card-text">{{ post.content }}</p>
             <a href="#!" class="card-link">User: {{ post.user.name }}</a>
             <a href="#!" class="card-link">Email: {{ post.user.email }}</a>

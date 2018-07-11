@@ -14,6 +14,7 @@ import { LogsComponent } from './logs/logs.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { PostComponent } from './post/post.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
