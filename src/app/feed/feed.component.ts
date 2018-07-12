@@ -1,8 +1,6 @@
 import { Component} from '@angular/core';
-import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'feed',
@@ -12,33 +10,33 @@ import { Router } from '@angular/router';
 export class FeedComponent {
   
   title = 'feed';
-  private apiUrlGET = 'http://localhost:3000/api/post?page=1&limit=15';
+  private apiUrlGETPosts = 'http://localhost:3000/api/post?page=1&limit=15';
   private apiUrlPOST = 'http://localhost:3000/api/post'
   data: any = {};
+  dataComment: any = {};
   nameUser = localStorage.getItem('nomeuser');
   token = localStorage.getItem('token');
 
   constructor(private http: HttpClient, private router: Router) {
     this.getPosts();
-  }
 
-  getData() {
-    
-    return this.http.get(this.apiUrlGET, {
-      headers:
-        new HttpHeaders()
-          .append('Authorization', 'Bearer ' + this.token)
-    }).pipe(map(data => data))
   }
 
   getPosts() {
-    
-    this.getData();
+    return this.http.get(this.apiUrlGETPosts, {
+      headers:
+        new HttpHeaders()
+          .append('Authorization', 'Bearer ' + this.token)
+    }).subscribe(
+      res => {
+        console.log(res);
+        this.data = res;
 
-    this.getData().subscribe(data => {
-      console.log(data);
-      this.data = data;
-    })
+      },
+      err => {
+        console.log(err)
+      }
+    )
   }
 
   logout() {
@@ -53,8 +51,8 @@ export class FeedComponent {
   }
 
   publishPost() {
-    var titleInput = (<HTMLInputElement>document.getElementById('commentTitle')).value;
-    var contentInput = (<HTMLInputElement>document.getElementById('commentContent')).value;
+    var titleInput = (<HTMLInputElement>document.getElementById('postTitle')).value;
+    var contentInput = (<HTMLInputElement>document.getElementById('postContent')).value;
 
     return this.http.post(this.apiUrlPOST, {
       
@@ -68,11 +66,20 @@ export class FeedComponent {
     }).subscribe(
       res => { 
         console.log(res);
-        location.reload();
+        this.getPosts();
       },
       err => {
         console.log(err)
       }
     );
   }
+
+  goToComment(postId) {
+    
+    console.log(postId);
+    localStorage.setItem('postId', postId);
+    this.router.navigateByUrl('/feed/'+postId+'/comments');
+    
+  }
+
 }

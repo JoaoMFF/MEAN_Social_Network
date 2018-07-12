@@ -183,7 +183,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".postBody {\r\n    text-align: center;\r\n}"
+module.exports = ".posts {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postBody {\r\n    text-align: center;\r\n}\r\n\r\n.addPost {\r\n    margin-bottom: 30px;\r\n}\r\n\r\n.addPost label{\r\n    margin-top: 15px;\r\n}"
 
 /***/ }),
 
@@ -194,7 +194,7 @@ module.exports = ".postBody {\r\n    text-align: center;\r\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"card \">\n          <div class=\"card-body postBody\">\n            <h4 class=\"card-title\">{{ post.title }}</h4>\n            <h6 class=\"card-subtitle mb-2 text-muted\">{{ post.dateCreated }}</h6>\n            <p class=\"card-text\">{{ post.content }}</p>\n            <a href=\"#!\" class=\"card-link\">User: {{ post.user.name }}</a>\n            <a href=\"#!\" class=\"card-link\">Email: {{ post.user.email }}</a>\n          </div>\n        </div>\n      </ng-container>\n\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <div class=\"card \">\n        <div class=\"card-body\">\n          <h4>Bem vindo {{ nameUser }}</h4>\n          <form>\n            <div class=\"form-group\">\n              <button type=\"button\"  (click)=\"logs();\" class=\"btn btn-outline-primary\">Logs</button>\n            </div>\n            <div class=\"form-group\">\n              <button type=\"button\" (click)=\"logout();\" class=\"btn btn-outline-danger\">Logout</button>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-8\">\n\n        <div class=\"card addPost\">\n          <div class=\"card-body\">\n            <form>\n              <h5>Add a new post</h5>\n              <div class=\"form-group\">\n                <label for=\"commentTitle\">Title:</label>  \n                <input\n                  required\n                  ngModel\n                  name=\"commentTitle\"\n                  #commentTitle=\"ngModel\"  \n                  type=\"text\" \n                  class=\"form-control\" \n                  id=\"commentTitle\">\n                <label for=\"commentContent\">Content:</label>  \n                <textarea \n                  required\n                  ngModel\n                  name=\"commentContent\"\n                  #commentContent=\"ngModel\" \n                  class=\"form-control\" \n                  rows=\"5\" \n                  id=\"commentContent\"></textarea>\n              </div>\n              <div class=\"form-group\">\n                <div *ngIf=\"commentTitle.invalid || commentContent.invalid ; else button_available\">\n                  <button disabled class=\"btn btn-outline-primary\">Publish</button>\n                </div>\n            \n                <ng-template #button_available>\n                  <button type=\"button\" (click)=\"publishPost();\"class=\"btn btn-primary\">Publish</button>\n                </ng-template>\n              </div>\n            </form>\n          </div>\n        </div>\n\n      <h5>Posts:</h5>\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"card posts\">\n          <div class=\"card-body postBody\">\n            <h4 class=\"card-title\">{{ post.title }}</h4>\n            <h6 class=\"card-subtitle mb-2 text-muted\">{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</h6>\n            <p class=\"card-text\">{{ post.content }}</p>\n            <a href=\"#!\" class=\"card-link\">User: {{ post.user.name }}</a>\n            <a href=\"#!\" class=\"card-link\">Email: {{ post.user.email }}</a>\n          </div>\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"goToComment( post._id);\">Comment</button>\n        </div>\n      </ng-container>\n\n\n\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -209,8 +209,8 @@ module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div cla
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FeedComponent", function() { return FeedComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -224,27 +224,57 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var FeedComponent = /** @class */ (function () {
-    function FeedComponent(http) {
+    function FeedComponent(http, router) {
         this.http = http;
+        this.router = router;
         this.title = 'feed';
-        this.apiUrl = 'http://localhost:3000/api/post?page=1&limit=15';
+        this.apiUrlGETPosts = 'http://localhost:3000/api/post?page=1&limit=15';
+        this.apiUrlPOST = 'http://localhost:3000/api/post';
         this.data = {};
+        this.dataComment = {};
+        this.nameUser = localStorage.getItem('nomeuser');
+        this.token = localStorage.getItem('token');
         this.getPosts();
     }
-    FeedComponent.prototype.getData = function () {
-        var token = localStorage.getItem('token');
-        return this.http.get(this.apiUrl, {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]()
-                .append('Authorization', 'Bearer ' + token)
-        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) { return data; }));
-    };
     FeedComponent.prototype.getPosts = function () {
         var _this = this;
-        this.getData();
-        this.getData().subscribe(function (data) {
-            console.log(data);
-            _this.data = data;
+        return this.http.get(this.apiUrlGETPosts, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
+                .append('Authorization', 'Bearer ' + this.token)
+        }).subscribe(function (res) {
+            console.log(res);
+            _this.data = res;
+        }, function (err) {
+            console.log(err);
         });
+    };
+    FeedComponent.prototype.logout = function () {
+        localStorage.clear();
+        this.router.navigateByUrl('');
+    };
+    FeedComponent.prototype.logs = function () {
+        if (this.token) {
+            this.router.navigateByUrl('/logs');
+        }
+    };
+    FeedComponent.prototype.publishPost = function () {
+        var titleInput = document.getElementById('commentTitle').value;
+        var contentInput = document.getElementById('commentContent').value;
+        return this.http.post(this.apiUrlPOST, {
+            "title": titleInput,
+            "content": contentInput
+        }, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
+                .append('Authorization', 'Bearer ' + this.token)
+        }).subscribe(function (res) {
+            console.log(res);
+            location.reload();
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    FeedComponent.prototype.goToComment = function (e) {
+        console.log(e);
     };
     FeedComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -252,7 +282,7 @@ var FeedComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./feed.component.html */ "./src/app/feed/feed.component.html"),
             styles: [__webpack_require__(/*! ./feed.component.css */ "./src/app/feed/feed.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], FeedComponent);
     return FeedComponent;
 }());
@@ -279,7 +309,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"forms\">\n  <h4>Login</h4>\n  <div class=\"form-group\">\n    <label for=\"emailLogin\">Email</label>\n    <input \n    required \n    ngModel \n    name=\"emailLogin\"\n    #emailLogin=\"ngModel\" \n    id=\"emailLogin\" \n    type=\"email\"\n    class=\"form-control\" >\n    <div class=\"alert alert-danger\" *ngIf=\"emailLogin.touched && !emailLogin.valid\">\n      <div *ngIf=\"emailLogin.errors.required\">Email is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordLogin\">Password</label>\n    <input \n    required \n    ngModel \n    name=\"passwordLogin\"\n    #passwordLogin=\"ngModel\"  \n    id=\"passwordLogin\"\n    type=\"password\"\n    class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"passwordLogin.touched && !passwordLogin.valid\">\n      <div *ngIf=\"passwordLogin.errors.required\">Password is required</div>\n    </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"emailLogin.invalid || passwordLogin.invalid ; else button_available\">\n      <button disabled class=\"btn btn-primary\">Sign In</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"saveToken()\" class=\"btn btn-primary\">Sign Ip</button>\n    </ng-template>\n  </div>\n</form>"
+module.exports = "<form class=\"forms\">\n  <h4>Login</h4>\n  <div class=\"form-group\">\n    <label for=\"emailLogin\">Email</label>\n    <input \n      required \n      ngModel \n      name=\"emailLogin\"\n      #emailLogin=\"ngModel\" \n      id=\"emailLogin\" \n      type=\"email\"\n      class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"emailLogin.touched && !emailLogin.valid\">\n      <div *ngIf=\"emailLogin.errors.required\">Email is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordLogin\">Password</label>\n    <input \n      required \n      ngModel \n      name=\"passwordLogin\"\n      #passwordLogin=\"ngModel\"  \n      id=\"passwordLogin\"\n      type=\"password\"\n      class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"passwordLogin.touched && !passwordLogin.valid\">\n      <div *ngIf=\"passwordLogin.errors.required\">Password is required</div>\n    </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"emailLogin.invalid || passwordLogin.invalid ; else button_available\">\n      <button disabled class=\"btn btn-outline-primary\">Sign In</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"saveToken()\" class=\"btn btn-primary\">Sign Ip</button>\n    </ng-template>\n  </div>\n</form>"
 
 /***/ }),
 
@@ -331,8 +361,11 @@ var LoginFormComponent = /** @class */ (function () {
         this.postLogin().subscribe(function (data) {
             console.log(data);
             _this.data = data;
-            localStorage.setItem('token', _this.data.token);
-            _this.router.navigateByUrl('/feed');
+            if (_this.data.token) {
+                localStorage.setItem('token', _this.data.token);
+                localStorage.setItem('nomeuser', _this.data.name);
+                _this.router.navigateByUrl('/feed');
+            }
         }, function (err) {
             console.log(err);
         });
@@ -518,7 +551,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form>\n  <h4>Register</h4>\n  <div class=\"form-group\" >\n    <label for=\"nomeRegister\">Nome</label>\n    <input  \n    required\n    ngModel \n    name=\"nomeRegister\"\n    #nomeRegister=\"ngModel\" \n    id=\"nomeRegister\"\n    type=\"text\" \n    class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"nomeRegister.touched && !nomeRegister.valid \">\n      <div *ngIf=\"nomeRegister.errors.required\">Name is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"emailRegister\">Email</label>\n    <input \n      required\n      ngModel \n      name=\"emailRegister\"\n      #emailRegister=\"ngModel\"\n      id=\"emailRegister\"\n      type=\"email\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"emailRegister.touched && !emailRegister.valid \">\n        <div *ngIf=\"emailRegister.errors.required\">Email is required</div>\n      </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordRegister\">Password</label>\n    <input\n      required\n      ngModel \n      name=\"passwordRegister\"\n      #passwordRegister=\"ngModel\"\n      id=\"passwordRegister\" \n      type=\"password\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"passwordRegister.touched && !passwordRegister.valid \">\n        <div *ngIf=\"passwordRegister.errors.required\">Password is required</div>\n      </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"nomeRegister.invalid || emailRegister.invalid || passwordRegister.invalid ; else button_available\">\n      <button disabled class=\"btn btn-primary\">Sign Up</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"saveToken();\" class=\"btn btn-primary\">Sign Up</button>\n    </ng-template>\n    \n  </div>\n</form>"
+module.exports = "<form>\n  <h4>Register</h4>\n  <div class=\"form-group\" >\n    <label for=\"nomeRegister\">Nome</label>\n    <input  \n    required\n    ngModel \n    name=\"nomeRegister\"\n    #nomeRegister=\"ngModel\" \n    id=\"nomeRegister\"\n    type=\"text\" \n    class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"nomeRegister.touched && !nomeRegister.valid \">\n      <div *ngIf=\"nomeRegister.errors.required\">Name is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"emailRegister\">Email</label>\n    <input \n      required\n      ngModel \n      name=\"emailRegister\"\n      #emailRegister=\"ngModel\"\n      id=\"emailRegister\"\n      type=\"email\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"emailRegister.touched && !emailRegister.valid \">\n        <div *ngIf=\"emailRegister.errors.required\">Email is required</div>\n      </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordRegister\">Password</label>\n    <input\n      required\n      ngModel \n      name=\"passwordRegister\"\n      #passwordRegister=\"ngModel\"\n      id=\"passwordRegister\" \n      type=\"password\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"passwordRegister.touched && !passwordRegister.valid \">\n        <div *ngIf=\"passwordRegister.errors.required\">Password is required</div>\n      </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"nomeRegister.invalid || emailRegister.invalid || passwordRegister.invalid ; else button_available\">\n      <button disabled class=\"btn btn-outline-primary\">Sign Up</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"postRegister();\" class=\"btn btn-primary\">Sign Up</button>\n    </ng-template>\n    \n  </div>\n</form>"
 
 /***/ }),
 
@@ -549,8 +582,10 @@ var RegisterFormComponent = /** @class */ (function () {
     function RegisterFormComponent(http) {
         this.http = http;
         this.title = 'register';
+        this.data = {};
     }
     RegisterFormComponent.prototype.postRegister = function () {
+        var _this = this;
         var emailInput = document.getElementById('emailRegister').value;
         var nameInput = document.getElementById('nomeRegister').value;
         var passInput = document.getElementById('passwordRegister').value;
@@ -560,6 +595,7 @@ var RegisterFormComponent = /** @class */ (function () {
             "name": nameInput
         }).subscribe(function (res) {
             console.log(res);
+            _this.data = res;
         }, function (err) {
             console.log(err);
         });
