@@ -240,6 +240,22 @@
 						"description": "Endpoint to delete a post for the logged in user"
 					},
 					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							}
+						],
+						"body": {},
+						"url": "{{server}}/api/post/5b3cc924859f400f6ac0534b/comments/5b49353a8661f918b41d3376",
+						"description": "Delete a comment for a given post for a given user"
+					},
+					"response": []
 				}
 			]
 		}

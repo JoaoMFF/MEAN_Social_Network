@@ -97,4 +97,25 @@ router.post("/:id/comments", tokenValidator, async function(req, res) {
     }
 });
 
+// Enpoint to delete a comment in a post for an authenticated user
+router.delete("/:id/comments/:commentId", tokenValidator, async function(
+    req,
+    res
+) {
+    try {
+        const isCommentDeleted = await CommentService.deleteComment(
+            req.userId,
+            req.params.id,
+            req.params.commentId
+        );
+        if (isCommentDeleted) {
+            return res.status(200).send();
+        } else {
+            throw new Error("Error while deleting comment");
+        }
+    } catch (error) {
+        return res.status(400).json({ message: error });
+    }
+});
+
 module.exports = router;

@@ -97,3 +97,19 @@ exports.createComment = async function(comment) {
         console.log("Error while logging: ", e);
     }
 };
+
+exports.deleteComment = async function(comment) {
+    const newLog = new Log({
+        userId: comment.user,
+        date: Date.now(),
+        entity: comment._id,
+        entityType: constants.COMMENT,
+        action: constants.DELETE
+    });
+    try {
+        await newLog.save();
+    } catch (e) {
+        // If logging fails we don't want to prevent the user from existing
+        console.log("Error while logging: ", e);
+    }
+};

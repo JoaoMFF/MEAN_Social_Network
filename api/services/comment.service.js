@@ -27,3 +27,25 @@ exports.createComment = async function(userId, postId, commentData) {
         throw Error("Error while Creating Comment");
     }
 };
+
+exports.deleteComment = async function(userId, postId, commentId) {
+    try {
+        const comment = await Comment.findOne({
+            user: userId,
+            post: postId,
+            _id: commentId
+        });
+
+        if (!comment) {
+            throw new Error(
+                "Comment not found for current user / post combination"
+            );
+        }
+        comment.deleted = true;
+        await comment.save();
+        LogService.deleteComment(comment);
+        return true;
+    } catch (e) {
+        throw e.message ? e.message : new Error("Error while deleting comment");
+    }
+};
