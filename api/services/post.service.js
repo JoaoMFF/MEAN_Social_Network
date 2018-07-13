@@ -31,3 +31,22 @@ exports.createPost = async function(userId, postData) {
         throw Error("Error while Creating Post");
     }
 };
+
+exports.deletePost = async function(userId, postId) {
+    try {
+        const post = await Post.findOne({
+            _id: postId,
+            user: userId,
+            deleted: false
+        });
+        if (!post) {
+            throw new Error("Post not found for current user");
+        }
+        post.deleted = true;
+        await post.save();
+        LogService.deletePost(post);
+        return true;
+    } catch (e) {
+        throw e.message ? e.message : new Error("Error while deleting post");
+    }
+};

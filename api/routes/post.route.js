@@ -35,6 +35,23 @@ router.post("/", tokenValidator, async function(req, res, next) {
     }
 });
 
+// Endpoint to delete a post in name of the user
+router.delete("/:id", tokenValidator, async function(req, res, next) {
+    try {
+        const isPostDeleted = await PostService.deletePost(
+            req.userId,
+            req.params.id
+        );
+        if (isPostDeleted) {
+            return res.status(200).send();
+        } else {
+            throw new Error("Error while deleting post");
+        }
+    } catch (error) {
+        return res.status(400).json({ message: error });
+    }
+});
+
 // Enpoint to return the comments of a post for an authenticated user
 router.get("/:id/comments", tokenValidator, async function(req, res) {
     try {
