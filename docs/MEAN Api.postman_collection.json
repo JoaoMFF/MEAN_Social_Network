@@ -201,6 +201,22 @@
 						"description": "Adds a comment for a given post"
 					},
 					"response": []
+				},
+				{
+					"name": "Delete Post",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							}
+						],
+						"body": {},
+						"url": "{{server}}/api/post/5b3cc924859f400f6ac0534b",
+						"description": "Endpoint to delete a post for the logged in user"
+					},
+					"response": []
 				}
 			]
 		}
