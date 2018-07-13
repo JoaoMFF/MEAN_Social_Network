@@ -28,6 +28,28 @@ exports.createComment = async function(userId, postId, commentData) {
     }
 };
 
+exports.updateComment = async function(userId, postId, commentData) {
+    try {
+        const comment = await Comment.findOne({
+            user: userId,
+            post: postId,
+            _id: commentData._id
+        });
+
+        if (!comment) {
+            throw new Error(
+                "Comment not found for current user / post combination"
+            );
+        }
+        comment.text = commentData.text;
+        await comment.save();
+        LogService.updateComment(comment);
+        return comment;
+    } catch (e) {
+        throw e.message ? e.message : new Error("Error while updating comment");
+    }
+};
+
 exports.deleteComment = async function(userId, postId, commentId) {
     try {
         const comment = await Comment.findOne({

@@ -97,6 +97,27 @@ router.post("/:id/comments", tokenValidator, async function(req, res) {
     }
 });
 
+// Enpoint to update a comment in a post for an authenticated user
+router.put("/:id/comments/:commentId", tokenValidator, async function(
+    req,
+    res
+) {
+    try {
+        const updatedComment = await CommentService.updateComment(
+            req.userId,
+            req.params.id,
+            {
+                _id: req.params.commentId,
+                text: req.body.text
+            }
+        );
+
+        return res.status(200).json({ text: updatedComment.text });
+    } catch (error) {
+        return res.status(400).json({ message: error });
+    }
+});
+
 // Enpoint to delete a comment in a post for an authenticated user
 router.delete("/:id/comments/:commentId", tokenValidator, async function(
     req,

@@ -106,29 +106,6 @@
 			"description": null,
 			"item": [
 				{
-					"name": "Add Post",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"title\": \"My very third LOGGED post\",\n\t\"content\": \"The content of this post was logged, there is no more privacy\"\n}"
-						},
-						"url": "{{server}}/api/post",
-						"description": "Create a new post"
-					},
-					"response": []
-				},
-				{
 					"name": "Get all Posts",
 					"request": {
 						"method": "GET",
@@ -160,6 +137,68 @@
 							]
 						},
 						"description": "Get a list of all available posts using filters"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"My very third LOGGED post\",\n\t\"content\": \"The content of this post was logged, there is no more privacy\"\n}"
+						},
+						"url": "{{server}}/api/post",
+						"description": "Create a new post"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Updated post title\",\n\t\"content\": \"Updated post content\"\n}"
+						},
+						"url": "{{server}}/api/post/5b3cbd943c5c690a4155879a",
+						"description": "Endpoint to update a post title and content"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							}
+						],
+						"body": {},
+						"url": "{{server}}/api/post/5b3cc924859f400f6ac0534b",
+						"description": "Endpoint to delete a post for the logged in user"
 					},
 					"response": []
 				},
@@ -203,7 +242,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Post",
+					"name": "Update Comment",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -218,26 +257,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"Updated post title\",\n\t\"content\": \"Updated post content\"\n}"
+							"raw": "{\n\t\"text\": \"I updated this comment\"\n}"
 						},
-						"url": "{{server}}/api/post/5b3cbd943c5c690a4155879a",
-						"description": "Endpoint to update a post title and content"
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Post",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}"
-							}
-						],
-						"body": {},
-						"url": "{{server}}/api/post/5b3cc924859f400f6ac0534b",
-						"description": "Endpoint to delete a post for the logged in user"
+						"url": "{{server}}/api/post/5b3cc924859f400f6ac0534b/comments/5b49372ee8e9661b78a7fadd",
+						"description": "Endpoint to update a comment of a given user on a given post"
 					},
 					"response": []
 				},
