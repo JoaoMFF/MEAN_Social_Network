@@ -17,6 +17,22 @@ exports.readPosts = async function(page = 1, limit = 15) {
     }
 };
 
+exports.readPost = async function(postId, userId) {
+    try {
+        const post = await Post.findOne({
+            _id: postId,
+            deleted: false
+        }).populate({ path: "user", select: { _id: 0, password: 0, __v: 0 } });
+        if (!post) {
+            throw new Error("Post not found");
+        }
+        LogService.readPost(post, userId);
+        return post;
+    } catch (e) {
+        throw e.message ? e.message : new Error("Error while updating post");
+    }
+};
+
 exports.createPost = async function(userId, postData) {
     try {
         const newPost = new Post({

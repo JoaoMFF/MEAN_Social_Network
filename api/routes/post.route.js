@@ -35,6 +35,22 @@ router.post("/", tokenValidator, async function(req, res, next) {
     }
 });
 
+// Endpoint to get a post for an Id
+router.get("/:id", tokenValidator, async function(req, res, next) {
+    try {
+        const post = await PostService.readPost(req.params.id, req.userId);
+
+        return res.status(200).json({
+            title: post.title,
+            content: post.content,
+            dateCreated: post.dateCreated,
+            user: post.user
+        });
+    } catch (error) {
+        return res.status(400).json({ message: error });
+    }
+});
+
 // Endpoint to update a post in name of the user
 router.put("/:id", tokenValidator, async function(req, res, next) {
     try {
