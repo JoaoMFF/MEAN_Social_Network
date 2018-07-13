@@ -38,7 +38,7 @@ export class LoginFormComponent {
       if(this.data.token){
         localStorage.setItem('token', this.data.token);
         localStorage.setItem('nomeuser', this.data.name);
-        this.router.navigateByUrl('/feed');
+        this.router.navigateByUrl('feed/page/1');
       }
     },
     err => {

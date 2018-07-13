@@ -103,7 +103,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./login-form/login-form.component */ "./src/app/login-form/login-form.component.ts");
 /* harmony import */ var _logs_logs_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./logs/logs.component */ "./src/app/logs/logs.component.ts");
 /* harmony import */ var _register_login_register_login_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./register-login/register-login.component */ "./src/app/register-login/register-login.component.ts");
-/* harmony import */ var _post_post_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./post/post.component */ "./src/app/post/post.component.ts");
+/* harmony import */ var _comments_comments_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./comments/comments.component */ "./src/app/comments/comments.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -135,7 +135,7 @@ var AppModule = /** @class */ (function () {
                 _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_9__["LoginFormComponent"],
                 _logs_logs_component__WEBPACK_IMPORTED_MODULE_10__["LogsComponent"],
                 _register_login_register_login_component__WEBPACK_IMPORTED_MODULE_11__["RegisterLoginComponent"],
-                _post_post_component__WEBPACK_IMPORTED_MODULE_12__["PostComponent"]
+                _comments_comments_component__WEBPACK_IMPORTED_MODULE_12__["CommentsComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -148,8 +148,8 @@ var AppModule = /** @class */ (function () {
                         component: _register_login_register_login_component__WEBPACK_IMPORTED_MODULE_11__["RegisterLoginComponent"]
                     },
                     {
-                        path: 'feed/:id_post',
-                        component: _post_post_component__WEBPACK_IMPORTED_MODULE_12__["PostComponent"]
+                        path: 'feed/:id_post/comments',
+                        component: _comments_comments_component__WEBPACK_IMPORTED_MODULE_12__["CommentsComponent"]
                     },
                     {
                         path: 'feed',
@@ -165,11 +165,116 @@ var AppModule = /** @class */ (function () {
                     }
                 ])
             ],
-            providers: [_feed_feed_component__WEBPACK_IMPORTED_MODULE_7__["FeedComponent"], _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]],
+            providers: [_feed_feed_component__WEBPACK_IMPORTED_MODULE_7__["FeedComponent"], _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"], _logs_logs_component__WEBPACK_IMPORTED_MODULE_10__["LogsComponent"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/comments/comments.component.css":
+/*!*************************************************!*\
+  !*** ./src/app/comments/comments.component.css ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".backFeed {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.commentSection {\r\n    margin-top: 25px;\r\n}\r\n\r\n.commentBody {\r\n    margin-bottom: 25px;\r\n}"
+
+/***/ }),
+
+/***/ "./src/app/comments/comments.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/comments/comments.component.html ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <button type=\"button\" (click)=\"returnToFeed(); \"class=\"btn btn-primary backFeed\">< Feed</button>\n      <div class=\"card addPost\">\n        <div class=\"card-body\">\n          <form>\n            <h5>Add a new comment</h5>\n            <div class=\"form-group\">\n              <label for=\"commentText\">Comment:</label>  \n              <textarea \n                required\n                ngModel\n                name=\"commentText\"\n                #commentText=\"ngModel\" \n                class=\"form-control\" \n                rows=\"3\" \n                id=\"commentText\"></textarea>\n            </div>\n            <div class=\"form-group\">\n              <div *ngIf=\"commentText.invalid ; else button_available\">\n                <button disabled class=\"btn btn-outline-primary\">Publish</button>\n              </div>\n          \n              <ng-template #button_available>\n                <button type=\"button\" (click)=\"publishPost();\"class=\"btn btn-primary\">Publish</button>\n              </ng-template>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12 commentSection\">\n      <h5>Comments:</h5>\n      <ng-container *ngFor=\"let comment of data\">\n        <div class=\"card commentBody\">\n          <div class=\"card-body\">\n            <p class=\"card-text\">{{ comment.text }}</p>\n            <h6 class=\"card-subtitle mb-2 text-muted\">{{ comment.dateCreated | date:'dd/MM/yyyy HH:mm' }}</h6>\n            <a href=\"#!\" class=\"card-link\">User: {{ comment.user.name }}</a>\n            <a href=\"#!\" class=\"card-link\">Email: {{ comment.user.email }}</a>\n          </div>\n        </div>\n      </ng-container>\n    </div> \n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/comments/comments.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/comments/comments.component.ts ***!
+  \************************************************/
+/*! exports provided: CommentsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CommentsComponent", function() { return CommentsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CommentsComponent = /** @class */ (function () {
+    function CommentsComponent(http, router) {
+        this.http = http;
+        this.router = router;
+        this.title = 'comment';
+        this.postId = localStorage.getItem('postId');
+        this.token = localStorage.getItem('token');
+        this.apiUrlComments = 'http://localhost:3000/api/post/' + this.postId + '/comments';
+        this.data = {};
+        this.getComments();
+    }
+    CommentsComponent.prototype.getComments = function () {
+        var _this = this;
+        return this.http.get(this.apiUrlComments, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
+                .append('Authorization', 'Bearer ' + this.token)
+        }).subscribe(function (res) {
+            _this.data = res;
+            console.log(_this.data);
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    CommentsComponent.prototype.publishPost = function () {
+        var _this = this;
+        var commentText = document.getElementById('commentText').value;
+        return this.http.post(this.apiUrlComments, {
+            "text": commentText
+        }, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
+                .append('Authorization', 'Bearer ' + this.token)
+        }).subscribe(function (res) {
+            console.log(res);
+            _this.getComments();
+            document.getElementById('commentText').value = "";
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    CommentsComponent.prototype.returnToFeed = function () {
+        localStorage.removeItem('postId');
+        this.router.navigateByUrl('/feed');
+    };
+    CommentsComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'comments',
+            template: __webpack_require__(/*! ./comments.component.html */ "./src/app/comments/comments.component.html"),
+            styles: [__webpack_require__(/*! ./comments.component.css */ "./src/app/comments/comments.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+    ], CommentsComponent);
+    return CommentsComponent;
 }());
 
 
@@ -194,7 +299,7 @@ module.exports = ".posts {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postBody {\r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <div class=\"card \">\n        <div class=\"card-body\">\n          <h4>Bem vindo {{ nameUser }}</h4>\n          <form>\n            <div class=\"form-group\">\n              <button type=\"button\"  (click)=\"logs();\" class=\"btn btn-outline-primary\">Logs</button>\n            </div>\n            <div class=\"form-group\">\n              <button type=\"button\" (click)=\"logout();\" class=\"btn btn-outline-danger\">Logout</button>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-8\">\n\n        <div class=\"card addPost\">\n          <div class=\"card-body\">\n            <form>\n              <h5>Add a new post</h5>\n              <div class=\"form-group\">\n                <label for=\"commentTitle\">Title:</label>  \n                <input\n                  required\n                  ngModel\n                  name=\"commentTitle\"\n                  #commentTitle=\"ngModel\"  \n                  type=\"text\" \n                  class=\"form-control\" \n                  id=\"commentTitle\">\n                <label for=\"commentContent\">Content:</label>  \n                <textarea \n                  required\n                  ngModel\n                  name=\"commentContent\"\n                  #commentContent=\"ngModel\" \n                  class=\"form-control\" \n                  rows=\"5\" \n                  id=\"commentContent\"></textarea>\n              </div>\n              <div class=\"form-group\">\n                <div *ngIf=\"commentTitle.invalid || commentContent.invalid ; else button_available\">\n                  <button disabled class=\"btn btn-outline-primary\">Publish</button>\n                </div>\n            \n                <ng-template #button_available>\n                  <button type=\"button\" (click)=\"publishPost();\"class=\"btn btn-primary\">Publish</button>\n                </ng-template>\n              </div>\n            </form>\n          </div>\n        </div>\n\n      <h5>Posts:</h5>\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"card posts\">\n          <div class=\"card-body postBody\">\n            <h4 class=\"card-title\">{{ post.title }}</h4>\n            <h6 class=\"card-subtitle mb-2 text-muted\">{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</h6>\n            <p class=\"card-text\">{{ post.content }}</p>\n            <a href=\"#!\" class=\"card-link\">User: {{ post.user.name }}</a>\n            <a href=\"#!\" class=\"card-link\">Email: {{ post.user.email }}</a>\n          </div>\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"goToComment( post._id);\">Comment</button>\n        </div>\n      </ng-container>\n\n\n\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <div class=\"card \">\n        <div class=\"card-body\">\n          <h4>Bem vindo {{ nameUser }}</h4>\n          <form>\n            <div class=\"form-group\">\n              <button type=\"button\"  (click)=\"logs();\" class=\"btn btn-outline-primary\">Logs</button>\n            </div>\n            <div class=\"form-group\">\n              <button type=\"button\" (click)=\"logout();\" class=\"btn btn-outline-danger\">Logout</button>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-8\">\n\n      <div class=\"card addPost\">\n        <div class=\"card-body\">\n          <form>\n            <h5>Add a new post</h5>\n            <div class=\"form-group\">\n              <label for=\"postTitle\">Title:</label>  \n              <input\n                required\n                ngModel\n                name=\"postTitle\"\n                #postTitle=\"ngModel\"  \n                type=\"text\" \n                class=\"form-control\" \n                id=\"postTitle\">\n              <label for=\"postContent\">Content:</label>  \n              <textarea \n                required\n                ngModel\n                name=\"postContent\"\n                #postContent=\"ngModel\" \n                class=\"form-control\" \n                rows=\"5\" \n                id=\"postContent\"></textarea>\n            </div>\n            <div class=\"form-group\">\n              <div *ngIf=\"postTitle.invalid || postContent.invalid ; else button_available\">\n                <button disabled class=\"btn btn-outline-primary\">Publish</button>\n              </div>\n          \n              <ng-template #button_available>\n                <button type=\"button\" (click)=\"publishPost();\"class=\"btn btn-primary\">Publish</button>\n              </ng-template>\n            </div>\n          </form>\n        </div>\n      </div>\n\n      <h5>Posts:</h5>\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"card posts\">\n          <div class=\"card-body postBody\">\n            <h4 class=\"card-title\">{{ post.title }}</h4>\n            <h6 class=\"card-subtitle mb-2 text-muted\">{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</h6>\n            <p class=\"card-text\">{{ post.content }}</p>\n            <a href=\"#!\" class=\"card-link\">User: {{ post.user.name }}</a>\n            <a href=\"#!\" class=\"card-link\">Email: {{ post.user.email }}</a>\n          </div>\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"goToComment( post._id);\">Comment</button>\n        </div>\n      </ng-container>\n\n\n\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -258,8 +363,9 @@ var FeedComponent = /** @class */ (function () {
         }
     };
     FeedComponent.prototype.publishPost = function () {
-        var titleInput = document.getElementById('commentTitle').value;
-        var contentInput = document.getElementById('commentContent').value;
+        var _this = this;
+        var titleInput = document.getElementById('postTitle').value;
+        var contentInput = document.getElementById('postContent').value;
         return this.http.post(this.apiUrlPOST, {
             "title": titleInput,
             "content": contentInput
@@ -268,13 +374,15 @@ var FeedComponent = /** @class */ (function () {
                 .append('Authorization', 'Bearer ' + this.token)
         }).subscribe(function (res) {
             console.log(res);
-            location.reload();
+            _this.getPosts();
         }, function (err) {
             console.log(err);
         });
     };
-    FeedComponent.prototype.goToComment = function (e) {
-        console.log(e);
+    FeedComponent.prototype.goToComment = function (postId) {
+        console.log(postId);
+        localStorage.setItem('postId', postId);
+        this.router.navigateByUrl('/feed/' + postId + '/comments');
     };
     FeedComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -464,69 +572,6 @@ var LogsComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], LogsComponent);
     return LogsComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/post/post.component.css":
-/*!*****************************************!*\
-  !*** ./src/app/post/post.component.css ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/post/post.component.html":
-/*!******************************************!*\
-  !*** ./src/app/post/post.component.html ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  post works!\n</p>\n"
-
-/***/ }),
-
-/***/ "./src/app/post/post.component.ts":
-/*!****************************************!*\
-  !*** ./src/app/post/post.component.ts ***!
-  \****************************************/
-/*! exports provided: PostComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PostComponent", function() { return PostComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var PostComponent = /** @class */ (function () {
-    function PostComponent() {
-    }
-    PostComponent.prototype.ngOnInit = function () {
-    };
-    PostComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'post',
-            template: __webpack_require__(/*! ./post.component.html */ "./src/app/post/post.component.html"),
-            styles: [__webpack_require__(/*! ./post.component.css */ "./src/app/post/post.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], PostComponent);
-    return PostComponent;
 }());
 
 

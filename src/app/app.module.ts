@@ -39,9 +39,9 @@ import { CommentsComponent } from './comments/comments.component';
         path: 'feed/:id_post/comments',
         component: CommentsComponent
       },
-      { 
-        path: 'feed',
-        component: FeedComponent 
+      {
+        path: 'feed/page/:pageNr',
+        component: FeedComponent
       },
       { 
         path: 'logs', 

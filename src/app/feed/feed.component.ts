@@ -10,20 +10,21 @@ import { Router } from '@angular/router';
 export class FeedComponent {
   
   title = 'feed';
-  private apiUrlGETPosts = 'http://localhost:3000/api/post?page=1&limit=15';
   private apiUrlPOST = 'http://localhost:3000/api/post'
+  pageUrl = this.router.url;
+  splitUrl = this.pageUrl.split("/feed/page/");
   data: any = {};
   dataComment: any = {};
   nameUser = localStorage.getItem('nomeuser');
   token = localStorage.getItem('token');
 
   constructor(private http: HttpClient, private router: Router) {
-    this.getPosts();
-
+    
+    this.getPosts(this.splitUrl[1]);
   }
 
-  getPosts() {
-    return this.http.get(this.apiUrlGETPosts, {
+  getPosts(page) {
+    return this.http.get('http://localhost:3000/api/post?page='+page+'&limit=15', {
       headers:
         new HttpHeaders()
           .append('Authorization', 'Bearer ' + this.token)
@@ -66,7 +67,7 @@ export class FeedComponent {
     }).subscribe(
       res => { 
         console.log(res);
-        this.getPosts();
+        this.getPosts(this.splitUrl[1]);
       },
       err => {
         console.log(err)
