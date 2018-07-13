@@ -203,6 +203,29 @@
 					"response": []
 				},
 				{
+					"name": "Update Post",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Updated post title\",\n\t\"content\": \"Updated post content\"\n}"
+						},
+						"url": "{{server}}/api/post/5b3cbd943c5c690a4155879a",
+						"description": "Endpoint to update a post title and content"
+					},
+					"response": []
+				},
+				{
 					"name": "Delete Post",
 					"request": {
 						"method": "DELETE",

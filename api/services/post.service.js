@@ -32,6 +32,26 @@ exports.createPost = async function(userId, postData) {
     }
 };
 
+exports.updatePost = async function(userId, postData) {
+    try {
+        const post = await Post.findOne({
+            _id: postData._id,
+            user: userId,
+            deleted: false
+        });
+        if (!post) {
+            throw new Error("Post not found for current user");
+        }
+        post.title = postData.title;
+        post.content = postData.content;
+        await post.save();
+        LogService.updatePost(post);
+        return post;
+    } catch (e) {
+        throw e.message ? e.message : new Error("Error while updating post");
+    }
+};
+
 exports.deletePost = async function(userId, postId) {
     try {
         const post = await Post.findOne({

@@ -35,6 +35,23 @@ router.post("/", tokenValidator, async function(req, res, next) {
     }
 });
 
+// Endpoint to update a post in name of the user
+router.put("/:id", tokenValidator, async function(req, res, next) {
+    try {
+        const updatedPost = await PostService.updatePost(req.userId, {
+            _id: req.params.id,
+            title: req.body.title,
+            content: req.body.content
+        });
+
+        return res
+            .status(200)
+            .json({ title: updatedPost.title, content: updatedPost.content });
+    } catch (error) {
+        return res.status(400).json({ message: error });
+    }
+});
+
 // Endpoint to delete a post in name of the user
 router.delete("/:id", tokenValidator, async function(req, res, next) {
     try {

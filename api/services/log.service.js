@@ -34,6 +34,22 @@ exports.createPost = async function(post) {
     }
 };
 
+exports.updatePost = async function(post) {
+    const newLog = new Log({
+        userId: post.user,
+        date: Date.now(),
+        entity: post._id,
+        entityType: constants.POST,
+        action: constants.UPDATE
+    });
+    try {
+        await newLog.save();
+    } catch (e) {
+        // If logging fails we don't want to prevent the user from existing
+        console.log("Error while logging: ", e);
+    }
+};
+
 exports.deletePost = async function(post) {
     const newLog = new Log({
         userId: post.user,
