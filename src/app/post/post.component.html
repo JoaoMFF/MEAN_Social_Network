@@ -12,16 +12,12 @@
             <a href="#!" class="card-link">Email: {{ posts.user.email }}</a>
 
             <form class="postButtons">
-                <div *ngIf="posts.user.email == userEmail ; else postBtnDisable">
-                  <button type="button" class="btn btn-primary">Edit</button>
-                  <button type="button" class="btn btn-danger">Delete</button>
-                </div>
-
-                <ng-template #postBtnDisable>
-                    <button type="button" class="btn btn-outline-primary" disabled>Edit</button>
-                    <button type="button" class="btn btn-outline-danger" disabled>Delete</button>
-                </ng-template>
+              <div *ngIf="posts.user.email == userEmail">
+                <button type="button" class="btn btn-primary">Edit</button>
+                <button type="button" class="btn btn-danger" (click)="deletePost()">Delete</button>
+              </div>
             </form> 
+
           </div>
         </div>
     </div>

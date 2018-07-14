@@ -12,7 +12,7 @@ import { RegisterFormComponent } from './register-form/register-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { LogsComponent } from './logs/logs.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
-import { CommentsComponent } from './comments/comments.component';
+import { PostComponent } from './post/post.component';
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { CommentsComponent } from './comments/comments.component';
     LoginFormComponent,
     LogsComponent,
     RegisterLoginComponent,
-    CommentsComponent,
+    PostComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +37,7 @@ import { CommentsComponent } from './comments/comments.component';
       },
       { 
         path: 'feed/:id_post/comments',
-        component: CommentsComponent
+        component: PostComponent
       },
       {
         path: 'feed/page/:pageNr',

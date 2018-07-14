@@ -3,11 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'comments',
-  templateUrl: './comments.component.html',
-  styleUrls: ['./comments.component.css']
+  selector: 'post',
+  templateUrl: './post.component.html',
+  styleUrls: ['./post.component.css']
 })
-export class CommentsComponent {
+export class PostComponent {
   title = 'comment';
   postId = localStorage.getItem('postId');
   userEmail = localStorage.getItem('userEmail');
@@ -80,6 +80,22 @@ export class CommentsComponent {
   returnToFeed(){
     localStorage.removeItem('postId');
     this.router.navigateByUrl('/feed/page/1');
+  }
+
+  deletePost() {
+    return this.http.delete(this.apiUrlPosts,{
+      headers:
+        new HttpHeaders()
+          .append('Authorization', 'Bearer ' + this.token)
+    }).subscribe(
+      res => { 
+        console.log(res);
+        this.router.navigateByUrl('/feed/page/1');
+      },
+      err => {
+        console.log(err)
+      }
+    );
   }
 
 }
