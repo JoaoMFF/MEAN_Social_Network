@@ -152,7 +152,7 @@ var AppModule = /** @class */ (function () {
                         component: _comments_comments_component__WEBPACK_IMPORTED_MODULE_12__["CommentsComponent"]
                     },
                     {
-                        path: 'feed',
+                        path: 'feed/page/:pageNr',
                         component: _feed_feed_component__WEBPACK_IMPORTED_MODULE_7__["FeedComponent"]
                     },
                     {
@@ -264,7 +264,7 @@ var CommentsComponent = /** @class */ (function () {
     };
     CommentsComponent.prototype.returnToFeed = function () {
         localStorage.removeItem('postId');
-        this.router.navigateByUrl('/feed');
+        this.router.navigateByUrl('/feed/page/1');
     };
     CommentsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -288,7 +288,7 @@ var CommentsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".posts {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postBody {\r\n    text-align: center;\r\n}\r\n\r\n.addPost {\r\n    margin-bottom: 30px;\r\n}\r\n\r\n.addPost label{\r\n    margin-top: 15px;\r\n}"
+module.exports = ".posts {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postBody {\r\n    text-align: center;\r\n}\r\n\r\n.addPost {\r\n    margin-bottom: 30px;\r\n}\r\n\r\n.addPost label{\r\n    margin-top: 15px;\r\n}\r\n\r\n.center {\r\n    text-align: center;\r\n}\r\n\r\n.pagination {\r\n    display: inline-block;\r\n}\r\n\r\n.pagination a {\r\n    color: black;\r\n    float: left;\r\n    padding: 8px 16px;\r\n    text-decoration: none;\r\n    transition: background-color .3s;\r\n    border: 1px solid #ddd;\r\n    margin: 0 4px;\r\n}\r\n\r\n.pagination a.active {\r\n    background-color: #007BFF;\r\n    color: white;\r\n    border: 1px solid #007BFF;\r\n}"
 
 /***/ }),
 
@@ -299,7 +299,7 @@ module.exports = ".posts {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postBody {\r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <div class=\"card \">\n        <div class=\"card-body\">\n          <h4>Bem vindo {{ nameUser }}</h4>\n          <form>\n            <div class=\"form-group\">\n              <button type=\"button\"  (click)=\"logs();\" class=\"btn btn-outline-primary\">Logs</button>\n            </div>\n            <div class=\"form-group\">\n              <button type=\"button\" (click)=\"logout();\" class=\"btn btn-outline-danger\">Logout</button>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-8\">\n\n      <div class=\"card addPost\">\n        <div class=\"card-body\">\n          <form>\n            <h5>Add a new post</h5>\n            <div class=\"form-group\">\n              <label for=\"postTitle\">Title:</label>  \n              <input\n                required\n                ngModel\n                name=\"postTitle\"\n                #postTitle=\"ngModel\"  \n                type=\"text\" \n                class=\"form-control\" \n                id=\"postTitle\">\n              <label for=\"postContent\">Content:</label>  \n              <textarea \n                required\n                ngModel\n                name=\"postContent\"\n                #postContent=\"ngModel\" \n                class=\"form-control\" \n                rows=\"5\" \n                id=\"postContent\"></textarea>\n            </div>\n            <div class=\"form-group\">\n              <div *ngIf=\"postTitle.invalid || postContent.invalid ; else button_available\">\n                <button disabled class=\"btn btn-outline-primary\">Publish</button>\n              </div>\n          \n              <ng-template #button_available>\n                <button type=\"button\" (click)=\"publishPost();\"class=\"btn btn-primary\">Publish</button>\n              </ng-template>\n            </div>\n          </form>\n        </div>\n      </div>\n\n      <h5>Posts:</h5>\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"card posts\">\n          <div class=\"card-body postBody\">\n            <h4 class=\"card-title\">{{ post.title }}</h4>\n            <h6 class=\"card-subtitle mb-2 text-muted\">{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</h6>\n            <p class=\"card-text\">{{ post.content }}</p>\n            <a href=\"#!\" class=\"card-link\">User: {{ post.user.name }}</a>\n            <a href=\"#!\" class=\"card-link\">Email: {{ post.user.email }}</a>\n          </div>\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"goToComment( post._id);\">Comment</button>\n        </div>\n      </ng-container>\n\n\n\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <div class=\"card \">\n        <div class=\"card-body\">\n          <h4>Bem vindo {{ nameUser }}</h4>\n          <form>\n            <div class=\"form-group\">\n              <button type=\"button\"  (click)=\"logs();\" class=\"btn btn-outline-primary\">Logs</button>\n            </div>\n            <div class=\"form-group\">\n              <button type=\"button\" (click)=\"logout();\" class=\"btn btn-outline-danger\">Logout</button>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-8\">\n\n      <div class=\"card addPost\">\n        <div class=\"card-body\">\n          <form>\n            <h5>Add a new post</h5>\n            <div class=\"form-group\">\n              <label for=\"postTitle\">Title:</label>  \n              <input\n                required\n                ngModel\n                name=\"postTitle\"\n                #postTitle=\"ngModel\"  \n                type=\"text\" \n                class=\"form-control\" \n                id=\"postTitle\">\n              <label for=\"postContent\">Content:</label>  \n              <textarea \n                required\n                ngModel\n                name=\"postContent\"\n                #postContent=\"ngModel\" \n                class=\"form-control\" \n                rows=\"5\" \n                id=\"postContent\"></textarea>\n            </div>\n            <div class=\"form-group\">\n              <div *ngIf=\"postTitle.invalid || postContent.invalid ; else button_available\">\n                <button disabled class=\"btn btn-outline-primary\">Publish</button>\n              </div>\n          \n              <ng-template #button_available>\n                <button type=\"button\" (click)=\"publishPost();\"class=\"btn btn-primary\">Publish</button>\n              </ng-template>\n            </div>\n          </form>\n        </div>\n      </div>\n\n      <h5>Posts:</h5>\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"card posts\">\n          <div class=\"card-body postBody\">\n            <h4 class=\"card-title\">{{ post.title }}</h4>\n            <h6 class=\"card-subtitle mb-2 text-muted\">{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</h6>\n            <p class=\"card-text\">{{ post.content }}</p>\n            <a href=\"#!\" class=\"card-link\">User: {{ post.user.name }}</a>\n            <a href=\"#!\" class=\"card-link\">Email: {{ post.user.email }}</a>\n          </div>\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"goToComment( post._id);\">Comment</button>\n        </div>\n      </ng-container>\n\n      <div class=\"center\">\n        <div class=\"pagination\">\n          <ng-container>\n            <div *ngIf=\"splitUrl[1] == 1\">\n              <a class=\"active\" href=\"/feed/page/1\">1</a>\n              <a href=\"/feed/page/2\">2</a>\n              <a href=\"/feed/page/3\">3</a>\n              <a href=\"/feed/page/2\">&raquo;</a>\n            </div>\n            <div *ngIf=\"splitUrl[1] == 2\">\n              <a href=\"/feed/page/1\">&laquo;</a>\n              <a href=\"/feed/page/1\">1</a>\n              <a class=\"active\" href=\"/feed/page/2\">2</a>\n              <a href=\"/feed/page/3\">3</a>\n              <a href=\"/feed/page/3\">&raquo;</a>\n            </div>\n            <div *ngIf=\"splitUrl[1] == 3\">\n              <a href=\"/feed/page/2\">&laquo;</a>\n              <a href=\"/feed/page/1\">1</a>\n              <a href=\"/feed/page/2\">2</a>\n              <a class=\"active\" href=\"/feed/page/3\">3</a>\n            </div>\n          </ng-container>\n        </div>\n      </div>\n          \n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -333,17 +333,18 @@ var FeedComponent = /** @class */ (function () {
         this.http = http;
         this.router = router;
         this.title = 'feed';
-        this.apiUrlGETPosts = 'http://localhost:3000/api/post?page=1&limit=15';
         this.apiUrlPOST = 'http://localhost:3000/api/post';
+        this.pageUrl = this.router.url;
+        this.splitUrl = this.pageUrl.split("/feed/page/");
         this.data = {};
         this.dataComment = {};
         this.nameUser = localStorage.getItem('nomeuser');
         this.token = localStorage.getItem('token');
-        this.getPosts();
+        this.getPosts(this.splitUrl[1]);
     }
-    FeedComponent.prototype.getPosts = function () {
+    FeedComponent.prototype.getPosts = function (page) {
         var _this = this;
-        return this.http.get(this.apiUrlGETPosts, {
+        return this.http.get('http://localhost:3000/api/post?page=' + page + '&limit=15', {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
                 .append('Authorization', 'Bearer ' + this.token)
         }).subscribe(function (res) {
@@ -374,7 +375,7 @@ var FeedComponent = /** @class */ (function () {
                 .append('Authorization', 'Bearer ' + this.token)
         }).subscribe(function (res) {
             console.log(res);
-            _this.getPosts();
+            _this.getPosts(_this.splitUrl[1]);
         }, function (err) {
             console.log(err);
         });
@@ -472,7 +473,7 @@ var LoginFormComponent = /** @class */ (function () {
             if (_this.data.token) {
                 localStorage.setItem('token', _this.data.token);
                 localStorage.setItem('nomeuser', _this.data.name);
-                _this.router.navigateByUrl('/feed');
+                _this.router.navigateByUrl('feed/page/1');
             }
         }, function (err) {
             console.log(err);

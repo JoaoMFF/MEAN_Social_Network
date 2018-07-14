@@ -3,6 +3,35 @@
   <div class="row">
     <div class="col-md-12">
       <button type="button" (click)="returnToFeed(); "class="btn btn-primary backFeed">< Feed</button>
+        <div class="card posts">
+          <div class="card-body postBody">
+            <h4 class="card-title">{{ posts.title }}</h4>
+            <h6 class="card-subtitle mb-2 text-muted">{{ posts.dateCreated | date:'dd/MM/yyyy HH:mm' }}</h6>
+            <p class="card-text">{{ posts.content }}</p>
+            <a href="#!" class="card-link">User: {{ posts.user.name }}</a>
+            <a href="#!" class="card-link">Email: {{ posts.user.email }}</a>
+
+            <form class="postButtons">
+                <div *ngIf="posts.user.email == userEmail ; else postBtnDisable">
+                  <button type="button" class="btn btn-primary">Edit</button>
+                  <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+
+                <ng-template #postBtnDisable>
+                    <button type="button" class="btn btn-outline-primary" disabled>Edit</button>
+                    <button type="button" class="btn btn-outline-danger" disabled>Delete</button>
+                </ng-template>
+            </form> 
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
       <div class="card addPost">
         <div class="card-body">
           <form>
@@ -38,7 +67,7 @@
   <div class="row">
     <div class="col-md-12 commentSection">
       <h5>Comments:</h5>
-      <ng-container *ngFor="let comment of data">
+      <ng-container *ngFor="let comment of comments">
         <div class="card commentBody">
           <div class="card-body">
             <p class="card-text">{{ comment.text }}</p>

@@ -10,12 +10,32 @@ import { Router } from '@angular/router';
 export class CommentsComponent {
   title = 'comment';
   postId = localStorage.getItem('postId');
+  userEmail = localStorage.getItem('userEmail');
   token = localStorage.getItem('token');
   private apiUrlComments = 'http://localhost:3000/api/post/'+this.postId+'/comments'
-  data: any = {};
+  private apiUrlPosts = 'http://localhost:3000/api/post/'+this.postId
+  comments: any = {};
+  posts: any = {};
 
   constructor(private http: HttpClient, private router: Router) {
     this.getComments();
+    this.getPost();
+  }
+
+  getPost() {
+    return this.http.get(this.apiUrlPosts, {
+      headers:
+        new HttpHeaders()
+          .append('Authorization', 'Bearer ' + this.token)
+    }).subscribe(
+      res => {
+        this.posts = res;
+        console.log(this.posts);
+      },
+      err => {
+        console.log(err)
+      }
+    )
   }
 
   getComments(){
@@ -25,8 +45,8 @@ export class CommentsComponent {
           .append('Authorization', 'Bearer ' + this.token)
     }).subscribe(
       res => {
-        this.data = res;
-        console.log(this.data);
+        this.comments = res;
+        console.log(this.comments);
       },
       err => {
         console.log(err)
@@ -59,7 +79,7 @@ export class CommentsComponent {
 
   returnToFeed(){
     localStorage.removeItem('postId');
-    this.router.navigateByUrl('/feed');
+    this.router.navigateByUrl('/feed/page/1');
   }
 
 }

@@ -77,8 +77,9 @@ export class FeedComponent {
 
   goToComment(postId) {
     
-    console.log(postId);
+    console.log('PostId ' + postId);
     localStorage.setItem('postId', postId);
+
     this.router.navigateByUrl('/feed/'+postId+'/comments');
     
   }

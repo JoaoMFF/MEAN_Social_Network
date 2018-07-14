@@ -38,6 +38,7 @@ export class LoginFormComponent {
       if(this.data.token){
         localStorage.setItem('token', this.data.token);
         localStorage.setItem('nomeuser', this.data.name);
+        localStorage.setItem('userEmail', this.data.email);
         this.router.navigateByUrl('feed/page/1');
       }
     },

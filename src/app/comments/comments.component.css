@@ -2,10 +2,18 @@
     margin-bottom: 25px;
 }
 
+.postBody {
+    text-align: center;
+}
+
 .commentSection {
     margin-top: 25px;
 }
 
 .commentBody {
     margin-bottom: 25px;
+}
+
+.postButtons button{
+    margin: 10px 10px 0 0;
 }
