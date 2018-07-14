@@ -13,12 +13,12 @@
 
             <form class="postButtons">
               <div *ngIf="posts.user.email == userEmail">
-                <button type="button" class="btn btn-primary" (click)="toggleEditForm()">Edit</button>
+                <button type="button" class="btn btn-primary" (click)="toggleEdit( posts._id )">Edit</button>
                 <button type="button" class="btn btn-danger" (click)="deletePost()">Delete</button>
               </div>
             </form>
 
-            <div *ngIf="edit == true">
+            <div *ngIf="toggle == posts._id">
               <form class="editForm">
                 <h5>Edit Post</h5>
                 <div class="form-group">
@@ -49,7 +49,7 @@
                   </div>
               
                   <ng-template #button_available>
-                    <button type="button" (click)="publishPost();"class="btn btn-primary">Publish</button>
+                    <button type="button" (click)="editPost();"class="btn btn-primary">Publish</button>
                   </ng-template>
                 </div>
               </form>
@@ -107,6 +107,42 @@
             <h6 class="card-subtitle mb-2 text-muted">{{ comment.dateCreated | date:'dd/MM/yyyy HH:mm' }}</h6>
             <a class="card-link">User: {{ comment.user.name }}</a>
             <a class="card-link">Email: {{ comment.user.email }}</a>
+            <form class="commentButtons">
+              <div *ngIf="comment.user.email == userEmail">
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary" (click)="toggleEdit( comment._id )">Edit</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteComment( comment._id )" >Delete</button>
+                </div>
+                
+                <div *ngIf="toggle == comment._id">
+                  <form class="editForm">
+                    <h5>Edit Post</h5>
+                    <div class="form-group">
+                      <label for="commentContentEdit">Edit Comment:</label>  
+                      <textarea 
+                        required
+                        ngModel
+                        name="commentContentEdit"
+                        #commentContentEdit="ngModel" 
+                        class="form-control" 
+                        rows="5" 
+                        id="commentContentEdit"
+                        placeholder="{{ comment.text }}"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <div *ngIf="commentContentEdit.invalid ; else button_available">
+                        <button disabled class="btn btn-outline-primary">Publish</button>
+                      </div>
+                  
+                      <ng-template #button_available>
+                        <button type="button" class="btn btn-primary" (click)="editComment( comment._id )">Publish</button>
+                      </ng-template>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </form>
           </div>
         </div>
       </ng-container>

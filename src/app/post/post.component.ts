@@ -16,7 +16,7 @@ export class PostComponent {
   private apiUrlPosts = 'http://localhost:3000/api/post/'+this.postId
   comments: any = {};
   posts: any = {};
-  edit = false
+  toggle = '';
 
   constructor(private http: HttpClient, private router: Router) {
     this.getComments();
@@ -47,7 +47,7 @@ export class PostComponent {
     }).subscribe(
       res => {
         this.comments = res;
-        console.log(this.comments);
+        console.log('comments: ' ,this.comments);
       },
       err => {
         console.log(err)
@@ -99,23 +99,9 @@ export class PostComponent {
     );
   }
 
-  toggleEditForm() {
-    
-    if(this.edit == false){
-      this.edit = true;
-    }
-    else{
-      this.edit = false;
-    }
-  }
-
-  publishPost() {
+  editPost() {
     var titleInput = (<HTMLInputElement>document.getElementById('postTitleEdit')).value;
     var contentInput = (<HTMLInputElement>document.getElementById('postContentEdit')).value;
-
-    //console.log(titleInput)
-    //console.log(contentInput)
-    console.log(this.postId)
     
     return this.http.put(this.apiUrlPosts, {
       
@@ -128,9 +114,55 @@ export class PostComponent {
           .append('Authorization', 'Bearer ' + this.token)
     }).subscribe(
       res => { 
-        console.log(res);
-        this.edit = false;
+        this.toggle = ''
         this.getPost();
+      },
+      err => {
+        console.log(err)
+      }
+    );
+  }
+
+  toggleEdit(id) {
+    if(this.toggle == ''){
+      this.toggle = id;
+    }
+    else{
+      this.toggle = ''
+    }
+  }
+
+  deleteComment(commentId) {
+    return this.http.delete(this.apiUrlComments+'/'+commentId,{
+      headers:
+        new HttpHeaders()
+          .append('Authorization', 'Bearer ' + this.token)
+    }).subscribe(
+      res => { 
+        console.log(res);
+        this.getComments();
+      },
+      err => {
+        console.log(err)
+      }
+    );
+  }
+
+  editComment(commentId) {
+    var contentInput = (<HTMLInputElement>document.getElementById('commentContentEdit')).value;
+    
+    return this.http.put(this.apiUrlComments+'/'+commentId, {
+      
+      "text": contentInput
+
+    },{
+      headers:
+        new HttpHeaders()
+          .append('Authorization', 'Bearer ' + this.token)
+    }).subscribe(
+      res => { 
+        this.toggle = ''
+        this.getComments();
       },
       err => {
         console.log(err)

@@ -27,3 +27,11 @@ textarea {
     margin-top: 25px;
     text-align: left;
 } 
+
+.commentButtons {
+    margin-bottom: 25px;
+}
+
+.commentButtons button {
+    margin: 10px 10px 0 0;
+}
