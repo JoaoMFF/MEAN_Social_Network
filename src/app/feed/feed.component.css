@@ -37,3 +37,7 @@
     color: white;
     border: 1px solid #007BFF;
 }
+
+textarea {
+    resize: none;
+}

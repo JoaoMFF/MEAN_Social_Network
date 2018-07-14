@@ -16,6 +16,7 @@ export class PostComponent {
   private apiUrlPosts = 'http://localhost:3000/api/post/'+this.postId
   comments: any = {};
   posts: any = {};
+  edit = false
 
   constructor(private http: HttpClient, private router: Router) {
     this.getComments();
@@ -54,7 +55,7 @@ export class PostComponent {
     )
   }
 
-  publishPost(){
+  publishComment(){
     var commentText = (<HTMLInputElement>document.getElementById('commentText')).value;
 
     return this.http.post(this.apiUrlComments, {
@@ -91,6 +92,45 @@ export class PostComponent {
       res => { 
         console.log(res);
         this.router.navigateByUrl('/feed/page/1');
+      },
+      err => {
+        console.log(err)
+      }
+    );
+  }
+
+  toggleEditForm() {
+    
+    if(this.edit == false){
+      this.edit = true;
+    }
+    else{
+      this.edit = false;
+    }
+  }
+
+  publishPost() {
+    var titleInput = (<HTMLInputElement>document.getElementById('postTitleEdit')).value;
+    var contentInput = (<HTMLInputElement>document.getElementById('postContentEdit')).value;
+
+    //console.log(titleInput)
+    //console.log(contentInput)
+    console.log(this.postId)
+    
+    return this.http.put(this.apiUrlPosts, {
+      
+      "title": titleInput,
+      "content": contentInput
+
+    },{
+      headers:
+        new HttpHeaders()
+          .append('Authorization', 'Bearer ' + this.token)
+    }).subscribe(
+      res => { 
+        console.log(res);
+        this.edit = false;
+        this.getPost();
       },
       err => {
         console.log(err)

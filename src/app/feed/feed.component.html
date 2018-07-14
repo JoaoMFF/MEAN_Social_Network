@@ -61,8 +61,8 @@
             <h4 class="card-title">{{ post.title }}</h4>
             <h6 class="card-subtitle mb-2 text-muted">{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</h6>
             <p class="card-text">{{ post.content }}</p>
-            <a href="#!" class="card-link">User: {{ post.user.name }}</a>
-            <a href="#!" class="card-link">Email: {{ post.user.email }}</a>
+            <a class="card-link">User: {{ post.user.name }}</a>
+            <a class="card-link">Email: {{ post.user.email }}</a>
           </div>
           <button type="button" class="btn btn-primary" (click)="goToComment( post._id );">Go to Post</button>
         </div>

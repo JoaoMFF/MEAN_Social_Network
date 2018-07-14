@@ -17,3 +17,13 @@
 .postButtons button{
     margin: 10px 10px 0 0;
 }
+
+
+textarea {
+    resize: none;
+}
+
+.editForm {
+    margin-top: 25px;
+    text-align: left;
+} 
