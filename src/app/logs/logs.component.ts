@@ -38,4 +38,10 @@ export class LogsComponent {
     this.router.navigateByUrl('/feed/page/1');
   }
 
+  goToPost(postId) {
+    localStorage.setItem('postId', postId);
+
+    this.router.navigateByUrl('/feed/'+postId+'/comments');
+  }
+
 }

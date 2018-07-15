@@ -1,44 +1,44 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <button type="button" class="btn btn-primary btnFeed" (click)="goToFeed();">< Feed</button>
+      <button type="button" class="btn btn-primary btnFeed " (click)="goToFeed();">< Feed</button>
       <h4>Logs:</h4>
       <div class="list-group ">
 
         <ng-container *ngFor="let log of log.logs">
           <a class="list-group-item flex-column align-items-start listLogs">
             <div class="d-flex w-100 justify-content-between">
-              <div *ngIf="log.entityType == 'POST' && log.action == 'DELETE'">
+
+              <div *ngIf="log.entityType == 'POST'">
                 <h5 class="mb-1">Post</h5>
                 <h6 class="mb-1">Title: {{ log.entity.title }}</h6>
                 <p class="mb-1">Content: {{ log.entity.content }}</p>
-                <p class="mb-1">Date of creation: {{ log.entity.dateCreated | date:'dd/MM/yyyy HH:mm' }}</p>
-                <small class="text-danger" >Deleted</small>
+                <p class="mb-1">Date: {{ log.entity.dateCreated | date:'dd/MM/yyyy HH:mm' }}</p>
+                <div *ngIf="log.entity.deleted == false">
+                  <button type="button" class="btn btn-outline-primary btn-sm btnGoToPost" (click)="goToPost( log.entity._id )">Go to Post</button>
+                </div>
+                <div *ngIf="log.action == 'DELETE'">
+                  <span class="badge badge-danger">Deleted</span>
+                </div>
+                <div *ngIf="log.action == 'READ'">
+                  <span class="badge badge-info">Read</span>
+                </div>
+                <div *ngIf="log.action == 'CREATE'">
+                  <span class="badge badge-success">Created</span>
+                </div>
               </div>
-              <div *ngIf="log.entityType == 'POST' && log.action == 'READ'">
-                <h5 class="mb-1">Post</h5>
-                <h6 class="mb-1">Title: {{ log.entity.title }}</h6>
-                <p class="mb-1">Content: {{ log.entity.content }}</p>
-                <p class="mb-1">Date of creation: {{ log.entity.dateCreated | date:'dd/MM/yyyy HH:mm' }}</p>
-                <small class="text-info">Read</small>
-              </div>
-              <div *ngIf="log.entityType == 'POST' && log.action == 'CREATE'">
-                <h5 class="mb-1">Post</h5>
-                <h6 class="mb-1">Title: {{ log.entity.title }}</h6>
-                <p class="mb-1">Content: {{ log.entity.content }}</p>
-                <p class="mb-1">Date of creation: {{ log.entity.dateCreated | date:'dd/MM/yyyy HH:mm' }}</p>
-                <small class="text-success">Created</small>
-              </div>
-              <div *ngIf="log.entityType == 'COMMENT' && log.action == 'DELETE'">
+
+              <div *ngIf="log.entityType == 'COMMENT'">
                 <h5 class="mb-1">Comment</h5>
                 <p class="mb-1">{{ log.entity.text }}</p>
-                <small class="text-danger" >Deleted</small>
+                <div *ngIf="log.action == 'DELETE'">
+                  <span class="badge badge-danger">Deleted</span>
+                </div>
+                <div *ngIf="log.action == 'CREATE'">
+                  <span class="badge badge-success">Created</span>
+                </div>
               </div>
-              <div *ngIf="log.entityType == 'COMMENT' && log.action == 'CREATE'">
-                <h5 class="mb-1">Comment</h5>
-                <p class="mb-1">{{ log.entity.text }}</p>
-                <small class="text-success">Created</small>
-              </div>
+
               <div *ngIf="log.entityType == 'USER'">
                 <h5 class="mb-1">Account </h5>
                 <p class="mb-1">Nome: {{ log.entity.name }}</p>
