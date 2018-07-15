@@ -14,7 +14,6 @@ import { LogsComponent } from './logs/logs.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { PostComponent } from './post/post.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +52,7 @@ import { PostComponent } from './post/post.component';
       }
     ])
   ],
-  providers: [FeedComponent, AppComponent, LogsComponent],
+  providers: [FeedComponent, AppComponent, LogsComponent, PostComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

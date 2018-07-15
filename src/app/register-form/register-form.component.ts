@@ -15,7 +15,7 @@ export class RegisterFormComponent {
   constructor(private http: HttpClient) {
   }
 
-  postRegister(){
+  userRegister(){
 
     var emailInput = (<HTMLInputElement>document.getElementById('emailRegister')).value;
     var nameInput = (<HTMLInputElement>document.getElementById('nomeRegister')).value;

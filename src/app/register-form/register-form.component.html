@@ -48,13 +48,13 @@
       <button disabled class="btn btn-outline-primary">Sign Up</button>
     </div>
 
+    <ng-template #button_available>
+      <button type="submit" (click)="userRegister();" class="btn btn-primary">Sign Up</button>
+    </ng-template>
+
     <div class="alert alert-success" role="alert" id="alertSucc">
       Account created with success!
     </div>
 
-    <ng-template #button_available>
-      <button type="submit" (click)="postRegister();" class="btn btn-primary">Sign Up</button>
-    </ng-template>
-    
   </div>
 </form>

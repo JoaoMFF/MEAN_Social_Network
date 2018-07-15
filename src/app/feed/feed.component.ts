@@ -32,7 +32,6 @@ export class FeedComponent {
       res => {
         console.log(res);
         this.data = res;
-
       },
       err => {
         console.log(err)
