@@ -1,11 +1,3 @@
-.posts {
-    margin-bottom: 25px;
-}
-
-.postBody {
-    text-align: center;
-}
-
 .addPost {
     margin-bottom: 30px;
 }
@@ -40,4 +32,27 @@
 
 textarea {
     resize: none;
+}
+
+.formBtn {
+    margin-top: 25px;
+    margin-bottom: 0;
+}
+
+.formBtn button{
+    width: 100%;
+}
+
+.postBody {
+    margin-bottom: 25px;
+}
+
+.postContent {
+    margin-top: 20px;
+}
+
+.shadow
+{
+    border: solid #BDBDBD 1px; 
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); 
 }

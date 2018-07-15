@@ -1,64 +1,39 @@
-
 <div class="container">
-  <div clas="row">
+  <div class="row">
     <div class="col-md-12">
-      <h4>Posts</h4>
-
-      <ng-container *ngFor="let logs of data.logs">
-        <div *ngIf='logs.entityType === "POST"'>
-            <div class="card">
-              <div class="card-body">
-                <p>Id: {{ logs.entity.post }}</p>
-                <p>Title: {{ logs.entity.tile }}</p>
-                <p>Content: {{ logs.entity.content }}</p>
-                <p>Date: {{ logs.date }}</p> 
-              </div>
-            </div>
-        </div>
-      </ng-container>
-
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div clas="row">
-    <div class="col-md-12">
-      <h4>Comments</h4>
-
-      <ng-container *ngFor="let logs of data.logs">
-        <div *ngIf='logs.entityType === "COMMENT"'>
-          <div class="card" ng-model="myVar">
-            <div class="card-body">
-              <p>Id: {{ logs.entity.post }}</p>
-              <p>Text: {{ logs.entity.text }}</p>
-              <p>Date: {{ logs.date }}</p>   
-            </div>
+      <button type="button" class="btn btn-primary">< Feed</button>
+      <h4>Logs:</h4>
+      <div class="list-group ">
+        <a  class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small>3 days ago</small>
           </div>
-        </div>
-      </ng-container>
-
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div clas="row">
-    <div class="col-md-12">
-      <h4>Account Details</h4>
-
-        <ng-container *ngFor="let logs of data.logs">
-          <div *ngIf='logs.entityType === "USER"'>
-            <div class="card">
-              <div class="card-body">
-                <p>Name: {{ logs.entity.name }}</p>
-                <p>Email: {{ logs.entity.email }}</p>
-                <p>Date: {{ logs.date }}</p>
-              </div>
-            </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small>Donec id elit non mi porta.</small>
+          <div class="form-group">
+            <button type="button" class="btn btn-primary" style="width: 100%;">< Feed</button>
           </div>
-        </ng-container>
-
+          
+        </a>
+        <a  class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small class="text-muted">3 days ago</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+        <a  class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small class="text-muted">3 days ago</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+      </div>
     </div>
   </div>
 </div>
+

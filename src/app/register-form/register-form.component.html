@@ -1,6 +1,6 @@
 <form>
   <h4>Register</h4>
-  <div class="form-group" >
+  <div class="form-group " >
     <label for="nomeRegister">Nome</label>
     <input  
     required
@@ -9,7 +9,7 @@
     #nomeRegister="ngModel" 
     id="nomeRegister"
     type="text" 
-    class="form-control">
+    class="form-control ">
     <div class="alert alert-danger" *ngIf="nomeRegister.touched && !nomeRegister.valid ">
       <div *ngIf="nomeRegister.errors.required">Name is required</div>
     </div>

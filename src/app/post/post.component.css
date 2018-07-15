@@ -3,7 +3,7 @@
 }
 
 .postBody {
-    text-align: center;
+    margin-bottom: 25px;
 }
 
 .commentSection {
@@ -28,10 +28,12 @@ textarea {
     text-align: left;
 } 
 
-.commentButtons {
-    margin-bottom: 25px;
-}
-
 .commentButtons button {
     margin: 10px 10px 0 0;
+}
+
+.shadow
+{
+    border: solid #BDBDBD 1px; 
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); 
 }
