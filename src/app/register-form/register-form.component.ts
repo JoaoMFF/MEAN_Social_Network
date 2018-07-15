@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class RegisterFormComponent {
   title = 'register';
   data: any = {};
+  alertDiv = (<HTMLInputElement>document.getElementById('alertSucc'))
 
   constructor(private http: HttpClient) {
   }
@@ -30,6 +31,10 @@ export class RegisterFormComponent {
       res => { 
         console.log(res);
         this.data = res;
+        (<HTMLInputElement>document.getElementById('emailRegister')).value = '';
+        (<HTMLInputElement>document.getElementById('nomeRegister')).value = '';
+        (<HTMLInputElement>document.getElementById('passwordRegister')).value = '';
+        (<HTMLInputElement>document.getElementById('alertSucc')).style.display = "block"
       },
       err => {
         console.log(err)

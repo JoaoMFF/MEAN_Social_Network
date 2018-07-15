@@ -1,37 +1,56 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <button type="button" class="btn btn-primary">< Feed</button>
+      <button type="button" class="btn btn-primary btnFeed" (click)="goToFeed();">< Feed</button>
       <h4>Logs:</h4>
       <div class="list-group ">
-        <a  class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
-          </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small>Donec id elit non mi porta.</small>
-          <div class="form-group">
-            <button type="button" class="btn btn-primary" style="width: 100%;">< Feed</button>
-          </div>
-          
-        </a>
-        <a  class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-          </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small class="text-muted">Donec id elit non mi porta.</small>
-        </a>
-        <a  class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-          </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small class="text-muted">Donec id elit non mi porta.</small>
-        </a>
+
+        <ng-container *ngFor="let log of log.logs">
+          <a class="list-group-item flex-column align-items-start listLogs">
+            <div class="d-flex w-100 justify-content-between">
+              <div *ngIf="log.entityType == 'POST' && log.action == 'DELETE'">
+                <h5 class="mb-1">Post</h5>
+                <h6 class="mb-1">Title: {{ log.entity.title }}</h6>
+                <p class="mb-1">Content: {{ log.entity.content }}</p>
+                <p class="mb-1">Date of creation: {{ log.entity.dateCreated | date:'dd/MM/yyyy HH:mm' }}</p>
+                <small class="text-danger" >Deleted</small>
+              </div>
+              <div *ngIf="log.entityType == 'POST' && log.action == 'READ'">
+                <h5 class="mb-1">Post</h5>
+                <h6 class="mb-1">Title: {{ log.entity.title }}</h6>
+                <p class="mb-1">Content: {{ log.entity.content }}</p>
+                <p class="mb-1">Date of creation: {{ log.entity.dateCreated | date:'dd/MM/yyyy HH:mm' }}</p>
+                <small class="text-info">Read</small>
+              </div>
+              <div *ngIf="log.entityType == 'POST' && log.action == 'CREATE'">
+                <h5 class="mb-1">Post</h5>
+                <h6 class="mb-1">Title: {{ log.entity.title }}</h6>
+                <p class="mb-1">Content: {{ log.entity.content }}</p>
+                <p class="mb-1">Date of creation: {{ log.entity.dateCreated | date:'dd/MM/yyyy HH:mm' }}</p>
+                <small class="text-success">Created</small>
+              </div>
+              <div *ngIf="log.entityType == 'COMMENT' && log.action == 'DELETE'">
+                <h5 class="mb-1">Comment</h5>
+                <p class="mb-1">{{ log.entity.text }}</p>
+                <small class="text-danger" >Deleted</small>
+              </div>
+              <div *ngIf="log.entityType == 'COMMENT' && log.action == 'CREATE'">
+                <h5 class="mb-1">Comment</h5>
+                <p class="mb-1">{{ log.entity.text }}</p>
+                <small class="text-success">Created</small>
+              </div>
+              <div *ngIf="log.entityType == 'USER'">
+                <h5 class="mb-1">Account </h5>
+                <p class="mb-1">Nome: {{ log.entity.name }}</p>
+                <p class="mb-1">Email: {{ log.entity.email }}</p>
+                <small class="text-success">Created</small>
+              </div>
+              
+              <small>{{ log.date | date:'dd/MM/yyyy HH:mm' }}</small>
+            </div>
+          </a>
+
+        </ng-container>
       </div>
     </div>
   </div>

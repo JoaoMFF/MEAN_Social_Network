@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterLoginComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    localStorage.clear();
+  }
 
   ngOnInit() {
   }
