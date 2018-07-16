@@ -7,60 +7,60 @@
         <div class="list-group postBody shadow">
           <a class="list-group-item flex-column align-items-start" >
             <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">{{ posts.title }}</h5>
-              <small>{{ posts.dateCreated | date:'dd/MM/yyyy HH:mm' }}</small>
+              <h5 class="mb-1">{{ post.title }}</h5>
+              <small>{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</small>
             </div>
             <div class="form-group postContent">
-              <p class="mb-1">{{ posts.content }}</p>
+              <p class="mb-1">{{ post.content }}</p>
             </div>
-            <div class="form-group">
-              <small>User: {{ posts.user.name }}</small>
+            <div class="form-group userInfo">
+              <small>User: {{ post.user.name }}</small>
             </div>
-            <div class="form-group">
-                <small>Email: {{ posts.user.email }}</small>
+            <div class="form-group userInfo">
+                <small>Email: {{ post.user.email }}</small>
             </div>
             <form class="postButtons">
-              <div *ngIf="posts.user.email == userEmail">
+              <div *ngIf="post.user.email == userEmail">
                 <button type="button" class="btn btn-primary btn-sm" (click)="toggleEdit( posts._id )">Edit</button>
                 <button type="button" class="btn btn-danger btn-sm" (click)="deletePost()">Delete</button>
               </div>
             </form>
-            <div *ngIf="toggle == posts._id">
-                <form class="editForm">
-                  <h5>Edit Post</h5>
-                  <div class="form-group">
-                    <label for="postTitleEdit">Title:</label>  
-                    <input
-                      required
-                      ngModel
-                      name="postTitleEdit"
-                      #postTitleEdit="ngModel"  
-                      type="text" 
-                      class="form-control" 
-                      id="postTitleEdit"
-                      placeholder="{{ posts.title }}">
-                    <label for="postContentEdit">Content:</label>  
-                    <textarea 
-                      required
-                      ngModel
-                      name="postContentEdit"
-                      #postContentEdit="ngModel" 
-                      class="form-control" 
-                      rows="5" 
-                      id="postContentEdit"
-                      placeholder="{{ posts.content }}"></textarea>
+            <div *ngIf="toggle == post._id">
+              <form class="editForm">
+                <h5>Edit Post</h5>
+                <div class="form-group">
+                  <label for="postTitleEdit">Title:</label>  
+                  <input
+                    required
+                    ngModel
+                    name="postTitleEdit"
+                    #postTitleEdit="ngModel"  
+                    type="text" 
+                    class="form-control" 
+                    id="postTitleEdit"
+                    placeholder="{{ post.title }}">
+                  <label for="postContentEdit">Content:</label>  
+                  <textarea 
+                    required
+                    ngModel
+                    name="postContentEdit"
+                    #postContentEdit="ngModel" 
+                    class="form-control" 
+                    rows="5" 
+                    id="postContentEdit"
+                    placeholder="{{ post.content }}"></textarea>
+                </div>
+                <div class="form-group">
+                  <div *ngIf="postTitleEdit.invalid || postContentEdit.invalid ; else button_available">
+                    <button disabled class="btn btn-outline-primary">Publish</button>
                   </div>
-                  <div class="form-group">
-                    <div *ngIf="postTitleEdit.invalid || postContentEdit.invalid ; else button_available">
-                      <button disabled class="btn btn-outline-primary">Publish</button>
-                    </div>
-                
-                    <ng-template #button_available>
-                      <button type="button" (click)="editPost();"class="btn btn-primary">Publish</button>
-                    </ng-template>
-                  </div>
-                </form>
-              </div>
+              
+                  <ng-template #button_available>
+                    <button type="button" (click)="editPost();"class="btn btn-primary">Publish</button>
+                  </ng-template>
+                </div>
+              </form>
+            </div>
           </a>
         </div>
 
@@ -96,6 +96,14 @@
               <ng-template #button_available>
                 <button type="button" (click)="publishComment();"class="btn btn-primary">Publish</button>
               </ng-template>
+
+              <div class="alert alert-success" role="alert" id="alertSucc">
+                  Comment published with success!
+              </div>
+
+              <div class="alert alert-danger" role="alert" id="alertErr">
+                Please fill the field required
+              </div>
             </div>
           </form>
         </div>
@@ -134,7 +142,6 @@
                     <form class="editForm">
                       <h5>Edit Post</h5>
                       <div class="form-group">
-                        <label for="commentContentEdit">Edit Comment:</label>  
                         <textarea 
                           required
                           ngModel

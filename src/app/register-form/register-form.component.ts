@@ -21,6 +21,9 @@ export class RegisterFormComponent {
     var nameInput = (<HTMLInputElement>document.getElementById('nomeRegister')).value;
     var passInput = (<HTMLInputElement>document.getElementById('passwordRegister')).value;
 
+    var alertSucc = (<HTMLInputElement>document.getElementById('alertSucc'));
+    var alertErr = (<HTMLInputElement>document.getElementById('alertErr'));
+
     this.http.post("http://localhost:3000/api/auth/register", {
       
       "email": emailInput,
@@ -34,11 +37,23 @@ export class RegisterFormComponent {
         (<HTMLInputElement>document.getElementById('emailRegister')).value = '';
         (<HTMLInputElement>document.getElementById('nomeRegister')).value = '';
         (<HTMLInputElement>document.getElementById('passwordRegister')).value = '';
-        (<HTMLInputElement>document.getElementById('alertSucc')).style.display = "block"
+        alertSucc.style.display = "block";
+        this.showAlert(alertSucc);
       },
       err => {
         console.log(err)
+        alertSucc.style.display = "none";
+        alertErr.style.display = "block";
+        this.showAlert(alertErr);
       }
     );
+  }
+
+  showAlert(alert) {
+    var count = 2; // set secconds
+    var counter = setInterval(function() {
+      alert.style.display = "none"
+        //clearInterval(counter) // stop interval
+    }, 1000 * count);
   }
 }

@@ -1,4 +1,11 @@
 #alertSucc {
+    text-align: center;
+    margin-top: 25px;
+    display: none;
+}
+
+#alertErr {
+    text-align: center;
     margin-top: 25px;
     display: none;
 }

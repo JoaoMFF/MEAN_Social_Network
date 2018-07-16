@@ -20,6 +20,8 @@ export class LoginFormComponent {
     var emailInput = (<HTMLInputElement>document.getElementById('emailLogin')).value;
     var passInput = (<HTMLInputElement>document.getElementById('passwordLogin')).value;
 
+    var alertErr = (<HTMLInputElement>document.getElementById('alertErrLogin'));
+
     return this.http.post("http://localhost:3000/api/auth", {
       
       "email": emailInput,
@@ -39,7 +41,17 @@ export class LoginFormComponent {
       },
       err => {
         console.log(err)
+        alertErr.style.display = "block";
+        this.showAlert(alertErr);
       })
+  }
+
+  showAlert(alert) {
+    var count = 2; // set secconds
+    var counter = setInterval(function() {
+      alert.style.display = "none"
+        //clearInterval(counter) // stop interval
+    }, 1000 * count);
   }
 
 }

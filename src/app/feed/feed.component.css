@@ -50,6 +50,10 @@ textarea {
     margin-bottom: 25px;
 }
 
+.postBody .userInfo {
+    margin-bottom: 5px;
+}
+
 .postContent {
     margin-top: 20px;
 }
@@ -58,4 +62,24 @@ textarea {
 {
     border: solid #BDBDBD 1px; 
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); 
+}
+
+.postButtons button {
+    margin-right: 15px;
+}
+
+.editForm {
+    margin-top: 25px;
+} 
+
+#alertSucc {
+    text-align: center;
+    margin: 15px 0 0 0;
+    display: none;
+}
+
+#alertErr {
+    text-align: center;
+    margin-top: 25px;
+    display: none;
 }

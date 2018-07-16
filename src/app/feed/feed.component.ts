@@ -15,8 +15,10 @@ export class FeedComponent {
   splitUrl = this.pageUrl.split("/feed/page/");
   data: any = {};
   dataComment: any = {};
+  userEmail = localStorage.getItem('userEmail');
   nameUser = localStorage.getItem('nomeuser');
   token = localStorage.getItem('token');
+  toggle = '';
 
   constructor(private http: HttpClient, private router: Router) {
     
@@ -39,6 +41,15 @@ export class FeedComponent {
     )
   }
 
+  toggleEdit(id) {
+    if(this.toggle == ''){
+      this.toggle = id;
+    }
+    else{
+      this.toggle = ''
+    }
+  }
+
   logout() {
     localStorage.clear();
     this.router.navigateByUrl('');
@@ -54,6 +65,9 @@ export class FeedComponent {
     var titleInput = (<HTMLInputElement>document.getElementById('postTitle')).value;
     var contentInput = (<HTMLInputElement>document.getElementById('postContent')).value;
 
+    var alertSucc = (<HTMLInputElement>document.getElementById('alertSucc'));
+    var alertErr = (<HTMLInputElement>document.getElementById('alertErr'));
+
     return this.http.post(this.apiUrlPOST, {
       
       "title": titleInput,
@@ -66,12 +80,27 @@ export class FeedComponent {
     }).subscribe(
       res => { 
         console.log(res);
+        (<HTMLInputElement>document.getElementById('postTitle')).value = '';
+        (<HTMLInputElement>document.getElementById('postContent')).value = '';
+        alertSucc.style.display = "block";
+        this.showAlert(alertSucc);
         this.getPosts(this.splitUrl[1]);
       },
       err => {
         console.log(err)
+        alertSucc.style.display = "none";
+        alertErr.style.display = "block";
+        this.showAlert(alertErr);
       }
     );
+  }
+
+  showAlert(alert) {
+    var count = 2; // set secconds
+    var counter = setInterval(function() {
+      alert.style.display = "none"
+        //clearInterval(counter) // stop interval
+    }, 1000 * count);
   }
 
   goToComment(postId) {
@@ -81,6 +110,46 @@ export class FeedComponent {
 
     this.router.navigateByUrl('/feed/'+postId+'/comments');
     
+  }
+
+  editPost(postId) {
+    var titleInput = (<HTMLInputElement>document.getElementById('postTitleEdit')).value;
+    var contentInput = (<HTMLInputElement>document.getElementById('postContentEdit')).value;
+    
+    return this.http.put(this.apiUrlPOST+'/'+postId, {
+      
+      "title": titleInput,
+      "content": contentInput
+
+    },{
+      headers:
+        new HttpHeaders()
+          .append('Authorization', 'Bearer ' + this.token)
+    }).subscribe(
+      res => { 
+        this.toggle = ''
+        this.getPosts(this.splitUrl[1]);
+      },
+      err => {
+        console.log(err)
+      }
+    );
+  }
+
+  deletePost(postId) {
+    return this.http.delete(this.apiUrlPOST+'/'+postId,{
+      headers:
+        new HttpHeaders()
+          .append('Authorization', 'Bearer ' + this.token)
+    }).subscribe(
+      res => { 
+        console.log(res);
+        this.getPosts(this.splitUrl[1]);
+      },
+      err => {
+        console.log(err)
+      }
+    );
   }
 
 }

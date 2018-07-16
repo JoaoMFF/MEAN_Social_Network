@@ -6,6 +6,10 @@
     margin-bottom: 25px;
 }
 
+.postContent {
+    margin-top: 15px;
+}
+
 .commentSection {
     margin-top: 25px;
 }
@@ -18,7 +22,6 @@
     margin: 10px 10px 0 0;
 }
 
-
 textarea {
     resize: none;
 }
@@ -27,7 +30,6 @@ textarea {
     margin-top: 25px;
     text-align: left;
 } 
-
 
 .commentButtons button {
     margin: 10px 10px 0 0;
@@ -41,4 +43,20 @@ textarea {
 
 .maringZero {
     margin-bottom: 0px;
+}
+
+.userInfo {
+    margin-bottom: 5px;
+}
+
+#alertSucc {
+    text-align: center;
+    margin: 15px 0 0 0;
+    display: none;
+}
+
+#alertErr {
+    text-align: center;
+    margin: 15px 0 0 0;
+    display: none;
 }

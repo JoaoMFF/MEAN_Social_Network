@@ -15,7 +15,7 @@ export class PostComponent {
   private apiUrlComments = 'http://localhost:3000/api/post/'+this.postId+'/comments'
   private apiUrlPosts = 'http://localhost:3000/api/post/'+this.postId
   comments: any = {};
-  posts: any = {};
+  post: any = {};
   toggle = '';
 
   constructor(private http: HttpClient, private router: Router) {
@@ -30,8 +30,8 @@ export class PostComponent {
           .append('Authorization', 'Bearer ' + this.token)
     }).subscribe(
       res => {
-        this.posts = res;
-        console.log(this.posts);
+        this.post = res;
+        console.log(this.post);
       },
       err => {
         console.log(err)
@@ -58,6 +58,9 @@ export class PostComponent {
   publishComment(){
     var commentText = (<HTMLInputElement>document.getElementById('commentText')).value;
 
+    var alertSucc = (<HTMLInputElement>document.getElementById('alertSucc'));
+    var alertErr = (<HTMLInputElement>document.getElementById('alertErr'));
+
     return this.http.post(this.apiUrlComments, {
       
       "text": commentText
@@ -69,13 +72,26 @@ export class PostComponent {
     }).subscribe(
       res => { 
         console.log(res);
+        alertSucc.style.display = "block";
+        this.showAlert(alertSucc);
         this.getComments();
         (<HTMLInputElement>document.getElementById('commentText')).value = ""
       },
       err => {
         console.log(err)
+        alertSucc.style.display = "none";
+        alertErr.style.display = "block";
+        this.showAlert(alertErr);
       }
     );
+  }
+
+  showAlert(alert) {
+    var count = 2; // set secconds
+    var counter = setInterval(function() {
+      alert.style.display = "none"
+        //clearInterval(counter) // stop interval
+    }, 1000 * count);
   }
 
   returnToFeed(){
