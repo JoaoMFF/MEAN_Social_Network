@@ -21,6 +21,7 @@ router.post("/register", async function(req, res, next) {
         const token = jwt.sign({ id: createdUser._id }, secret.secret, {
             expiresIn: 86400 // expires in 24 hours
         });
+        // 201 CREATED
         return res.status(201).json({
             email: createdUser.email,
             name: createdUser.name,
@@ -41,6 +42,7 @@ router.post("/", async function(req, res) {
         const token = jwt.sign({ id: user._id }, secret.secret, {
             expiresIn: 86400 // expires in 24 hours
         });
+        // 200 OK
         return res.status(200).json({
             email: user.email,
             name: user.name,

@@ -33,7 +33,8 @@ exports.updateComment = async function(userId, postId, commentData) {
         const comment = await Comment.findOne({
             user: userId,
             post: postId,
-            _id: commentData._id
+            _id: commentData._id,
+            deleted: false
         });
 
         if (!comment) {
@@ -55,7 +56,8 @@ exports.deleteComment = async function(userId, postId, commentId) {
         const comment = await Comment.findOne({
             user: userId,
             post: postId,
-            _id: commentId
+            _id: commentId,
+            deleted: false
         });
 
         if (!comment) {

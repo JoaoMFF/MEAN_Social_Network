@@ -6,10 +6,12 @@ async function tokenValidator(req, res, next) {
     try {
         const token = req.headers["authorization"].split(" ")[1];
         if (!token) {
+            //401 UNAUTHORIZED
             return res.status(401).json({ message: "No token provided." });
         }
         const decodedToken = await jwt.verify(token, secret.secret);
-        const user = await UserService.getUserById(decodedToken.id);
+        //Check if user exists based on token id
+        await UserService.getUserById(decodedToken.id);
         req.userId = decodedToken.id;
         next();
     } catch (error) {
