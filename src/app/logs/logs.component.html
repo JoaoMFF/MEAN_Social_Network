@@ -26,6 +26,9 @@
                 <div *ngIf="log.action == 'CREATE'">
                   <span class="badge badge-success">Created</span>
                 </div>
+                <div *ngIf="log.action == 'UPDATE'">
+                  <span class="badge badge-warning">Updated</span>
+                </div>
               </div>
 
               <div *ngIf="log.entityType == 'COMMENT'">
@@ -36,6 +39,9 @@
                 </div>
                 <div *ngIf="log.action == 'CREATE'">
                   <span class="badge badge-success">Created</span>
+                </div>
+                <div *ngIf="log.action == 'UPDATE'">
+                  <span class="badge badge-warning">Updated</span>
                 </div>
               </div>
 

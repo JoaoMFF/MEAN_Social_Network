@@ -67,7 +67,7 @@ export class FeedComponent {
 
     return this.http.post(this.apiUrlPOST, {
       
-      "title": title.viewModel,
+      "title": title,
       "content": content
 
     },{
