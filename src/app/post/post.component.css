@@ -60,3 +60,9 @@ textarea {
     margin: 15px 0 0 0;
     display: none;
 }
+
+.shadow
+{
+    border: solid #BDBDBD 1px; 
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); 
+}

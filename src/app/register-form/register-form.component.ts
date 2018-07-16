@@ -15,20 +15,16 @@ export class RegisterFormComponent {
   constructor(private http: HttpClient) {
   }
 
-  userRegister(){
-
-    var emailInput = (<HTMLInputElement>document.getElementById('emailRegister')).value;
-    var nameInput = (<HTMLInputElement>document.getElementById('nomeRegister')).value;
-    var passInput = (<HTMLInputElement>document.getElementById('passwordRegister')).value;
+  userRegister(name, email, pass){
 
     var alertSucc = (<HTMLInputElement>document.getElementById('alertSucc'));
     var alertErr = (<HTMLInputElement>document.getElementById('alertErr'));
 
     this.http.post("http://localhost:3000/api/auth/register", {
       
-      "email": emailInput,
-      "password": passInput,
-      "name": nameInput
+      "email": name,
+      "password": email,
+      "name": pass
 
     }).subscribe(
       res => { 

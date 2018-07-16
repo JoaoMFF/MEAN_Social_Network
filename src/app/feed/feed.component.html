@@ -47,7 +47,7 @@
               </div>
           
               <ng-template #button_available>
-                <button type="button" (click)="publishPost();"class="btn btn-primary">Publish</button>
+                <button type="button" (click)="publishPost(postTitle.value, postContent.value);"class="btn btn-primary">Publish</button>
               </ng-template>
 
               <div class="alert alert-success" role="alert" id="alertSucc">
@@ -114,11 +114,11 @@
                 </div>
                 <div class="form-group">
                   <div *ngIf="postTitleEdit.invalid || postContentEdit.invalid ; else button_available">
-                    <button disabled class="btn btn-outline-primary">Publish</button>
+                    <button disabled class="btn btn-outline-primary">Confirm</button>
                   </div>
               
                   <ng-template #button_available>
-                    <button type="button" (click)="editPost( post._id );"class="btn btn-primary">Publish</button>
+                    <button type="button" (click)="editPost( post._id, postTitleEdit.value, postContentEdit.value );"class="btn btn-primary">Confirm</button>
                   </ng-template>
                 </div>
               </form>

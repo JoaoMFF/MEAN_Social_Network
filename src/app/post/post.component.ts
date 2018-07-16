@@ -55,8 +55,7 @@ export class PostComponent {
     )
   }
 
-  publishComment(){
-    var commentText = (<HTMLInputElement>document.getElementById('commentText')).value;
+  publishComment(commentText){
 
     var alertSucc = (<HTMLInputElement>document.getElementById('alertSucc'));
     var alertErr = (<HTMLInputElement>document.getElementById('alertErr'));
@@ -115,14 +114,12 @@ export class PostComponent {
     );
   }
 
-  editPost() {
-    var titleInput = (<HTMLInputElement>document.getElementById('postTitleEdit')).value;
-    var contentInput = (<HTMLInputElement>document.getElementById('postContentEdit')).value;
-    
+  editPost(title, content) {
+  
     return this.http.put(this.apiUrlPosts, {
       
-      "title": titleInput,
-      "content": contentInput
+      "title": title,
+      "content": content
 
     },{
       headers:
@@ -164,12 +161,11 @@ export class PostComponent {
     );
   }
 
-  editComment(commentId) {
-    var contentInput = (<HTMLInputElement>document.getElementById('commentContentEdit')).value;
+  editComment(commentId, text) {
     
     return this.http.put(this.apiUrlComments+'/'+commentId, {
       
-      "text": contentInput
+      "text": text
 
     },{
       headers:

@@ -49,7 +49,7 @@
     </div>
 
     <ng-template #button_available>
-      <button type="submit" (click)="userRegister();" class="btn btn-primary">Sign Up</button>
+      <button type="submit" (click)="userRegister(nomeRegister.value, emailRegister.value, passwordRegister.value);" class="btn btn-primary">Sign Up</button>
     </ng-template>
 
     <div class="alert alert-success" role="alert" id="alertSucc">

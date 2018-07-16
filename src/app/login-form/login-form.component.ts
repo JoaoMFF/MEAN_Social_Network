@@ -15,17 +15,14 @@ export class LoginFormComponent {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  userLogin(){
-
-    var emailInput = (<HTMLInputElement>document.getElementById('emailLogin')).value;
-    var passInput = (<HTMLInputElement>document.getElementById('passwordLogin')).value;
+  userLogin(email, pass){
 
     var alertErr = (<HTMLInputElement>document.getElementById('alertErrLogin'));
 
     return this.http.post("http://localhost:3000/api/auth", {
       
-      "email": emailInput,
-      "password": passInput
+      "email": email,
+      "password": pass
 
     }).subscribe(
       res => {

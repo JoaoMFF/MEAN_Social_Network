@@ -21,7 +21,7 @@
             </div>
             <form class="postButtons">
               <div *ngIf="post.user.email == userEmail">
-                <button type="button" class="btn btn-primary btn-sm" (click)="toggleEdit( posts._id )">Edit</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="toggleEdit( post._id )">Edit</button>
                 <button type="button" class="btn btn-danger btn-sm" (click)="deletePost()">Delete</button>
               </div>
             </form>
@@ -52,11 +52,11 @@
                 </div>
                 <div class="form-group">
                   <div *ngIf="postTitleEdit.invalid || postContentEdit.invalid ; else button_available">
-                    <button disabled class="btn btn-outline-primary">Publish</button>
+                    <button disabled class="btn btn-outline-primary">Confirm</button>
                   </div>
               
                   <ng-template #button_available>
-                    <button type="button" (click)="editPost();"class="btn btn-primary">Publish</button>
+                    <button type="button" (click)="editPost(postTitleEdit.value, postContentEdit.value);"class="btn btn-primary">Confirm</button>
                   </ng-template>
                 </div>
               </form>
@@ -86,7 +86,8 @@
                 #commentText="ngModel" 
                 class="form-control" 
                 rows="3" 
-                id="commentText"></textarea>
+                id="commentText">
+              </textarea>
             </div>
             <div class="form-group maringZero">
               <div *ngIf="commentText.invalid ; else button_available">
@@ -94,7 +95,7 @@
               </div>
           
               <ng-template #button_available>
-                <button type="button" (click)="publishComment();"class="btn btn-primary">Publish</button>
+                <button type="button" (click)="publishComment(commentText.value);"class="btn btn-primary">Publish</button>
               </ng-template>
 
               <div class="alert alert-success" role="alert" id="alertSucc">
@@ -154,11 +155,11 @@
                       </div>
                       <div class="form-group">
                         <div *ngIf="commentContentEdit.invalid ; else button_available">
-                          <button disabled class="btn btn-outline-primary">Publish</button>
+                          <button disabled class="btn btn-outline-primary">Confirm</button>
                         </div>
                     
                         <ng-template #button_available>
-                          <button type="button" class="btn btn-primary" (click)="editComment( comment._id )">Publish</button>
+                          <button type="button" class="btn btn-primary" (click)="editComment( comment._id, commentContentEdit.value )">Confirm</button>
                         </ng-template>
                       </div>
                     </form>

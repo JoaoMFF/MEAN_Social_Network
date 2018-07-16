@@ -61,17 +61,14 @@ export class FeedComponent {
     }
   }
 
-  publishPost() {
-    var titleInput = (<HTMLInputElement>document.getElementById('postTitle')).value;
-    var contentInput = (<HTMLInputElement>document.getElementById('postContent')).value;
-
+  publishPost(title, content) {
     var alertSucc = (<HTMLInputElement>document.getElementById('alertSucc'));
     var alertErr = (<HTMLInputElement>document.getElementById('alertErr'));
 
     return this.http.post(this.apiUrlPOST, {
       
-      "title": titleInput,
-      "content": contentInput
+      "title": title.viewModel,
+      "content": content
 
     },{
       headers:
@@ -112,14 +109,11 @@ export class FeedComponent {
     
   }
 
-  editPost(postId) {
-    var titleInput = (<HTMLInputElement>document.getElementById('postTitleEdit')).value;
-    var contentInput = (<HTMLInputElement>document.getElementById('postContentEdit')).value;
-    
+  editPost(postId, title, content) {
     return this.http.put(this.apiUrlPOST+'/'+postId, {
       
-      "title": titleInput,
-      "content": contentInput
+      "title": title,
+      "content": content
 
     },{
       headers:

@@ -41,7 +41,7 @@ module.exports = "html, body {\r\n    height: 100%;\r\n}\r\n\r\n.forms {\r\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"bg-primary topStrip\">\r\n  <h3>MEAN Social Network</h3>\r\n</div>\r\n<router-outlet>\r\n  \r\n</router-outlet>"
+module.exports = "<div class=\"bg-primary topStrip shadow\">\r\n  <h3>MEAN Social Network</h3>\r\n</div>\r\n<router-outlet>\r\n  <!-- Pages render here -->\r\n</router-outlet>"
 
 /***/ }),
 
@@ -67,6 +67,13 @@ var AppComponent = /** @class */ (function () {
     function AppComponent() {
         this.title = 'app';
     }
+    AppComponent.prototype.showAlert = function (alert) {
+        var count = 2; // set secconds
+        var counter = setInterval(function () {
+            alert.style.display = "none";
+            //clearInterval(counter) // stop interval
+        }, 1000 * count);
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
@@ -165,7 +172,7 @@ var AppModule = /** @class */ (function () {
                     }
                 ])
             ],
-            providers: [_feed_feed_component__WEBPACK_IMPORTED_MODULE_7__["FeedComponent"], _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"], _logs_logs_component__WEBPACK_IMPORTED_MODULE_10__["LogsComponent"]],
+            providers: [_feed_feed_component__WEBPACK_IMPORTED_MODULE_7__["FeedComponent"], _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"], _logs_logs_component__WEBPACK_IMPORTED_MODULE_10__["LogsComponent"], _post_post_component__WEBPACK_IMPORTED_MODULE_12__["PostComponent"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
         })
     ], AppModule);
@@ -183,7 +190,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".addPost {\r\n    margin-bottom: 30px;\r\n}\r\n\r\n.addPost label{\r\n    margin-top: 15px;\r\n}\r\n\r\n.center {\r\n    text-align: center;\r\n}\r\n\r\n.pagination {\r\n    display: inline-block;\r\n}\r\n\r\n.pagination a {\r\n    color: black;\r\n    float: left;\r\n    padding: 8px 16px;\r\n    text-decoration: none;\r\n    transition: background-color .3s;\r\n    border: 1px solid #ddd;\r\n    margin: 0 4px;\r\n}\r\n\r\n.pagination a.active {\r\n    background-color: #007BFF;\r\n    color: white;\r\n    border: 1px solid #007BFF;\r\n}\r\n\r\ntextarea {\r\n    resize: none;\r\n}\r\n\r\n.formBtn {\r\n    margin-top: 25px;\r\n    margin-bottom: 0;\r\n}\r\n\r\n.formBtn button{\r\n    width: 100%;\r\n}\r\n\r\n.postBody {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postContent {\r\n    margin-top: 20px;\r\n}\r\n\r\n.shadow\r\n{\r\n    border: solid #BDBDBD 1px; \r\n    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); \r\n}\r\n"
+module.exports = ".logout {\r\n    margin-left: 25px;\r\n}\r\n.addPost {\r\n    margin-bottom: 30px;\r\n}\r\n.addPost label{\r\n    margin-top: 15px;\r\n}\r\n.center {\r\n    text-align: center;\r\n}\r\n.pagination {\r\n    display: inline-block;\r\n}\r\n.pagination a {\r\n    color: black;\r\n    float: left;\r\n    padding: 8px 16px;\r\n    text-decoration: none;\r\n    transition: background-color .3s;\r\n    border: 1px solid #ddd;\r\n    margin: 0 4px;\r\n}\r\n.pagination a.active {\r\n    background-color: #007BFF;\r\n    color: white;\r\n    border: 1px solid #007BFF;\r\n}\r\ntextarea {\r\n    resize: none;\r\n}\r\n.formBtn {\r\n    margin-top: 25px;\r\n    margin-bottom: 0;\r\n}\r\n.formBtn button{\r\n    width: 100%;\r\n}\r\n.postBody {\r\n    margin-bottom: 25px;\r\n}\r\n.postBody .userInfo {\r\n    margin-bottom: 5px;\r\n}\r\n.postContent {\r\n    margin-top: 20px;\r\n}\r\n.shadow\r\n{\r\n    border: solid #BDBDBD 1px; \r\n    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); \r\n}\r\n.postButtons button {\r\n    margin-right: 15px;\r\n}\r\n.editForm {\r\n    margin-top: 25px;\r\n}\r\n#alertSucc {\r\n    text-align: center;\r\n    margin: 15px 0 0 0;\r\n    display: none;\r\n}\r\n#alertErr {\r\n    text-align: center;\r\n    margin-top: 25px;\r\n    display: none;\r\n}\r\n"
 
 /***/ }),
 
@@ -194,7 +201,7 @@ module.exports = ".addPost {\r\n    margin-bottom: 30px;\r\n}\r\n\r\n.addPost la
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <div class=\"card shadow\">\n        <div class=\"card-body\">\n          <h4>Bem vindo {{ nameUser }}</h4>\n          <form>\n            <div class=\"form-group\">\n              <button type=\"button\"  (click)=\"logs();\" class=\"btn btn-primary\">Logs</button>\n            </div>\n            <div class=\"form-group\">\n              <button type=\"button\" (click)=\"logout();\" class=\"btn btn-danger\">Logout</button>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-8\">\n\n      <div class=\"card addPost shadow\">\n        <div class=\"card-body\">\n          <form>\n            <h5>Add a new post</h5>\n            <div class=\"form-group\">\n              <label for=\"postTitle\">Title:</label>  \n              <input\n                required\n                ngModel\n                name=\"postTitle\"\n                #postTitle=\"ngModel\"  \n                type=\"text\" \n                class=\"form-control\" \n                id=\"postTitle\">\n              <label for=\"postContent\">Content:</label>  \n              <textarea \n                required\n                ngModel\n                name=\"postContent\"\n                #postContent=\"ngModel\" \n                class=\"form-control\" \n                rows=\"5\" \n                id=\"postContent\"></textarea>\n            </div>\n            <div class=\"form-group\">\n              <div *ngIf=\"postTitle.invalid || postContent.invalid ; else button_available\">\n                <button disabled class=\"btn btn-outline-primary\">Publish</button>\n              </div>\n          \n              <ng-template #button_available>\n                <button type=\"button\" (click)=\"publishPost();\"class=\"btn btn-primary\">Publish</button>\n              </ng-template>\n            </div>\n          </form>\n        </div>\n      </div>\n\n      <h5>Posts:</h5>\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"list-group postBody shadow\">\n          <a class=\"list-group-item flex-column align-items-start\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <h5 class=\"mb-1\">{{ post.title }}</h5>\n              <small>{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</small>\n            </div>\n            \n            <div class=\"form-group postContent\">\n              <p class=\"mb-1\">{{ post.content }}</p>\n            </div>\n            <div class=\"form-group\">\n              <small>User: {{ post.user.name }}</small>\n            </div>\n            <div class=\"form-group\">\n                <small>Email: {{ post.user.email }}</small>\n            </div>\n            <div class=\"form-group formBtn\">\n              <button type=\"button\" class=\"btn btn-primary\"  (click)=\"goToComment( post._id );\">Go to Post</button>\n            </div>\n          </a>\n        </div>\n      </ng-container>\n\n      <div class=\"center\">\n        <div class=\"pagination\">\n          <ng-container>\n            <div *ngIf=\"splitUrl[1] == 1\">\n              <a class=\"active\" href=\"/feed/page/1\">1</a>\n              <a href=\"/feed/page/2\">2</a>\n              <a href=\"/feed/page/3\">3</a>\n              <a href=\"/feed/page/2\">&raquo;</a>\n            </div>\n            <div *ngIf=\"splitUrl[1] == 2\">\n              <a href=\"/feed/page/1\">&laquo;</a>\n              <a href=\"/feed/page/1\">1</a>\n              <a class=\"active\" href=\"/feed/page/2\">2</a>\n              <a href=\"/feed/page/3\">3</a>\n              <a href=\"/feed/page/3\">&raquo;</a>\n            </div>\n            <div *ngIf=\"splitUrl[1] == 3\">\n              <a href=\"/feed/page/2\">&laquo;</a>\n              <a href=\"/feed/page/1\">1</a>\n              <a href=\"/feed/page/2\">2</a>\n              <a class=\"active\" href=\"/feed/page/3\">3</a>\n            </div>\n          </ng-container>\n        </div>\n      </div>\n          \n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <div class=\"card shadow\">\n        <div class=\"card-body\">\n          <h4>Welcome {{ nameUser }}</h4>\n          <form class=\"form-inline \">\n            <div class=\"form-group\">\n              <button type=\"button\"  (click)=\"logs();\" class=\"btn btn-primary btn-sm\">Logs</button>\n            </div>\n            <div class=\"form-group\">\n              <button type=\"button\" (click)=\"logout();\" class=\"btn btn-danger btn-sm logout\">Logout</button>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-8\">\n\n      <div class=\"card addPost shadow\">\n        <div class=\"card-body\">\n          <form>\n            <h5>Add a new post</h5>\n            <div class=\"form-group\">\n              <label for=\"postTitle\">Title:</label>  \n              <input\n                required\n                ngModel\n                name=\"postTitle\"\n                #postTitle=\"ngModel\"  \n                type=\"text\" \n                class=\"form-control\" \n                id=\"postTitle\">\n              <label for=\"postContent\">Content:</label>  \n              <textarea \n                required\n                ngModel\n                name=\"postContent\"\n                #postContent=\"ngModel\" \n                class=\"form-control\" \n                rows=\"5\" \n                id=\"postContent\"></textarea>\n            </div>\n            <div class=\"form-group\">\n              <div *ngIf=\"postTitle.invalid || postContent.invalid ; else button_available\">\n                <button disabled class=\"btn btn-outline-primary\">Publish</button>\n              </div>\n          \n              <ng-template #button_available>\n                <button type=\"button\" (click)=\"publishPost();\"class=\"btn btn-primary\">Publish</button>\n              </ng-template>\n\n              <div class=\"alert alert-success\" role=\"alert\" id=\"alertSucc\">\n                Post published with success!\n              </div>\n\n              <div class=\"alert alert-danger\" role=\"alert\" id=\"alertErr\">\n                Please fill all the fields required\n              </div>\n\n            </div>\n          </form>\n        </div>\n      </div>\n\n      <h5>Posts:</h5>\n      <ng-container *ngFor=\"let post of data.docs\">\n        <div class=\"list-group postBody shadow\">\n          <a class=\"list-group-item flex-column align-items-start\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <h5 class=\"mb-1\">{{ post.title }}</h5>\n              <small>{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</small>\n            </div>\n            \n            <div class=\"form-group postContent\">\n              <p class=\"mb-1\">{{ post.content }}</p>\n            </div>\n            <div class=\"form-group userInfo\">\n              <small>User: {{ post.user.name }}</small>\n            </div>\n            <div class=\"form-group\">\n                <small>Email: {{ post.user.email }}</small>\n            </div>\n            <form class=\"postButtons\">\n              <div *ngIf=\"post.user.email == userEmail\">\n                <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"toggleEdit( post._id )\">Edit</button>\n                <button type=\"button\" class=\"btn btn-danger btn-sm\" (click)=\"deletePost( post._id )\">Delete</button>\n              </div>\n            </form>\n            <div *ngIf=\"toggle == post._id\">\n              <form class=\"editForm\">\n                <h5>Edit Post</h5>\n                <div class=\"form-group\">\n                  <label for=\"postTitleEdit\">Title:</label>  \n                  <input\n                    required\n                    ngModel\n                    name=\"postTitleEdit\"\n                    #postTitleEdit=\"ngModel\"  \n                    type=\"text\" \n                    class=\"form-control\" \n                    id=\"postTitleEdit\"\n                    placeholder=\"{{ post.title }}\">\n                  <label for=\"postContentEdit\">Content:</label>  \n                  <textarea \n                    required\n                    ngModel\n                    name=\"postContentEdit\"\n                    #postContentEdit=\"ngModel\" \n                    class=\"form-control\" \n                    rows=\"5\" \n                    id=\"postContentEdit\"\n                    placeholder=\"{{ post.content }}\"></textarea>\n                </div>\n                <div class=\"form-group\">\n                  <div *ngIf=\"postTitleEdit.invalid || postContentEdit.invalid ; else button_available\">\n                    <button disabled class=\"btn btn-outline-primary\">Publish</button>\n                  </div>\n              \n                  <ng-template #button_available>\n                    <button type=\"button\" (click)=\"editPost( post._id );\"class=\"btn btn-primary\">Publish</button>\n                  </ng-template>\n                </div>\n              </form>\n            </div>\n            <div class=\"form-group formBtn\">\n              <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"goToComment( post._id );\">Go to Post</button>\n            </div>\n          </a>\n        </div>\n      </ng-container>\n\n      <div class=\"center\">\n        <div class=\"pagination\">\n          <ng-container>\n            <div *ngIf=\"splitUrl[1] == 1\">\n              <a class=\"active\" href=\"/feed/page/1\">1</a>\n              <a href=\"/feed/page/2\">2</a>\n              <a href=\"/feed/page/3\">3</a>\n              <a href=\"/feed/page/2\">&raquo;</a>\n            </div>\n            <div *ngIf=\"splitUrl[1] == 2\">\n              <a href=\"/feed/page/1\">&laquo;</a>\n              <a href=\"/feed/page/1\">1</a>\n              <a class=\"active\" href=\"/feed/page/2\">2</a>\n              <a href=\"/feed/page/3\">3</a>\n              <a href=\"/feed/page/3\">&raquo;</a>\n            </div>\n            <div *ngIf=\"splitUrl[1] == 3\">\n              <a href=\"/feed/page/2\">&laquo;</a>\n              <a href=\"/feed/page/1\">1</a>\n              <a href=\"/feed/page/2\">2</a>\n              <a class=\"active\" href=\"/feed/page/3\">3</a>\n            </div>\n          </ng-container>\n        </div>\n      </div>\n          \n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -233,8 +240,10 @@ var FeedComponent = /** @class */ (function () {
         this.splitUrl = this.pageUrl.split("/feed/page/");
         this.data = {};
         this.dataComment = {};
+        this.userEmail = localStorage.getItem('userEmail');
         this.nameUser = localStorage.getItem('nomeuser');
         this.token = localStorage.getItem('token');
+        this.toggle = '';
         this.getPosts(this.splitUrl[1]);
     }
     FeedComponent.prototype.getPosts = function (page) {
@@ -249,6 +258,14 @@ var FeedComponent = /** @class */ (function () {
             console.log(err);
         });
     };
+    FeedComponent.prototype.toggleEdit = function (id) {
+        if (this.toggle == '') {
+            this.toggle = id;
+        }
+        else {
+            this.toggle = '';
+        }
+    };
     FeedComponent.prototype.logout = function () {
         localStorage.clear();
         this.router.navigateByUrl('');
@@ -262,6 +279,8 @@ var FeedComponent = /** @class */ (function () {
         var _this = this;
         var titleInput = document.getElementById('postTitle').value;
         var contentInput = document.getElementById('postContent').value;
+        var alertSucc = document.getElementById('alertSucc');
+        var alertErr = document.getElementById('alertErr');
         return this.http.post(this.apiUrlPOST, {
             "title": titleInput,
             "content": contentInput
@@ -270,15 +289,58 @@ var FeedComponent = /** @class */ (function () {
                 .append('Authorization', 'Bearer ' + this.token)
         }).subscribe(function (res) {
             console.log(res);
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+            alertSucc.style.display = "block";
+            _this.showAlert(alertSucc);
             _this.getPosts(_this.splitUrl[1]);
         }, function (err) {
             console.log(err);
+            alertSucc.style.display = "none";
+            alertErr.style.display = "block";
+            _this.showAlert(alertErr);
         });
+    };
+    FeedComponent.prototype.showAlert = function (alert) {
+        var count = 2; // set secconds
+        var counter = setInterval(function () {
+            alert.style.display = "none";
+            //clearInterval(counter) // stop interval
+        }, 1000 * count);
     };
     FeedComponent.prototype.goToComment = function (postId) {
         console.log('PostId ' + postId);
         localStorage.setItem('postId', postId);
         this.router.navigateByUrl('/feed/' + postId + '/comments');
+    };
+    FeedComponent.prototype.editPost = function (postId) {
+        var _this = this;
+        var titleInput = document.getElementById('postTitleEdit').value;
+        var contentInput = document.getElementById('postContentEdit').value;
+        return this.http.put(this.apiUrlPOST + '/' + postId, {
+            "title": titleInput,
+            "content": contentInput
+        }, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
+                .append('Authorization', 'Bearer ' + this.token)
+        }).subscribe(function (res) {
+            _this.toggle = '';
+            _this.getPosts(_this.splitUrl[1]);
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    FeedComponent.prototype.deletePost = function (postId) {
+        var _this = this;
+        return this.http.delete(this.apiUrlPOST + '/' + postId, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
+                .append('Authorization', 'Bearer ' + this.token)
+        }).subscribe(function (res) {
+            console.log(res);
+            _this.getPosts(_this.splitUrl[1]);
+        }, function (err) {
+            console.log(err);
+        });
     };
     FeedComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -302,7 +364,7 @@ var FeedComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "#alertErrLogin {\r\n    text-align: center;\r\n    margin-top: 25px;\r\n    display: none;\r\n}"
 
 /***/ }),
 
@@ -313,7 +375,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"forms\">\n  <h4>Login</h4>\n  <div class=\"form-group\">\n    <label for=\"emailLogin\">Email</label>\n    <input \n      required \n      ngModel \n      name=\"emailLogin\"\n      #emailLogin=\"ngModel\" \n      id=\"emailLogin\" \n      type=\"email\"\n      class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"emailLogin.touched && !emailLogin.valid\">\n      <div *ngIf=\"emailLogin.errors.required\">Email is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordLogin\">Password</label>\n    <input \n      required \n      ngModel \n      name=\"passwordLogin\"\n      #passwordLogin=\"ngModel\"  \n      id=\"passwordLogin\"\n      type=\"password\"\n      class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"passwordLogin.touched && !passwordLogin.valid\">\n      <div *ngIf=\"passwordLogin.errors.required\">Password is required</div>\n    </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"emailLogin.invalid || passwordLogin.invalid ; else button_available\">\n      <button disabled class=\"btn btn-outline-primary\">Sign In</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"saveToken()\" class=\"btn btn-primary\">Sign Ip</button>\n    </ng-template>\n  </div>\n</form>"
+module.exports = "<form class=\"forms\">\n  <h4>Login</h4>\n  <div class=\"form-group\">\n    <label for=\"emailLogin\">Email</label>\n    <input \n      required \n      ngModel \n      name=\"emailLogin\"\n      #emailLogin=\"ngModel\" \n      id=\"emailLogin\" \n      type=\"email\"\n      class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"emailLogin.touched && !emailLogin.valid\">\n      <div *ngIf=\"emailLogin.errors.required\">Email is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordLogin\">Password</label>\n    <input \n      required \n      ngModel \n      name=\"passwordLogin\"\n      #passwordLogin=\"ngModel\"  \n      id=\"passwordLogin\"\n      type=\"password\"\n      class=\"form-control\">\n    <div class=\"alert alert-danger\" *ngIf=\"passwordLogin.touched && !passwordLogin.valid\">\n      <div *ngIf=\"passwordLogin.errors.required\">Password is required</div>\n    </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"emailLogin.invalid || passwordLogin.invalid ; else button_available\">\n      <button disabled class=\"btn btn-outline-primary\">Sign In</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"userLogin()\" class=\"btn btn-primary\">Sign Ip</button>\n    </ng-template>\n\n    <div class=\"alert alert-danger\" role=\"alert\" id=\"alertErrLogin\">\n      Wrong credentials!\n    </div>\n  </div>\n</form>"
 
 /***/ }),
 
@@ -328,9 +390,8 @@ module.exports = "<form class=\"forms\">\n  <h4>Login</h4>\n  <div class=\"form-
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginFormComponent", function() { return LoginFormComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -343,7 +404,6 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var LoginFormComponent = /** @class */ (function () {
     function LoginFormComponent(http, router) {
         this.http = http;
@@ -351,20 +411,17 @@ var LoginFormComponent = /** @class */ (function () {
         this.title = 'login';
         this.data = {};
     }
-    LoginFormComponent.prototype.postLogin = function () {
+    LoginFormComponent.prototype.userLogin = function () {
+        var _this = this;
         var emailInput = document.getElementById('emailLogin').value;
         var passInput = document.getElementById('passwordLogin').value;
+        var alertErr = document.getElementById('alertErrLogin');
         return this.http.post("http://localhost:3000/api/auth", {
             "email": emailInput,
             "password": passInput
-        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) { return data; }));
-    };
-    LoginFormComponent.prototype.saveToken = function () {
-        var _this = this;
-        this.postLogin();
-        this.postLogin().subscribe(function (data) {
-            console.log(data);
-            _this.data = data;
+        }).subscribe(function (res) {
+            console.log(res);
+            _this.data = res;
             if (_this.data.token) {
                 localStorage.setItem('token', _this.data.token);
                 localStorage.setItem('nomeuser', _this.data.name);
@@ -373,7 +430,16 @@ var LoginFormComponent = /** @class */ (function () {
             }
         }, function (err) {
             console.log(err);
+            alertErr.style.display = "block";
+            _this.showAlert(alertErr);
         });
+    };
+    LoginFormComponent.prototype.showAlert = function (alert) {
+        var count = 2; // set secconds
+        var counter = setInterval(function () {
+            alert.style.display = "none";
+            //clearInterval(counter) // stop interval
+        }, 1000 * count);
     };
     LoginFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -381,7 +447,7 @@ var LoginFormComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./login-form.component.html */ "./src/app/login-form/login-form.component.html"),
             styles: [__webpack_require__(/*! ./login-form.component.css */ "./src/app/login-form/login-form.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], LoginFormComponent);
     return LoginFormComponent;
 }());
@@ -397,7 +463,7 @@ var LoginFormComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".card {\r\n    margin-top: 20px;\r\n}\r\n\r\n.sections {\r\n    margin-top: 40px;\r\n}"
+module.exports = ".btnFeed {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.listLogs {\r\n    margin-bottom: 15px;\r\n}\r\n\r\n.btnGoToPost {\r\n    margin: 5px 0 10px 0;\r\n}"
 
 /***/ }),
 
@@ -408,7 +474,7 @@ module.exports = ".card {\r\n    margin-top: 20px;\r\n}\r\n\r\n.sections {\r\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <button type=\"button\" class=\"btn btn-primary\">< Feed</button>\n      <h4>Logs:</h4>\n      <div class=\"list-group \">\n        <a  class=\"list-group-item list-group-item-action flex-column align-items-start\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <h5 class=\"mb-1\">List group item heading</h5>\n            <small>3 days ago</small>\n          </div>\n          <p class=\"mb-1\">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>\n          <small>Donec id elit non mi porta.</small>\n          <div class=\"form-group\">\n            <button type=\"button\" class=\"btn btn-primary\" style=\"width: 100%;\">< Feed</button>\n          </div>\n          \n        </a>\n        <a  class=\"list-group-item list-group-item-action flex-column align-items-start\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <h5 class=\"mb-1\">List group item heading</h5>\n            <small class=\"text-muted\">3 days ago</small>\n          </div>\n          <p class=\"mb-1\">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>\n          <small class=\"text-muted\">Donec id elit non mi porta.</small>\n        </a>\n        <a  class=\"list-group-item list-group-item-action flex-column align-items-start\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <h5 class=\"mb-1\">List group item heading</h5>\n            <small class=\"text-muted\">3 days ago</small>\n          </div>\n          <p class=\"mb-1\">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>\n          <small class=\"text-muted\">Donec id elit non mi porta.</small>\n        </a>\n      </div>\n    </div>\n  </div>\n</div>\n\n"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <button type=\"button\" class=\"btn btn-primary btnFeed \" (click)=\"goToFeed();\">< Feed</button>\n      <h4>Logs:</h4>\n      <div class=\"list-group \">\n\n        <ng-container *ngFor=\"let log of log.logs\">\n          <a class=\"list-group-item flex-column align-items-start listLogs\">\n            <div class=\"d-flex w-100 justify-content-between\">\n\n              <div *ngIf=\"log.entityType == 'POST'\">\n                <h5 class=\"mb-1\">Post</h5>\n                <h6 class=\"mb-1\">Title: {{ log.entity.title }}</h6>\n                <p class=\"mb-1\">Content: {{ log.entity.content }}</p>\n                <p class=\"mb-1\">Date: {{ log.entity.dateCreated | date:'dd/MM/yyyy HH:mm' }}</p>\n                <div *ngIf=\"log.entity.deleted == false\">\n                  <button type=\"button\" class=\"btn btn-outline-primary btn-sm btnGoToPost\" (click)=\"goToPost( log.entity._id )\">Go to Post</button>\n                </div>\n                <div *ngIf=\"log.action == 'DELETE'\">\n                  <span class=\"badge badge-danger\">Deleted</span>\n                </div>\n                <div *ngIf=\"log.action == 'READ'\">\n                  <span class=\"badge badge-info\">Read</span>\n                </div>\n                <div *ngIf=\"log.action == 'CREATE'\">\n                  <span class=\"badge badge-success\">Created</span>\n                </div>\n              </div>\n\n              <div *ngIf=\"log.entityType == 'COMMENT'\">\n                <h5 class=\"mb-1\">Comment</h5>\n                <p class=\"mb-1\">{{ log.entity.text }}</p>\n                <div *ngIf=\"log.action == 'DELETE'\">\n                  <span class=\"badge badge-danger\">Deleted</span>\n                </div>\n                <div *ngIf=\"log.action == 'CREATE'\">\n                  <span class=\"badge badge-success\">Created</span>\n                </div>\n              </div>\n\n              <div *ngIf=\"log.entityType == 'USER'\">\n                <h5 class=\"mb-1\">Account </h5>\n                <p class=\"mb-1\">Nome: {{ log.entity.name }}</p>\n                <p class=\"mb-1\">Email: {{ log.entity.email }}</p>\n                <small class=\"text-success\">Created</small>\n              </div>\n              \n              <small>{{ log.date | date:'dd/MM/yyyy HH:mm' }}</small>\n            </div>\n          </a>\n        </ng-container>\n        \n      </div>\n    </div>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -423,8 +489,8 @@ module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div cla
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LogsComponent", function() { return LogsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -438,27 +504,33 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var LogsComponent = /** @class */ (function () {
-    function LogsComponent(http) {
+    function LogsComponent(http, router) {
         this.http = http;
+        this.router = router;
         this.title = 'logs';
         this.apiUrl = 'http://localhost:3000/api/user/logs';
-        this.data = {};
+        this.log = {};
         this.getLogs();
     }
-    LogsComponent.prototype.getData = function () {
-        var token = localStorage.getItem('token');
-        return this.http.get(this.apiUrl, {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]()
-                .append('Authorization', 'Bearer ' + token)
-        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) { return data; }));
-    };
     LogsComponent.prototype.getLogs = function () {
         var _this = this;
-        this.getData();
-        this.getData().subscribe(function (data) {
+        var token = localStorage.getItem('token');
+        return this.http.get(this.apiUrl, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
+                .append('Authorization', 'Bearer ' + token)
+        }).subscribe(function (data) {
             console.log(data);
-            _this.data = data;
+            _this.log = data;
+        }, function (err) {
+            console.log(err);
         });
+    };
+    LogsComponent.prototype.goToFeed = function () {
+        this.router.navigateByUrl('/feed/page/1');
+    };
+    LogsComponent.prototype.goToPost = function (postId) {
+        localStorage.setItem('postId', postId);
+        this.router.navigateByUrl('/feed/' + postId + '/comments');
     };
     LogsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -466,7 +538,7 @@ var LogsComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./logs.component.html */ "./src/app/logs/logs.component.html"),
             styles: [__webpack_require__(/*! ./logs.component.css */ "./src/app/logs/logs.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], LogsComponent);
     return LogsComponent;
 }());
@@ -482,7 +554,7 @@ var LogsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".backFeed {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postBody {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.commentSection {\r\n    margin-top: 25px;\r\n}\r\n\r\n.commentBody {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postButtons button{\r\n    margin: 10px 10px 0 0;\r\n}\r\n\r\ntextarea {\r\n    resize: none;\r\n}\r\n\r\n.editForm {\r\n    margin-top: 25px;\r\n    text-align: left;\r\n}\r\n\r\n.commentButtons button {\r\n    margin: 10px 10px 0 0;\r\n}\r\n\r\n.shadow\r\n{\r\n    border: solid #BDBDBD 1px; \r\n    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); \r\n}"
+module.exports = ".backFeed {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postBody {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postContent {\r\n    margin-top: 15px;\r\n}\r\n\r\n.commentSection {\r\n    margin-top: 25px;\r\n}\r\n\r\n.commentBody {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postButtons button{\r\n    margin: 10px 10px 0 0;\r\n}\r\n\r\ntextarea {\r\n    resize: none;\r\n}\r\n\r\n.editForm {\r\n    margin-top: 25px;\r\n    text-align: left;\r\n}\r\n\r\n.commentButtons button {\r\n    margin: 10px 10px 0 0;\r\n}\r\n\r\n.shadow\r\n{\r\n    border: solid #BDBDBD 1px; \r\n    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); \r\n}\r\n\r\n.maringZero {\r\n    margin-bottom: 0px;\r\n}\r\n\r\n.userInfo {\r\n    margin-bottom: 5px;\r\n}\r\n\r\n#alertSucc {\r\n    text-align: center;\r\n    margin: 15px 0 0 0;\r\n    display: none;\r\n}\r\n\r\n#alertErr {\r\n    text-align: center;\r\n    margin: 15px 0 0 0;\r\n    display: none;\r\n}\r\n"
 
 /***/ }),
 
@@ -493,7 +565,7 @@ module.exports = ".backFeed {\r\n    margin-bottom: 25px;\r\n}\r\n\r\n.postBody 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <button type=\"button\" (click)=\"returnToFeed(); \"class=\"btn btn-primary backFeed\">< Feed</button>\n\n        <div class=\"list-group postBody shadow\">\n          <a class=\"list-group-item flex-column align-items-start\" >\n            <div class=\"d-flex w-100 justify-content-between\">\n              <h5 class=\"mb-1\">{{ posts.title }}</h5>\n              <small>{{ posts.dateCreated | date:'dd/MM/yyyy HH:mm' }}</small>\n            </div>\n            <div class=\"form-group postContent\">\n              <p class=\"mb-1\">{{ posts.content }}</p>\n            </div>\n            <div class=\"form-group\">\n              <small>User: {{ posts.user.name }}</small>\n            </div>\n            <div class=\"form-group\">\n                <small>Email: {{ posts.user.email }}</small>\n            </div>\n            <form class=\"postButtons\">\n              <div *ngIf=\"posts.user.email == userEmail\">\n                <button type=\"button\" class=\"btn btn-primary\" (click)=\"toggleEdit( posts._id )\">Edit</button>\n                <button type=\"button\" class=\"btn btn-danger\" (click)=\"deletePost()\">Delete</button>\n              </div>\n            </form>\n            <div *ngIf=\"toggle == posts._id\">\n                <form class=\"editForm\">\n                  <h5>Edit Post</h5>\n                  <div class=\"form-group\">\n                    <label for=\"postTitleEdit\">Title:</label>  \n                    <input\n                      required\n                      ngModel\n                      name=\"postTitleEdit\"\n                      #postTitleEdit=\"ngModel\"  \n                      type=\"text\" \n                      class=\"form-control\" \n                      id=\"postTitleEdit\"\n                      placeholder=\"{{ posts.title }}\">\n                    <label for=\"postContentEdit\">Content:</label>  \n                    <textarea \n                      required\n                      ngModel\n                      name=\"postContentEdit\"\n                      #postContentEdit=\"ngModel\" \n                      class=\"form-control\" \n                      rows=\"5\" \n                      id=\"postContentEdit\"\n                      placeholder=\"{{ posts.content }}\"></textarea>\n                  </div>\n                  <div class=\"form-group\">\n                    <div *ngIf=\"postTitleEdit.invalid || postContentEdit.invalid ; else button_available\">\n                      <button disabled class=\"btn btn-outline-primary\">Publish</button>\n                    </div>\n                \n                    <ng-template #button_available>\n                      <button type=\"button\" (click)=\"editPost();\"class=\"btn btn-primary\">Publish</button>\n                    </ng-template>\n                  </div>\n                </form>\n              </div>\n          </a>\n        </div>\n\n    \n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n\n      <div class=\"card addPost shadow\">\n        <div class=\"card-body\">\n          <form>\n            <h5>Add a new comment</h5>\n            <div class=\"form-group\">\n              <label for=\"commentText\">Comment:</label>  \n              <textarea \n                required\n                ngModel\n                name=\"commentText\"\n                #commentText=\"ngModel\" \n                class=\"form-control\" \n                rows=\"3\" \n                id=\"commentText\"></textarea>\n            </div>\n            <div class=\"form-group\">\n              <div *ngIf=\"commentText.invalid ; else button_available\">\n                <button disabled class=\"btn btn-outline-primary\">Publish</button>\n              </div>\n          \n              <ng-template #button_available>\n                <button type=\"button\" (click)=\"publishComment();\"class=\"btn btn-primary\">Publish</button>\n              </ng-template>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12 commentSection\">\n      <h5>Comments:</h5>\n      <ng-container *ngFor=\"let comment of comments\">\n\n          <div class=\"list-group commentBody shadow\">\n            <a class=\"list-group-item flex-column align-items-start\">\n              <div class=\"d-flex w-100 justify-content-between\">\n                <p class=\"mb-1\">{{ comment.text }}</p>\n                <small>{{ comment.dateCreated | date:'dd/MM/yyyy HH:mm' }}</small>\n              </div>\n              \n              <div class=\"form-group\">\n                <small>User: {{ comment.user.name }}</small>\n              </div>\n              <div class=\"form-group\">\n                  <small>Email: {{ comment.user.email }}</small>\n              </div>\n              <form class=\"commentButtons\">\n                <div *ngIf=\"comment.user.email == userEmail\">\n                  <div class=\"form-group\">\n                    <button type=\"button\" class=\"btn btn-primary\" (click)=\"toggleEdit( comment._id )\">Edit</button>\n                    <button type=\"button\" class=\"btn btn-danger\" (click)=\"deleteComment( comment._id )\" >Delete</button>\n                  </div>\n                  \n                  <div *ngIf=\"toggle == comment._id\">\n                    <form class=\"editForm\">\n                      <h5>Edit Post</h5>\n                      <div class=\"form-group\">\n                        <label for=\"commentContentEdit\">Edit Comment:</label>  \n                        <textarea \n                          required\n                          ngModel\n                          name=\"commentContentEdit\"\n                          #commentContentEdit=\"ngModel\" \n                          class=\"form-control\" \n                          rows=\"5\" \n                          id=\"commentContentEdit\"\n                          placeholder=\"{{ comment.text }}\"></textarea>\n                      </div>\n                      <div class=\"form-group\">\n                        <div *ngIf=\"commentContentEdit.invalid ; else button_available\">\n                          <button disabled class=\"btn btn-outline-primary\">Publish</button>\n                        </div>\n                    \n                        <ng-template #button_available>\n                          <button type=\"button\" class=\"btn btn-primary\" (click)=\"editComment( comment._id )\">Publish</button>\n                        </ng-template>\n                      </div>\n                    </form>\n                  </div>\n  \n                </div>\n              </form>\n            </a>\n          </div>\n      </ng-container>\n    </div> \n  </div>\n</div>\n"
+module.exports = "\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <button type=\"button\" (click)=\"returnToFeed(); \"class=\"btn btn-primary backFeed\">< Feed</button>\n\n        <div class=\"list-group postBody shadow\">\n          <a class=\"list-group-item flex-column align-items-start\" >\n            <div class=\"d-flex w-100 justify-content-between\">\n              <h5 class=\"mb-1\">{{ post.title }}</h5>\n              <small>{{ post.dateCreated | date:'dd/MM/yyyy HH:mm' }}</small>\n            </div>\n            <div class=\"form-group postContent\">\n              <p class=\"mb-1\">{{ post.content }}</p>\n            </div>\n            <div class=\"form-group userInfo\">\n              <small>User: {{ post.user.name }}</small>\n            </div>\n            <div class=\"form-group userInfo\">\n                <small>Email: {{ post.user.email }}</small>\n            </div>\n            <form class=\"postButtons\">\n              <div *ngIf=\"post.user.email == userEmail\">\n                <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"toggleEdit( posts._id )\">Edit</button>\n                <button type=\"button\" class=\"btn btn-danger btn-sm\" (click)=\"deletePost()\">Delete</button>\n              </div>\n            </form>\n            <div *ngIf=\"toggle == post._id\">\n              <form class=\"editForm\">\n                <h5>Edit Post</h5>\n                <div class=\"form-group\">\n                  <label for=\"postTitleEdit\">Title:</label>  \n                  <input\n                    required\n                    ngModel\n                    name=\"postTitleEdit\"\n                    #postTitleEdit=\"ngModel\"  \n                    type=\"text\" \n                    class=\"form-control\" \n                    id=\"postTitleEdit\"\n                    placeholder=\"{{ post.title }}\">\n                  <label for=\"postContentEdit\">Content:</label>  \n                  <textarea \n                    required\n                    ngModel\n                    name=\"postContentEdit\"\n                    #postContentEdit=\"ngModel\" \n                    class=\"form-control\" \n                    rows=\"5\" \n                    id=\"postContentEdit\"\n                    placeholder=\"{{ post.content }}\"></textarea>\n                </div>\n                <div class=\"form-group\">\n                  <div *ngIf=\"postTitleEdit.invalid || postContentEdit.invalid ; else button_available\">\n                    <button disabled class=\"btn btn-outline-primary\">Publish</button>\n                  </div>\n              \n                  <ng-template #button_available>\n                    <button type=\"button\" (click)=\"editPost();\"class=\"btn btn-primary\">Publish</button>\n                  </ng-template>\n                </div>\n              </form>\n            </div>\n          </a>\n        </div>\n\n    \n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n\n      <div class=\"card addPost shadow\">\n        <div class=\"card-body\">\n          <form>\n            <h5>Add a new comment</h5>\n            <div class=\"form-group\">\n              <label for=\"commentText\">Comment:</label>  \n              <textarea \n                required\n                ngModel\n                name=\"commentText\"\n                #commentText=\"ngModel\" \n                class=\"form-control\" \n                rows=\"3\" \n                id=\"commentText\"></textarea>\n            </div>\n            <div class=\"form-group maringZero\">\n              <div *ngIf=\"commentText.invalid ; else button_available\">\n                <button disabled class=\"btn btn-outline-primary\">Publish</button>\n              </div>\n          \n              <ng-template #button_available>\n                <button type=\"button\" (click)=\"publishComment();\"class=\"btn btn-primary\">Publish</button>\n              </ng-template>\n\n              <div class=\"alert alert-success\" role=\"alert\" id=\"alertSucc\">\n                  Comment published with success!\n              </div>\n\n              <div class=\"alert alert-danger\" role=\"alert\" id=\"alertErr\">\n                Please fill the field required\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12 commentSection\">\n      <h5>Comments:</h5>\n      <ng-container *ngFor=\"let comment of comments\">\n\n          <div class=\"list-group commentBody shadow\">\n            <a class=\"list-group-item flex-column align-items-start\">\n              <div class=\"d-flex w-100 justify-content-between\">\n                <p class=\"mb-1\">{{ comment.text }}</p>\n                <small>{{ comment.dateCreated | date:'dd/MM/yyyy HH:mm' }}</small>\n              </div>\n              \n              <div class=\"form-group\">\n                <small>User: {{ comment.user.name }}</small>\n              </div>\n              <div class=\"form-group\">\n                  <small>Email: {{ comment.user.email }}</small>\n              </div>\n              <form class=\"commentButtons\">\n                <div *ngIf=\"comment.user.email == userEmail\">\n                  <div class=\"form-group maringZero\">\n                    <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"toggleEdit( comment._id )\">Edit</button>\n                    <button type=\"button\" class=\"btn btn-danger btn-sm\" (click)=\"deleteComment( comment._id )\" >Delete</button>\n                  </div>\n                  \n                  <div *ngIf=\"toggle == comment._id\">\n                    <form class=\"editForm\">\n                      <h5>Edit Post</h5>\n                      <div class=\"form-group\">\n                        <textarea \n                          required\n                          ngModel\n                          name=\"commentContentEdit\"\n                          #commentContentEdit=\"ngModel\" \n                          class=\"form-control\" \n                          rows=\"5\" \n                          id=\"commentContentEdit\"\n                          placeholder=\"{{ comment.text }}\"></textarea>\n                      </div>\n                      <div class=\"form-group\">\n                        <div *ngIf=\"commentContentEdit.invalid ; else button_available\">\n                          <button disabled class=\"btn btn-outline-primary\">Publish</button>\n                        </div>\n                    \n                        <ng-template #button_available>\n                          <button type=\"button\" class=\"btn btn-primary\" (click)=\"editComment( comment._id )\">Publish</button>\n                        </ng-template>\n                      </div>\n                    </form>\n                  </div>\n  \n                </div>\n              </form>\n            </a>\n          </div>\n      </ng-container>\n    </div> \n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -533,7 +605,7 @@ var PostComponent = /** @class */ (function () {
         this.apiUrlComments = 'http://localhost:3000/api/post/' + this.postId + '/comments';
         this.apiUrlPosts = 'http://localhost:3000/api/post/' + this.postId;
         this.comments = {};
-        this.posts = {};
+        this.post = {};
         this.toggle = '';
         this.getComments();
         this.getPost();
@@ -544,8 +616,8 @@ var PostComponent = /** @class */ (function () {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
                 .append('Authorization', 'Bearer ' + this.token)
         }).subscribe(function (res) {
-            _this.posts = res;
-            console.log(_this.posts);
+            _this.post = res;
+            console.log(_this.post);
         }, function (err) {
             console.log(err);
         });
@@ -565,6 +637,8 @@ var PostComponent = /** @class */ (function () {
     PostComponent.prototype.publishComment = function () {
         var _this = this;
         var commentText = document.getElementById('commentText').value;
+        var alertSucc = document.getElementById('alertSucc');
+        var alertErr = document.getElementById('alertErr');
         return this.http.post(this.apiUrlComments, {
             "text": commentText
         }, {
@@ -572,11 +646,23 @@ var PostComponent = /** @class */ (function () {
                 .append('Authorization', 'Bearer ' + this.token)
         }).subscribe(function (res) {
             console.log(res);
+            alertSucc.style.display = "block";
+            _this.showAlert(alertSucc);
             _this.getComments();
             document.getElementById('commentText').value = "";
         }, function (err) {
             console.log(err);
+            alertSucc.style.display = "none";
+            alertErr.style.display = "block";
+            _this.showAlert(alertErr);
         });
+    };
+    PostComponent.prototype.showAlert = function (alert) {
+        var count = 2; // set secconds
+        var counter = setInterval(function () {
+            alert.style.display = "none";
+            //clearInterval(counter) // stop interval
+        }, 1000 * count);
     };
     PostComponent.prototype.returnToFeed = function () {
         localStorage.removeItem('postId');
@@ -668,7 +754,7 @@ var PostComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".shadow\r\n{\r\n    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); \r\n}\r\n"
+module.exports = "#alertSucc {\r\n    text-align: center;\r\n    margin-top: 25px;\r\n    display: none;\r\n}\r\n\r\n#alertErr {\r\n    text-align: center;\r\n    margin-top: 25px;\r\n    display: none;\r\n}"
 
 /***/ }),
 
@@ -679,7 +765,7 @@ module.exports = ".shadow\r\n{\r\n    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form>\n  <h4>Register</h4>\n  <div class=\"form-group \" >\n    <label for=\"nomeRegister\">Nome</label>\n    <input  \n    required\n    ngModel \n    name=\"nomeRegister\"\n    #nomeRegister=\"ngModel\" \n    id=\"nomeRegister\"\n    type=\"text\" \n    class=\"form-control \">\n    <div class=\"alert alert-danger\" *ngIf=\"nomeRegister.touched && !nomeRegister.valid \">\n      <div *ngIf=\"nomeRegister.errors.required\">Name is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"emailRegister\">Email</label>\n    <input \n      required\n      ngModel \n      name=\"emailRegister\"\n      #emailRegister=\"ngModel\"\n      id=\"emailRegister\"\n      type=\"email\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"emailRegister.touched && !emailRegister.valid \">\n        <div *ngIf=\"emailRegister.errors.required\">Email is required</div>\n      </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordRegister\">Password</label>\n    <input\n      required\n      ngModel \n      name=\"passwordRegister\"\n      #passwordRegister=\"ngModel\"\n      id=\"passwordRegister\" \n      type=\"password\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"passwordRegister.touched && !passwordRegister.valid \">\n        <div *ngIf=\"passwordRegister.errors.required\">Password is required</div>\n      </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"nomeRegister.invalid || emailRegister.invalid || passwordRegister.invalid ; else button_available\">\n      <button disabled class=\"btn btn-outline-primary\">Sign Up</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"postRegister();\" class=\"btn btn-primary\">Sign Up</button>\n    </ng-template>\n    \n  </div>\n</form>"
+module.exports = "<form>\n  <h4>Register</h4>\n  <div class=\"form-group \" >\n    <label for=\"nomeRegister\">Nome</label>\n    <input  \n    required\n    ngModel \n    name=\"nomeRegister\"\n    #nomeRegister=\"ngModel\" \n    id=\"nomeRegister\"\n    type=\"text\" \n    class=\"form-control \">\n    <div class=\"alert alert-danger\" *ngIf=\"nomeRegister.touched && !nomeRegister.valid \">\n      <div *ngIf=\"nomeRegister.errors.required\">Name is required</div>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"emailRegister\">Email</label>\n    <input \n      required\n      ngModel \n      name=\"emailRegister\"\n      #emailRegister=\"ngModel\"\n      id=\"emailRegister\"\n      type=\"email\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"emailRegister.touched && !emailRegister.valid \">\n        <div *ngIf=\"emailRegister.errors.required\">Email is required</div>\n      </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"passwordRegister\">Password</label>\n    <input\n      required\n      ngModel \n      name=\"passwordRegister\"\n      #passwordRegister=\"ngModel\"\n      id=\"passwordRegister\" \n      type=\"password\" \n      class=\"form-control\">\n      <div class=\"alert alert-danger\" *ngIf=\"passwordRegister.touched && !passwordRegister.valid \">\n        <div *ngIf=\"passwordRegister.errors.required\">Password is required</div>\n      </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div *ngIf=\"nomeRegister.invalid || emailRegister.invalid || passwordRegister.invalid ; else button_available\">\n      <button disabled class=\"btn btn-outline-primary\">Sign Up</button>\n    </div>\n\n    <ng-template #button_available>\n      <button type=\"submit\" (click)=\"userRegister();\" class=\"btn btn-primary\">Sign Up</button>\n    </ng-template>\n\n    <div class=\"alert alert-success\" role=\"alert\" id=\"alertSucc\">\n      Account created with success!\n    </div>\n\n    <div class=\"alert alert-danger\" role=\"alert\" id=\"alertErr\">\n      Oops something went wrong!\n    </div>\n\n  </div>\n</form>"
 
 /***/ }),
 
@@ -711,12 +797,15 @@ var RegisterFormComponent = /** @class */ (function () {
         this.http = http;
         this.title = 'register';
         this.data = {};
+        this.alertDiv = document.getElementById('alertSucc');
     }
-    RegisterFormComponent.prototype.postRegister = function () {
+    RegisterFormComponent.prototype.userRegister = function () {
         var _this = this;
         var emailInput = document.getElementById('emailRegister').value;
         var nameInput = document.getElementById('nomeRegister').value;
         var passInput = document.getElementById('passwordRegister').value;
+        var alertSucc = document.getElementById('alertSucc');
+        var alertErr = document.getElementById('alertErr');
         this.http.post("http://localhost:3000/api/auth/register", {
             "email": emailInput,
             "password": passInput,
@@ -724,9 +813,24 @@ var RegisterFormComponent = /** @class */ (function () {
         }).subscribe(function (res) {
             console.log(res);
             _this.data = res;
+            document.getElementById('emailRegister').value = '';
+            document.getElementById('nomeRegister').value = '';
+            document.getElementById('passwordRegister').value = '';
+            alertSucc.style.display = "block";
+            _this.showAlert(alertSucc);
         }, function (err) {
             console.log(err);
+            alertSucc.style.display = "none";
+            alertErr.style.display = "block";
+            _this.showAlert(alertErr);
         });
+    };
+    RegisterFormComponent.prototype.showAlert = function (alert) {
+        var count = 2; // set secconds
+        var counter = setInterval(function () {
+            alert.style.display = "none";
+            //clearInterval(counter) // stop interval
+        }, 1000 * count);
     };
     RegisterFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -788,6 +892,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var RegisterLoginComponent = /** @class */ (function () {
     function RegisterLoginComponent() {
+        localStorage.clear();
     }
     RegisterLoginComponent.prototype.ngOnInit = function () {
     };
