@@ -22,9 +22,9 @@ export class RegisterFormComponent {
 
     this.http.post("http://localhost:3000/api/auth/register", {
       
-      "email": name,
-      "password": email,
-      "name": pass
+      "email": email,
+      "password": pass,
+      "name": name
 
     }).subscribe(
       res => { 
